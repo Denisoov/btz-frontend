@@ -1,5 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
-
 export default {
   head: {
     titleTemplate: '%s - btz-frontend',
@@ -16,8 +14,15 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
-  css: [],
-
+  styleResources: {
+    scss: [
+    '@/assets/styles/colors.scss',
+    '@/assets/styles/fonts.scss',
+    '@/assets/styles/mixins.scss'
+    ],
+  },
+  css: [
+    '@/assets/styles/index.scss'],
   plugins: [],
 
   components: true,
