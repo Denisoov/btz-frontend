@@ -31,7 +31,7 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
-  modules: [],
+  modules: ['@nuxtjs/style-resources'],
 
   vuetify: {
     treeShake: true,
