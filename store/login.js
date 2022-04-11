@@ -4,11 +4,11 @@ const defaultState = {
     first_name: '',
     second_name: '',
     patronymic: '',
-    username: '',
+    email: '',
     password: '',
   },
   signInForm: {
-    username: '',
+    email: '',
     password: '',
   },
 }
@@ -41,15 +41,15 @@ export const mutations = {
   SET_PATRONYMIC: (state, patronymic) => {
     state.loginForm.patronymic = patronymic
   },
-  SET_USERNAME_LOGIN: (state, username) => {
-    state.loginForm.username = username
+  SET_EMAIL_LOGIN: (state, email) => {
+    state.loginForm.email = email
   },
   SET_PASSWORD: (state, password) => {
     state.loginForm.password = password
   },
   // для формы авторизации
-  SET_USERNAME_SIGNIN: (state, username) => {
-    state.signInForm.username = username
+  SET_EMAIL_SIGNIN: (state, email) => {
+    state.signInForm.email = email
   },
   SET_PASSWORD_SIGNIN: (state, password) => {
     state.signInForm.password = password
@@ -58,9 +58,10 @@ export const mutations = {
 
 export const actions = {
   changeCurrentForm({ commit }, formName) {
+    console.log(formName)
     commit('SET_CURRENT_FORM', formName)
 
-    if (formName === CurrentForm.SIGN_IN) {
+    if (formName === 'SignInForm') {
       commit('RESET_LOGIN_DATA', defaultState.loginForm)
     } else {
       commit('RESET_SIGN_IN_DATA', defaultState.signInForm)

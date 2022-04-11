@@ -23,7 +23,9 @@ export default {
   },
   css: [
     '@/assets/styles/index.scss'],
-  plugins: [],
+  plugins: [
+    '@/plugins/rules-validate',
+  ],
 
   components: true,
 
@@ -38,5 +40,9 @@ export default {
     defaultAssets: false,
   },
 
-  build: {},
+  build: {
+    transpile: [
+      'vee-validate'
+    ]
+  },
 }

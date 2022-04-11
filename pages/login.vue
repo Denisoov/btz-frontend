@@ -19,8 +19,8 @@ export default Vue.extend({
     }
   },
   methods: {
-    changeCurrentForm(typeForm) {
-      this.$store.dispatch('login/changeCurrentForm', typeForm)
+    changeCurrentForm(formName) {
+      this.$store.dispatch('login/changeCurrentForm', formName)
     },
   },
   beforeDestroy() {
@@ -38,7 +38,7 @@ export default Vue.extend({
       <transition name="fade" mode="out-in">
         <component
           :is="currentForm"
-          @changeCurrentForm="changeCurrentForm('LogInForm')"
+          @changeCurrentForm="changeCurrentForm"
         ></component>
       </transition>
     </div>
