@@ -1,4 +1,5 @@
 <script>
+import Vue from 'vue'
 
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 
@@ -8,7 +9,7 @@ extend('required', required)
 
 import AppButton from '@/components/base/AppButton.vue'
 
-export default {
+export default Vue.extend({
   components: {
     ValidationObserver,
     ValidationProvider,
@@ -52,14 +53,14 @@ export default {
       }
     },
   },
-}
+})
 </script>
 
 <template>
   <div class="form">
     <h2 class="form__title">Вход в систему</h2>
     <validation-observer ref="SignInForm" v-slot="formSlotProps" tag="div">
-      <v-form class="form" :value="formSlotProps.valid" @submit.prevent>
+      <v-form :value="formSlotProps.valid" @submit.prevent>
         <validation-provider
           v-slot="{ errors }"
           mode="eager"

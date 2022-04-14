@@ -1,5 +1,5 @@
 <template>
-  <button class="app-button" >
+  <button class="app-button" v-on="$listeners" >
     {{ $attrs.title }}
   </button>
 </template>

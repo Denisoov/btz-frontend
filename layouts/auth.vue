@@ -1,12 +1,10 @@
 <template>
-  <v-app>
-    <div class="layout">
-      <nuxt />
-    </div>
-  </v-app>
+  <div class="layout">
+    <nuxt />
+  </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .layout {
   @include flex-mix(flex);
   min-height: 100vh;
