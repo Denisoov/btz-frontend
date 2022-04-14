@@ -20,12 +20,9 @@ export default Vue.extend({
   </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .wrapper-menu {
   height: 70vh;
   @include flex-mix(flex);
-}
-h2 {
-  width: fit-content;
 }
 </style>
