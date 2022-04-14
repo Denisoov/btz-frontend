@@ -102,7 +102,7 @@ export default Vue.extend({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .form {
   @include flex-mix(flex);
   flex-direction: column;
@@ -122,9 +122,12 @@ export default Vue.extend({
   color: rgba(23, 27, 148, 0.42) !important;
   caret-color: rgba(23, 27, 148, 0.42) !important;
 }
+.v-messages__message {
+  color: $error-message;
+}
 .content-url--registration {
   text-align: center;
-  margin: 5px 0 29px 0;
+  margin: 12px 0 28px 0;
   font-size: 14px;
 
   a {

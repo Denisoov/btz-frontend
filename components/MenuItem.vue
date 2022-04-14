@@ -31,22 +31,31 @@ export default Vue.extend({
   min-height: 152px;
   border-radius: 15px;
   padding: 30px;
-  box-shadow: 4px 0px 25px rgba(0, 0, 0, 0.1);
+  // box-shadow: 4px 0px 25px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e7e7e7;
   user-select: none;
   @include transition-easy(0.16s);
+  transition: background-color 250ms;
 
   &:hover {
     cursor: pointer;
-    @include transition-easy(0.16s);
-    background: #eef1ff;
-    transform: translateY(-5px);
+    background-color: $dark-blue;
+    transition: background-color 250ms;
+
+    .card-item__title, 
+    .card-item__description {
+      color: $white;
+    }
   }
+
   &__title {
+    color: $small-title;
     margin-bottom: 15px;
   }
   &__description {
     font-size: 14px;
-    color: #656565;
+    color: $small-description;
   }
+
 }
 </style>
