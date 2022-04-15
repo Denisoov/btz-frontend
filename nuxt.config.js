@@ -23,7 +23,9 @@ export default {
   },
   css: [
     '@/assets/styles/index.scss'],
-  plugins: [],
+  plugins: [
+    '@/plugins/rules-validate',
+  ],
 
   components: true,
 
@@ -31,12 +33,16 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
-  modules: [],
+  modules: ['@nuxtjs/style-resources'],
 
   vuetify: {
     treeShake: true,
     defaultAssets: false,
   },
 
-  build: {},
+  build: {
+    transpile: [
+      'vee-validate'
+    ]
+  },
 }

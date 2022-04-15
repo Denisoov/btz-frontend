@@ -2,6 +2,11 @@
 
 ![build](https://github.com/Denisoov/pawnshop/actions/workflows/ci.yml/badge.svg)
 
+## Requirements 
+
+$ Node.js -> 16.14.2
+$ npm -> 8.5.0
+
 ## Build Setup
 
 ```bash

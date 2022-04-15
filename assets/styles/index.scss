@@ -6,16 +6,18 @@
   h2 {
     font-family: 'Montserrat-SemiBold', 'sans-serif';
     text-align: center;
+    width: fit-content;
     font-size: 28px;
     color: #282828;
-    width: 300px;
   }
   h3 {
     font-family: 'Montserrat-SemiBold', 'sans-serif';
-    color: #282828;
   }
   p {
     font-family: 'Montserrat-Medium', 'sans-serif';
+  }
+  a {
+    cursor: pointer;
   }
   input {
     font-family: 'Montserrat-Medium', 'sans-serif';
@@ -26,8 +28,10 @@
     }
   }
   button {
+    outline: none;
+    
     &:focus {
-      outline: 0;
+      outline: none;
     }
     &:disabled {
       opacity: 0.6;
