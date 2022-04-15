@@ -164,7 +164,7 @@ export default Vue.extend({
       У меня
       <a @click="goToSignIn()">есть аккаунт</a>
     </div>
-    <app-button @click="logIn" title="Регистрация" />
+    <app-button class="registration" @click="logIn" title="Регистрация" />
   </div>
 </template>
 
@@ -183,6 +183,9 @@ export default Vue.extend({
 }
 .form__title {
   margin-bottom: 25px;
+}
+.registration {
+    background: $dark-blue;
 }
 .form__preview-text {
   width: 300px;

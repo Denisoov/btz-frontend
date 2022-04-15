@@ -28,7 +28,7 @@ export default Vue.extend({
         <li>
           <icon-user />
         </li>
-        <li></li>
+        <li>Выйти</li>
       </ul>
     </div>
   </div>
@@ -61,10 +61,12 @@ export default Vue.extend({
     height: 34px;
 
     li {
-      display: inline-block;
+      @include flex-mix(flex);
       width: initial;
       margin-right: 30px;
-      height: 31px;
+      height: inherit;
+      transition: transform 250ms ease-in-out;
+      cursor: pointer;
     }
   }
 }

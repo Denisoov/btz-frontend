@@ -28,8 +28,10 @@
     }
   }
   button {
+    outline: none;
+    
     &:focus {
-      outline: 0;
+      outline: none;
     }
     &:disabled {
       opacity: 0.6;

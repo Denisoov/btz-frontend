@@ -98,7 +98,7 @@ export default Vue.extend({
       У меня
       <a @click="goToLogIn()">нет аккаунта</a>
     </div>
-    <app-button @click="signIn()" :title="'Войти'" />
+    <app-button class="signin" @click="signIn()" :title="'Войти'" />
   </div>
 </template>
 
@@ -117,6 +117,9 @@ export default Vue.extend({
 }
 .v-input {
   width: 300px;
+}
+.signin {
+    background: $dark-blue;
 }
 .v-application .primary--text {
   color: rgba(23, 27, 148, 0.42) !important;
