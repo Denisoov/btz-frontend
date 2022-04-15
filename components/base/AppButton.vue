@@ -32,7 +32,9 @@
   transition: background 0s;
   opacity: 0.8;
   background-size: 100%;
-
+}
+.micro {
+  padding: 8px 20px 8px 20px !important;
 }
 .mini {
   padding: 16px 40px 16px 40px !important;
