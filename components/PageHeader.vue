@@ -1,6 +1,6 @@
 <template>
   <section class="page-header">
-    <button class="page-header__comback ripple">Назад</button>
+    <button @click="$router.go(-1)" class="page-header__comback ripple">Назад</button>
     <h2> {{ $attrs['content-title']}} </h2>
   </section>
 </template>
@@ -20,8 +20,7 @@
     font-family: 'Montserrat-SemiBold', 'sans-serif';
     text-align: center;
     font-size: 14px;
-    background: linear-gradient(180deg, #1b20a6 0%, #1c21ac 100%);
-    box-shadow: inset 0px 0px 12px rgb(23 27 150);
+    background: linear-gradient(180deg, #1d22af 0%, #2228c7 100%)
   }
 }
 </style>

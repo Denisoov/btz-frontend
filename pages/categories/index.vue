@@ -5,7 +5,6 @@ import PageHeader from '@/components/PageHeader'
 import InfoBlock from '@/components/InfoBlock'
 import AppInputSearch from '@/components/base/AppInputSearch'
 import AppButton from '@/components/base/AppButton'
-import BankCard from '@/components/BankCard'
 
 export default Vue.extend({
   components: {
@@ -13,26 +12,29 @@ export default Vue.extend({
     InfoBlock,
     AppInputSearch,
     AppButton,
-    BankCard,
   },
 })
 </script>
 
 <template>
   <div class="content">
-    <page-header :content-title="'Управление БТЗ'" />
-    <!-- <info-block /> -->
+    <page-header :content-title="'Категории'" />
+    <info-block />
     <section class="control-panel">
       <app-input-search
         class="control-panel__search"
-        :placeholder="'Поиск по банку'"
+        :placeholder="'Поиск по категориям'"
       />
-      <app-button class="control-panel__create mini" :title="'Создать'" />
-      <app-button class="control-panel__upload mini" :title="'Загрузить'" />
+      <app-button 
+        class="control-panel__create mini" 
+        :title="'Создать'" 
+      />
+      <app-button 
+        class="control-panel__upload mini" 
+        :title="'Загрузить'" 
+      />
     </section>
-    <section class="banks">
-      <bank-card v-for="i in 9" :key="i" />
-    </section>
+    <section class="banks"></section>
   </div>
 </template>
 

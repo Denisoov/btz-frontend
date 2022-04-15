@@ -31,7 +31,7 @@ export default Vue.extend({
  .card-bank {
     position: relative;
     width: 100%;
-    height: 165px;
+    height: 150px;
     padding: 15px 30px 0 15px;
     background: none;
     border-radius: 1em;
@@ -41,18 +41,20 @@ export default Vue.extend({
     &:hover {
       box-shadow: 4px 4px 25px #a695ff1f;
       border: none;
-      background-color: white;
+      background-color: #ffffff96;
       transition: all 250ms ease-in-out;
       transform: scale(1.03);
     }
 
     &__title {
       margin-bottom: 20px;
+      font-size: 16px;
     }
 
     &__amount-text {
       color: $light-gray;
       margin-bottom: 20px;
+      font-size: 14px;
     }
 
     &-control {
