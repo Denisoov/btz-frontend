@@ -5,6 +5,7 @@ import PageHeader from '@/components/PageHeader'
 import InfoBlock from '@/components/InfoBlock'
 import AppInputSearch from '@/components/base/AppInputSearch'
 import AppButton from '@/components/base/AppButton'
+import ListQuestions from '@/components/ListQuestions'
 
 export default Vue.extend({
   components: {
@@ -12,7 +13,45 @@ export default Vue.extend({
     InfoBlock,
     AppInputSearch,
     AppButton,
+    ListQuestions
   },
+  data: () => ({
+    questions: [
+      {
+        id: 0,
+        id_category: 1,
+        question: 'Сколько будет 2 +2',
+        type_question_id: 1,
+        answer: [3],
+        opinions: [
+          {
+            id: 1,
+            opinion: '1'
+          },
+          {
+            id: 2,
+            opinion: '2'
+          },
+          {
+            id: 3,
+            opinion: '3'
+          },
+          {
+            id: 4,
+            opinion: '4'
+          }
+        ]
+      },
+      {
+        id: 1,
+        id_category: 1,
+        question: 'Я ___ и был',
+        type_question_id: 2,
+        answer: ['был'],
+        opinions: null
+      }
+    ]
+  })
 })
 </script>
 
@@ -34,7 +73,7 @@ export default Vue.extend({
         :title="'Загрузить'" 
       />
     </section>
-    <section class="banks"></section>
+    <list-questions :questions="questions" />
   </div>
 </template>
 
