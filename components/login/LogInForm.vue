@@ -185,7 +185,7 @@ export default Vue.extend({
   margin-bottom: 25px;
 }
 .registration {
-    background: $dark-blue;
+    background: #171B94;
 }
 .form__preview-text {
   width: 300px;

@@ -1,36 +1,55 @@
 <script>
 import Vue from 'vue';
 
-import DefaultFormOpenQuestion from '@/components/questions/DefaultFormOpenQuestion'
-// import ActivedFormOpenQuestion from '@/components/questions/ActivedFormOpenQuestion'
-
 export default Vue.extend({
   components: {
-    DefaultFormOpenQuestion,
-    ActivedFormOpenQuestion: () =>(import('@/components/questions/ActivedFormOpenQuestion'))
-},
+    TitleFormQuestion: () => import('@/components/questions/TitleFormQuestion'),
+    SelectTypeQuestion: () => import('@/components/questions/SelectTypeQuestion')
+  },
   props: {
     question: {
       type: Object,
       required: true
+    },
+  },
+  methods: {
+    setActiveQuestion(question) {
+      this.$store.commit(
+        'question/SET_ACTIVE_QUESTION', 
+        question
+      )
     }
   }
 })
 </script>
 
 <template>
-  <div class="question">
-    <default-form-open-question :question="question" />
-    <!-- <actived-form-open-question /> -->
+  <div 
+    @click="setActiveQuestion(question)" 
+    class="type-open"
+  >
+    <div class="heaader">
+      <title-form-question :question="question" />
+      <select-type-question  />
+    </div>
   </div>
 </template>
 
-<style scoped lang="scss">
-  .question {
-    width: 100%;
-    height: inherit;
-    padding: 20px 30px;
-    box-shadow: 0px 2px 21px rgba(0, 0, 0, 0.09);
-    border-radius: 10px;
+<style lang="scss">
+.type-open {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 6px;
+    background-color: $dark-blue;
+    border-radius: 15px;
+
   }
+  .heaader {
+    @include flex-mix(flex, space-between)
+  }
+}
 </style>

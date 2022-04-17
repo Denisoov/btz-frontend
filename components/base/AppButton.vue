@@ -37,6 +37,6 @@
   padding: 8px 20px 8px 20px !important;
 }
 .mini {
-  padding: 16px 40px 16px 40px !important;
+  padding: 13px 40px 13px 40px !important;
 }
 </style>

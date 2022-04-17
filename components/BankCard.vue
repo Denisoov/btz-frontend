@@ -53,7 +53,6 @@ export default Vue.extend({
 
     &__amount-text {
       color: $light-gray;
-      margin-bottom: 20px;
       font-size: 14px;
     }
 

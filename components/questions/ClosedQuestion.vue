@@ -12,7 +12,7 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div>2 тип {{ question.question }}</div>
+  <div class="type-closed">2 тип {{ question.question }}</div>
 </template>
 
 <style>

@@ -10,21 +10,23 @@ export default Vue.extend({
 })
 </script>
 <template>
-  <div class="layout">
+  <v-app class="layout">
     <the-header></the-header>
     <div class="page">
       <nuxt />
     </div>
-  </div>
+  </v-app>
 </template>
 <style lang="scss" scoped>
-.layout {
+.v-application {
   width: 100%;
   height: 100%;
   display: block;
 
   .page {
+    z-index: 20;
     max-width: 1200px;
+    min-width: 1200px;
     height: initial;
     min-height: 800px;
     padding: 30px;

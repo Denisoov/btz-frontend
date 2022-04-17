@@ -41,7 +41,7 @@ export default Vue.extend({
   width: 100%;
   height: 300px;
   @include flex-mix(flex, center, flex-start);
-  z-index: -55;
+  z-index: 10;
   font-family: 'Montserrat-Medium';
   background: linear-gradient(180deg, #171b94 0%, #242ace 100%);
   color: #f3f3f3;

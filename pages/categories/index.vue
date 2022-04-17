@@ -8,6 +8,7 @@ import AppButton from '@/components/base/AppButton'
 import ListQuestions from '@/components/ListQuestions'
 
 export default Vue.extend({
+  
   components: {
     PageHeader,
     InfoBlock,
@@ -15,43 +16,11 @@ export default Vue.extend({
     AppButton,
     ListQuestions
   },
-  data: () => ({
-    questions: [
-      {
-        id: 0,
-        id_category: 1,
-        question: 'Сколько будет 2 +2',
-        type_question_id: 1,
-        answer: [3],
-        opinions: [
-          {
-            id: 1,
-            opinion: '1'
-          },
-          {
-            id: 2,
-            opinion: '2'
-          },
-          {
-            id: 3,
-            opinion: '3'
-          },
-          {
-            id: 4,
-            opinion: '4'
-          }
-        ]
-      },
-      {
-        id: 1,
-        id_category: 1,
-        question: 'Я ___ и был',
-        type_question_id: 2,
-        answer: ['был'],
-        opinions: null
-      }
-    ]
-  })
+  computed: {
+    questions() {
+      return this.$store.state.question.questions
+    },
+  }
 })
 </script>
 
