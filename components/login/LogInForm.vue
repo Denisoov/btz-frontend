@@ -79,7 +79,7 @@ export default Vue.extend({
 <template>
   <div class="form">
     <h2 class="form__title">Давайте сделаем первый шаг</h2>
-    <span class="form__preview-text">
+    <span class="form__description">
       Начать работу быстро и легко, просто заполните информацию ниже
     </span>
     <validation-observer ref="LogInForm" v-slot="formSlotProps" tag="div">
@@ -187,7 +187,7 @@ export default Vue.extend({
 .registration {
     background: #171B94;
 }
-.form__preview-text {
+.form__description {
   width: 300px;
   text-align: center;
   color: $light-gray;

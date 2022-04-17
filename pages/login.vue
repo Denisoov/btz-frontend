@@ -4,12 +4,18 @@ import Vue from 'vue'
 import LogInForm from '@/components/login/LogInForm.vue'
 import SignInForm from '@/components/login/SignInForm.vue'
 
+import LogoType from '@/assets/images/logo.png'
+
 export default Vue.extend({
   layout: 'auth',
   components: {
     LogInForm,
     SignInForm,
+    EmailVerify: () => (import('@/components/login/EmailVerify'))
   },
+  data: () => ({
+    LogoType
+  }),
   computed: {
     currentForm() {
       return this.$store.getters['login/currentForm']
@@ -32,7 +38,7 @@ export default Vue.extend({
 <template>
   <div class="wrapper-form">
     <div class="side">
-      <img src="@/assets/images/logo.png" alt="creaTest" />
+      <img :src="LogoType" alt="creaTest" />
     </div>
     <div class="side">
       <transition name="fade" mode="out-in">

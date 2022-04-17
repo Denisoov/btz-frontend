@@ -1,4 +1,5 @@
 const defaultState = {
+  isLoading: false,
   currentForm: 'SignInForm',
   loginForm: {
     first_name: '',
@@ -16,6 +17,9 @@ const defaultState = {
 export const state = () => defaultState
 
 export const mutations = {
+  SET_LOADING: (state) => {
+    state.isLoading = !state.isLoading
+  },
   SET_LOGIN_FORM: (state, first_name) => {
     state.loginForm.first_name = first_name
   },
@@ -58,7 +62,6 @@ export const mutations = {
 
 export const actions = {
   changeCurrentForm({ commit }, formName) {
-    console.log(formName)
     commit('SET_CURRENT_FORM', formName)
 
     if (formName === 'SignInForm') {
@@ -71,6 +74,7 @@ export const actions = {
     commit('RESET_LOGIN_DATA')
     commit('RESET_SIGN_IN_DATA')
   },
+
 }
 
 export const getters = {
