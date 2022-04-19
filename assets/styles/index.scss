@@ -3,6 +3,10 @@
     padding: 0;
     box-sizing: border-box;
   }
+  .v-application p {
+    margin: 0;
+    padding: 0;
+  }
   h2 {
     font-family: 'Montserrat-SemiBold', 'sans-serif';
     text-align: center;
@@ -10,7 +14,7 @@
     font-size: 28px;
     color: #282828;
   }
-  h3 {
+  h3, h4 {
     font-family: 'Montserrat-SemiBold', 'sans-serif';
   }
   p {
@@ -21,6 +25,9 @@
   }
   input {
     font-family: 'Montserrat-Medium', 'sans-serif';
+  }
+  code {
+    color: #fb2661 !important;
   }
   svg {
     &:hover {
@@ -37,5 +44,14 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
+  }
+
+  .ripple {
+    background-position: center;
+  }
+  .ripple:active {
+    transition: background 0s;
+    opacity: 0.8;
+    background-size: 100%;
   }
   

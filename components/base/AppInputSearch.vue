@@ -1,9 +1,9 @@
 <template>
-  <input type="text">
+  <input class="search" type="text">
 </template>
 
 <style lang="scss" scoped>
-  input {
+  .search {
     padding: 12px;
     border-radius: 15px;
     border-radius: 7px;

@@ -41,6 +41,7 @@ export default {
   },
 
   build: {
+    extractCSS: true,
     transpile: [
       'vee-validate'
     ]

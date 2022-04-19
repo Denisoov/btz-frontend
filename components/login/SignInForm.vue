@@ -119,7 +119,7 @@ export default Vue.extend({
   width: 300px;
 }
 .signin {
-    background: $dark-blue;
+    background: $primary;
 }
 .v-application .primary--text {
   color: rgba(23, 27, 148, 0.42) !important;

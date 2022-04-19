@@ -27,7 +27,7 @@ export default Vue.extend({
         {
           title: 'Помощь пользователю',
           description: 'Инструкция и руководство для Пользователей',
-          link: '/help',
+          link: '/guide',
         },
       ],
     }

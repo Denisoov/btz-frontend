@@ -1,6 +1,8 @@
 <script>
 import Vue from 'vue'
 
+import LogoType from '@/assets/images/logo.png'
+
 import IconHome from '@/components/icons/IconHome.vue'
 import IconQuestion from '@/components/icons/IconQuestion.vue'
 import IconUser from '@/components/icons/IconUser.vue'
@@ -11,13 +13,16 @@ export default Vue.extend({
     IconQuestion,
     IconUser,
   },
+  data: () => ({
+    LogoType
+  })
 })
 </script>
 
 <template>
-  <div class="the-header">
-    <div class="header-bar">
-      <div></div>
+  <header>
+    <nav class="header-bar">
+      <img :src="LogoType" alt="creaTest" />
       <ul class="menu">
         <li>
           <icon-home />
@@ -30,28 +35,34 @@ export default Vue.extend({
         </li>
         <li>Выйти</li>
       </ul>
-    </div>
-  </div>
+    </nav>
+  </header>
 </template>
 <style lang="scss" scoped>
-.the-header {
+header {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 300px;
   @include flex-mix(flex, center, flex-start);
-  z-index: -55;
+  z-index: 10;
   font-family: 'Montserrat-Medium';
   background: linear-gradient(180deg, #171b94 0%, #242ace 100%);
   color: #f3f3f3;
 }
-.header-bar {
+nav {
   width: 100%;
   height: 100px;
   max-width: 1980px;
   @include flex-mix(flex, space-between);
   align-items: center;
+
+  img {
+    margin-left: 30px;
+    width: 145px;
+    height: 36px;
+  }
 
   .menu {
     @include flex-mix(flex);
