@@ -1,36 +1,20 @@
 <script>
-import Vue from 'vue';
+import Vue from 'vue'
 
 export default Vue.extend({
   components: {
     TitleFormQuestion: () => import('@/components/questions/TitleFormQuestion'),
-    SelectTypeQuestion: () => import('@/components/questions/SelectTypeQuestion')
+    SelectTypeQuestion: () =>
+      import('@/components/questions/SelectTypeQuestion'),
   },
-  props: {
-    question: {
-      type: Object,
-      required: true
-    },
-  },
-  methods: {
-    setActiveQuestion(question) {
-      this.$store.commit(
-        'question/SET_ACTIVE_QUESTION', 
-        question
-      )
-    }
-  }
 })
 </script>
 
 <template>
-  <div 
-    @click="setActiveQuestion(question)" 
-    class="type-open"
-  >
+  <div class="type-open">
     <div class="heaader">
-      <title-form-question :question="question" />
-      <select-type-question  />
+      <title-form-question />
+      <select-type-question />
     </div>
   </div>
 </template>
@@ -46,10 +30,9 @@ export default Vue.extend({
     width: 6px;
     background-color: $dark-blue;
     border-radius: 15px;
-
   }
   .heaader {
-    @include flex-mix(flex, space-between)
+    @include flex-mix(flex, space-between);
   }
 }
 </style>

@@ -38,7 +38,10 @@ export default Vue.extend({
 <template>
   <div class="wrapper-form">
     <div class="side">
-      <img :src="LogoType" alt="creaTest" />
+      <img 
+        :src="LogoType" 
+        alt="creaTest"
+      />
     </div>
     <div class="side">
       <transition name="fade" mode="out-in">

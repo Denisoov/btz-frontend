@@ -2,10 +2,15 @@
 import Vue from "vue";
 
 export default Vue.extend({
-  props: {
-    question: {
-      type: Object
-    }
+  computed: {
+    questionName: {
+      get() {
+        return this.$store.state.question.activeQuestion.question
+      },
+      set(value) {
+        this.$store.commit('question/SET_QUESTION_NAME', value)
+      },
+    },
   },
   methods: {
     resize() {
@@ -28,6 +33,7 @@ export default Vue.extend({
     class="title-question" 
     placeholder="Вопрос без заголовка" 
     @input="resize()"
+    v-model="questionName"
     ref="textarea"
   ></textarea>
 </template>
@@ -39,12 +45,15 @@ export default Vue.extend({
     font-family: 'Montserrat-SemiBold', 'sans-serif';
     resize: none;
     height: inherit;
-
     outline: none;
     padding: 6px 10px;
     background-color: #ebf0ff;
-    border-bottom: 2px solid #000;
+    border-bottom: 2px solid #171b946b;
     overflow-y: hidden;
     transition: all 50ms ease-in-out;
+
+    &:focus {
+      border-bottom: 2px solid #414394;
+    }
   }
 </style>

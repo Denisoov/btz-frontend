@@ -12,9 +12,9 @@ export default Vue.extend({
 <template>
   <v-app class="layout">
     <the-header></the-header>
-    <div class="page">
+    <main class="page">
       <nuxt />
-    </div>
+    </main>
   </v-app>
 </template>
 <style lang="scss" scoped>

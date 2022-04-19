@@ -43,13 +43,14 @@ export const state = () => defaultState
 
 export const mutations = {
   SET_ACTIVE_QUESTION(state, question) {
-    console.log(question)
-
     if (state.activeQuestion?.id !== question.id)
       state.activeQuestion = Object.assign({}, {...question, active: true})
   },
-  SET_QUESTION_NAME({ activeQuestion }, newTitle) {
-    activeQuestion.question = newTitle
+  SET_QUESTION_NAME({ activeQuestion }, text) {
+    activeQuestion.question = text
+  },
+  SET_QUESTION_TYPE({ activeQuestion }, type) {
+    activeQuestion.type_question_id = type
   }
 }
 
@@ -57,5 +58,5 @@ export const actions = {}
 
 export const getters = {
   questions: ({ questions }) => questions,
-  activeQuestionId: ({ activeQuestion }) => activeQuestion.id,
+  activeQuestion: ({ activeQuestion }) => activeQuestion,
 }

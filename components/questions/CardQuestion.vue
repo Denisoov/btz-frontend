@@ -19,27 +19,17 @@ export default Vue.extend({
     title: '',
   }),
   computed: {
-    questionName: {
-      get() {
-        return this.$store.state.question.activeQuestion?.question
-          ? this.$store.state.question.activeQuestion?.question
-          : ''
-      },
-      set() {
-        this.$store.commit('question/SET_QUESTION_NAME', this.title)
-      },
-    },
-    activeQuestionId() {
-      return this.$store.getters['question/activeQuestionId']
+    activeQuestion() {
+      return this.$store.getters['question/activeQuestion']
     },
   },
   methods: {
     setActiveQuestion(question) {
-      this.$store.commit('question/SET_ACTIVE_QUESTION', question)
-      console.log(this.activeQuestionId)
+      if (this.activeQuestion.id !== question.id) 
+        this.$store.commit('question/SET_ACTIVE_QUESTION', question)
     },
     determinantQuestionId(id) {
-      return this.activeQuestionId === id
+      return this.activeQuestion.id === id
     },
     determinantTypeQuestion(type) {
       switch (type) {
@@ -54,36 +44,17 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div @click="setActiveQuestion(question)" class="title-question">
+  <div @click="setActiveQuestion(question)">
     <div>
-      <!-- <textarea v-if="activeQuestionId === question.id" v-model="questionName" cols="30" rows="10"></textarea> -->
-      <div v-if="activeQuestionId !== question.id" >{{ question.question }}</div>
-
+      <div v-if="activeQuestion.id !== question.id" >{{ question.question }}</div>
       <component
         v-if="determinantQuestionId(question.id)"
-        :question="question"
-        class="questions__question"
-        :is="'OpenQuestion'"
+        :is="determinantTypeQuestion(activeQuestion.type_question_id)"
       ></component>
     </div>
   </div>
 </template>
 
 <style lang="scss">
-.title-question {
-  width: 100%;
-  font-family: 'Montserrat-SemiBold', 'sans-serif';
-  resize: none;
-  height: inherit;
 
-  &:focus {
-    width: 50%;
-    outline: none;
-    padding: 6px 10px;
-    background-color: #ebf0ff;
-    border-bottom: 2px solid #000;
-    overflow-y: hidden;
-    transition: all 50ms ease-in-out;
-  }
-}
 </style>

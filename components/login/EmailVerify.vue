@@ -49,6 +49,6 @@ export default Vue.extend({
 }
 .email {
   margin-top: 40px;
-  background: #171b94;
+  background: $primary;
 }
 </style>

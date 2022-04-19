@@ -11,7 +11,7 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div class="card-bank">
+  <article class="card-bank">
     <h3 class="card-bank__title">
       Разработка программного обеспечения по решению государственных задач
     </h3>
@@ -24,7 +24,7 @@ export default Vue.extend({
       <button @click="goToDetailBank()" class="card-bank-control__detail">Подробнее...</button>
       <button class="card-bank-control__remove">Удалить</button>
     </div>
-  </div>
+  </article>
 </template>
 
 <style scoped lang="scss">

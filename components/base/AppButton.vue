@@ -70,9 +70,11 @@ export default Vue.extend({
   background-size: 100%;
 }
 .micro {
+  width: inherit;
   padding: 8px 20px 8px 20px !important;
 }
 .mini {
+  width: inherit;
   padding: 13px 40px 13px 40px !important;
 }
 .loading {

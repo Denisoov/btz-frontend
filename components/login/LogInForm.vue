@@ -83,7 +83,7 @@ export default Vue.extend({
       Начать работу быстро и легко, просто заполните информацию ниже
     </span>
     <validation-observer ref="LogInForm" v-slot="formSlotProps" tag="div">
-      <v-form class="form" :value="formSlotProps.valid" @submit.prevent>
+      <v-form :value="formSlotProps.valid" @submit.prevent>
         <validation-provider
           v-slot="{ errors }"
           mode="eager"
@@ -185,7 +185,7 @@ export default Vue.extend({
   margin-bottom: 25px;
 }
 .registration {
-    background: #171B94;
+    background: $primary;
 }
 .form__description {
   width: 300px;

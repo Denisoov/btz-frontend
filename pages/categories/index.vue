@@ -14,13 +14,27 @@ export default Vue.extend({
     InfoBlock,
     AppInputSearch,
     AppButton,
-    ListQuestions
+    ListQuestions,
+    AppDialog: () => (import('@/components/base/AppDialog')),
+    DialogCreateCategory: () => (import('@/components/dialogs/DialogCreateCategory')),
+  },
+  methods: {
+    closeDialog() {
+      this.isDialogCreateCategory = false
+    },
+    openDialogCreateCategory() {
+      this.isDialogCreateCategory = true
+    }
   },
   computed: {
     questions() {
       return this.$store.state.question.questions
     },
-  }
+  },
+  data: () => ({
+    isDialogCreateCategory: false,
+
+  })
 })
 </script>
 
@@ -28,6 +42,20 @@ export default Vue.extend({
   <div class="content">
     <page-header :content-title="'Категории'" />
     <info-block />
+    <app-dialog
+      v-if="isDialogCreateCategory"
+      ref="dialog"
+      :max-width="'680'"
+      :value="isDialogCreateCategory"
+      v-bind="$attrs"
+      v-on="$listeners"
+      >
+        <template #content>
+          <dialog-create-category
+            v-click-outside="closeDialog"
+            @closeDialog="closeDialog" />
+        </template>
+    </app-dialog>
     <section class="control-panel">
       <app-input-search
         class="control-panel__search"
@@ -35,7 +63,8 @@ export default Vue.extend({
       />
       <app-button 
         class="control-panel__create mini" 
-        :title="'Создать'" 
+        :title="'Создать'"
+        @click="openDialogCreateCategory"
       />
       <app-button 
         class="control-panel__upload mini" 
