@@ -3,24 +3,32 @@ import Vue from 'vue'
 
 export default Vue.extend({
   components: {
-    TitleFormQuestion: () => import('@/components/questions/TitleFormQuestion'),
-    SelectTypeQuestion: () =>
-      import('@/components/questions/SelectTypeQuestion'),
+    CheckBoxFormQuestion: () => import('@/components/questions/CheckBoxFormQuestion'),
   },
+  computed: {
+    opinionsOpenQuestion() {
+      return this.$store.state.question.activeQuestion.opinions
+    }
+  }
 })
 </script>
 
 <template>
-  <div class="type-open">
-    <div class="heaader">
-      <title-form-question />
-      <select-type-question />
-    </div>
-  </div>
+  <form class="question-open">
+    <check-box-form-question
+      v-for="(opinion, index) in opinionsOpenQuestion"
+      :key="index"
+      :opinion="opinion.opinion"
+      :index="index"
+    />
+    <check-box-form-question
+      :opinion="'Добавить вариант'"
+    />
+  </form>
 </template>
 
 <style lang="scss">
-.type-open {
+.question-open {
   &::before {
     content: '';
     position: absolute;
@@ -28,11 +36,8 @@ export default Vue.extend({
     left: 0;
     height: 100%;
     width: 6px;
-    background-color: $dark-blue;
+    background-color: #45cdec;
     border-radius: 15px;
-  }
-  .heaader {
-    @include flex-mix(flex, space-between);
   }
 }
 </style>

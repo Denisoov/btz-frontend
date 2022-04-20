@@ -2,23 +2,24 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-components: {
-    TitleFormQuestion: () => import('@/components/questions/TitleFormQuestion'),
-    SelectTypeQuestion: () =>
-      import('@/components/questions/SelectTypeQuestion'),
-  },
 })
 </script>
 
 <template>
-  <div class="type-closed">
-    <div class="header">
-      <title-form-question />
-      <select-type-question />
-    </div>
-  </div>
+  <div class="question-closed">закрытый вопрос</div>
 </template>
 
-<style>
-
+<style closed lang="scss">
+.question-closed {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 6px;
+    background-color: #f3467e;
+    border-radius: 15px;
+  }
+}
 </style>

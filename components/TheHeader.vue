@@ -22,18 +22,28 @@ export default Vue.extend({
 <template>
   <header>
     <nav class="header-bar">
-      <img :src="LogoType" alt="creaTest" />
+      <nuxt-link class="header-bar__logotype" to="/">
+        <img :src="LogoType" alt="creaTest" />
+      </nuxt-link>
       <ul class="menu">
         <li>
-          <icon-home />
+          <nuxt-link to="/">
+            <icon-home />
+          </nuxt-link>
         </li>
         <li>
-          <icon-question />
+          <nuxt-link to="/guide">
+            <icon-question />
+          </nuxt-link>
         </li>
         <li>
-          <icon-user />
+          <nuxt-link to="/guide">
+            <icon-user />
+          </nuxt-link>
         </li>
-        <li>Выйти</li>
+        <li>
+          <button>Выйти</button>
+        </li>
       </ul>
     </nav>
   </header>
@@ -51,17 +61,18 @@ header {
   background: linear-gradient(180deg, #171b94 0%, #242ace 100%);
   color: #f3f3f3;
 }
-nav {
+.header-bar {
   width: 100%;
   height: 100px;
   max-width: 1980px;
   @include flex-mix(flex, space-between);
   align-items: center;
 
-  img {
+  &__logotype {
     margin-left: 30px;
     width: 145px;
     height: 36px;
+    cursor: pointer
   }
 
   .menu {

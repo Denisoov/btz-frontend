@@ -33,6 +33,22 @@ const defaultState = {
       answer: ['был'],
       opinions: null,
     },
+    {
+      id: 2,
+      id_category: 1,
+      question: 'Я ___ и был',
+      type_question_id: 2,
+      answer: ['был'],
+      opinions: null,
+    },
+    {
+      id: 3,
+      id_category: 1,
+      question: 'Я ___ и был',
+      type_question_id: 2,
+      answer: ['был'],
+      opinions: null,
+    },
   ],
   activeQuestion: {
     id: null
@@ -51,7 +67,10 @@ export const mutations = {
   },
   SET_QUESTION_TYPE({ activeQuestion }, type) {
     activeQuestion.type_question_id = type
-  }
+  },
+  REWRITE_OPEN_QUESTION_OPINION({ activeQuestion }, opinion) {
+    activeQuestion.opinions[opinion.index] = opinion.text
+  },
 }
 
 export const actions = {}
