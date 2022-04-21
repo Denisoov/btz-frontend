@@ -10,12 +10,38 @@ export default Vue.extend({
       set(value) {
         this.$store.commit('question/SET_QUESTION_NAME', value)
       },
+    }
+  },
+  methods: {
+    getAnswer() {
+      if (this.$store.state.question.activeQuestion.type_question_id === 2) {
+        const question = this.questionName
+        const answers = this.extractAnswer(question)
+
+        console.log('answers:', answers)
+        this.$store.commit('question/REVIEW_CLOSED_QUESTION_ANSWERS', answers)
+      }
+    },
+    extractAnswer(str){
+      let answer, positionStart, positionEnd;
+
+      let regStart = /{/ig;
+      let regEnd = /}/ig;
+
+      positionStart = regStart.exec(str)
+      positionEnd = regEnd.exec(str)
+
+      if (positionStart && positionEnd) {
+        answer = str.slice(positionStart.index + 1, positionEnd.index)
+                      .replace(/[^a-zа-яё\s]/gi, '')
+                        .split(' ');
+
+        return answer
+      }
     },
   },
-  mounted() {
-    if (this.active) {
-      this.$refs["textarea"].focus()
-    }
+  updated() {
+    this.getAnswer()
   }
 })
 </script>

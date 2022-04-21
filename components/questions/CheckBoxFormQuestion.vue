@@ -2,22 +2,49 @@
 import Vue from 'vue'
 
 export default Vue.extend({
-  computed: {},
   props: {
     opinion: {
-      type: String | null
+      type: Object | String
+    },
+    index: {
+      type: Number
     }
   },
   data: () => ({
-
+    isCheked: true
   }),
+  computed: {
+    isChekedOpinions() {
+      return this.$store.question.activeQuestion.answer
+    },
+    opinionQuestion: {
+      get() {
+        return this.opinion
+      },
+      set(value) {
+        this.$store.commit('question/REWRITE_OPEN_QUESTION_OPINION', 
+        {
+          index: this.index,
+          text: value
+        })
+      }
+    }
+  },
 })
 </script>
 
 <template>
   <div class="wrapper-checkbox">
-    <input class="wrapper-checkbox__checkbox" type="checkbox">
-    <input v-model="opinion" class="wrapper-checkbox__input" type="text">
+    <input 
+      v-model="isCheked"
+      class="wrapper-checkbox__checkbox" 
+      type="checkbox"
+    >
+    <input 
+      v-model="opinionQuestion" 
+      class="wrapper-checkbox__input" 
+      type="text"
+    >
   </div>
 </template>
 

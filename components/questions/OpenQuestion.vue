@@ -21,9 +21,9 @@ export default Vue.extend({
       :opinion="opinion.opinion"
       :index="index"
     />
-    <check-box-form-question
+    <!-- <check-box-form-question
       :opinion="'Добавить вариант'"
-    />
+    /> -->
   </form>
 </template>
 

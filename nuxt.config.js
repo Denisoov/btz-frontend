@@ -1,6 +1,6 @@
 export default {
   head: {
-    titleTemplate: '%s - btz-frontend',
+    titleTemplate: 'btz-frontend',
     title: 'btz-frontend',
     htmlAttrs: {
       lang: 'en',
@@ -13,16 +13,15 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-
   styleResources: {
     scss: [
-    '@/assets/styles/colors.scss',
-    '@/assets/styles/fonts.scss',
-    '@/assets/styles/mixins.scss'
+    '~/assets/styles/colors.scss',
+    '~/assets/styles/fonts.scss',
+    '~/assets/styles/mixins.scss'
     ],
   },
   css: [
-    '@/assets/styles/index.scss'],
+    '~/assets/styles/index.scss'],
   plugins: [
     '@/plugins/rules-validate',
   ],

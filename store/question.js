@@ -8,6 +8,7 @@ const defaultState = {
       answer: [3],
       opinions: [
         {
+          isAnswer: true,
           id: 1,
           opinion: '1',
         },
@@ -28,7 +29,7 @@ const defaultState = {
     {
       id: 1,
       id_category: 1,
-      question: 'Я ___ и был',
+      question: 'Neque "porro quisquam est" qui dolorem ipsum',
       type_question_id: 2,
       answer: ['был'],
       opinions: null,
@@ -69,7 +70,10 @@ export const mutations = {
     activeQuestion.type_question_id = type
   },
   REWRITE_OPEN_QUESTION_OPINION({ activeQuestion }, opinion) {
-    activeQuestion.opinions[opinion.index] = opinion.text
+    activeQuestion.opinions[opinion.index].opinion = opinion.text
+  },
+  REVIEW_CLOSED_QUESTION_ANSWERS({ activeQuestion }, answers) {
+    activeQuestion.answer = answers
   },
 }
 
