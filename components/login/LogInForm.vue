@@ -164,7 +164,7 @@ export default Vue.extend({
       У меня
       <a @click="goToSignIn()">есть аккаунт</a>
     </div>
-    <app-button class="registration" @click="logIn" title="Регистрация" />
+    <app-button class="registration middle" @click="logIn" title="Регистрация" />
   </div>
 </template>
 

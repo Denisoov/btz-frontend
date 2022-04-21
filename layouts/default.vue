@@ -34,7 +34,7 @@ export default Vue.extend({
     // box-shadow: 0 6px 37px rgb(0 0 0 / 10%);
     box-shadow: 10px 10px 0px rgb(239 239 239);
     border-radius: 15px;
-    background: #f9faff;
+    background: $background-content;
   }
 }
 </style>

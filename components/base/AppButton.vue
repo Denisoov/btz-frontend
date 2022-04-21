@@ -41,7 +41,7 @@ export default Vue.extend({
 .app-button {
   position: relative;
   @include flex-mix(flex);
-  min-height: 50px;
+  min-height: 30px;
   width: 300px;
   color: $white;
   border-radius: 5px;
@@ -54,7 +54,7 @@ export default Vue.extend({
     @include transition-easy(0.15s);
     transform: translate(0px, 3px);
     -webkit-transform: translate(0px, 3px);
-    box-shadow: 0px 5px 0px 0px;
+    box-shadow: none;
   }
   &:disabled {
     transform: none;
@@ -69,9 +69,12 @@ export default Vue.extend({
   opacity: 0.8;
   background-size: 100%;
 }
+.middle {
+  padding: 13px 40px 13px 40px !important;
+}
 .micro {
   width: inherit;
-  padding: 8px 20px 8px 20px !important;
+  padding: 4px 20px 4px 20px !important;
 }
 .mini {
   width: inherit;
@@ -79,6 +82,7 @@ export default Vue.extend({
 }
 .loading {
   color: rgba(255, 255, 255, 0);
+
   span {
     height: 5px;
     width: 5px;
@@ -86,6 +90,7 @@ export default Vue.extend({
     background: #fff;
     display: inline-block;
     animation: loading 0.5s infinite linear alternate;
+
     &:nth-child(2) {
       animation-delay: 0.3s;
     }

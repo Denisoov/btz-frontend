@@ -9,9 +9,7 @@ export default Vue.extend({
   components: {
     AppButton,
   },
-  data: () => ({
-    EmailVerify,
-  }),
+  data: () => ({ EmailVerify }),
   methods: {
     refreshVerifyEmail() {
       this.$store.commit('login/SET_LOADING')
@@ -34,7 +32,7 @@ export default Vue.extend({
 
     <app-button 
       @click="refreshVerifyEmail" 
-      class="email" 
+      class="email middle" 
       :title="'Повторно отправить'" 
     />
   </div>

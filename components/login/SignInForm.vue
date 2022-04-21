@@ -59,7 +59,11 @@ export default Vue.extend({
 <template>
   <div class="form">
     <h2 class="form__title">Вход в систему</h2>
-    <validation-observer ref="SignInForm" v-slot="formSlotProps" tag="div">
+    <validation-observer 
+      ref="SignInForm" 
+      v-slot="formSlotProps" 
+      tag="div"
+    >
       <v-form :value="formSlotProps.valid" @submit.prevent>
         <validation-provider
           v-slot="{ errors }"
@@ -98,7 +102,11 @@ export default Vue.extend({
       У меня
       <a @click="goToLogIn()">нет аккаунта</a>
     </div>
-    <app-button class="signin" @click="signIn()" :title="'Войти'" />
+    <app-button 
+      class="signin middle" 
+      @click="signIn()" 
+      :title="'Войти'" 
+    />
   </div>
 </template>
 
@@ -107,7 +115,6 @@ export default Vue.extend({
   @include flex-mix(flex);
   flex-direction: column;
 
-  // задаем шрифт для всех блоков кроме h2
   & > *:not(.form__title) {
     font-family: 'Montserrat-Medium', 'sans-serif';
   }
@@ -119,6 +126,7 @@ export default Vue.extend({
   width: 300px;
 }
 .signin {
+    min-height: 50px;
     background: $primary;
 }
 .v-application .primary--text {
