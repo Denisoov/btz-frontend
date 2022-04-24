@@ -16,7 +16,7 @@
     padding: 6px 20px;
     margin-right: 20px;
     border-radius: 15px;
-    color: #f9faff;
+    color: $background-content;
     font-family: 'Montserrat-SemiBold', 'sans-serif';
     text-align: center;
     font-size: 14px;

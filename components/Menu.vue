@@ -14,7 +14,7 @@ export default Vue.extend({
           link: '/banks',
         },
         {
-          title: 'Список категорий',
+          title: 'Категории',
           description: 'Список созданных пользователем, категории вопросов',
           link: '/categories',
         },

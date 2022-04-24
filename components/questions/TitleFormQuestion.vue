@@ -10,50 +10,63 @@ export default Vue.extend({
       set(value) {
         this.$store.commit('question/SET_QUESTION_NAME', value)
       },
-    },
+    }
   },
   methods: {
-    resize() {
-      let textarea = this.$refs["textarea"];
+    getAnswer() {
+      if (this.$store.state.question.activeQuestion.type_question_id === 2) {
+        const question = this.questionName
+        const answers = this.extractAnswer(question)
 
-      textarea.style.minHeight = "46px";
-      textarea.style.minHeight = textarea.scrollHeight + "px";
-    }
+        console.log('answers:', answers)
+        this.$store.commit('question/REVIEW_CLOSED_QUESTION_ANSWERS', answers)
+      }
+    },
+    extractAnswer(str){
+      let answer, positionStart, positionEnd;
+
+      let regStart = /{/ig;
+      let regEnd = /}/ig;
+
+      positionStart = regStart.exec(str)
+      positionEnd = regEnd.exec(str)
+
+      if (positionStart && positionEnd) {
+        answer = str.slice(positionStart.index + 1, positionEnd.index)
+                      .replace(/[^a-zа-яё\s]/gi, '')
+                        .split(' ');
+
+        return answer
+      }
+    },
   },
-  mounted() {
-    if (this.active) {
-      this.$refs["textarea"].focus()
-    }
+  updated() {
+    this.getAnswer()
   }
 })
 </script>
 
 <template>
-  <textarea
-    class="title-question" 
-    placeholder="Вопрос без заголовка" 
-    @input="resize()"
+  <v-textarea
+    filled
+    auto-grow
+    label="Вопрос"
+    rows="2"
+    hide-details
+    row-height="20"
+    class="input-title"
     v-model="questionName"
-    ref="textarea"
-  ></textarea>
+  ></v-textarea>
 </template>
 
-<style scoped lang="scss">
-  .title-question {
-
-    width: 50%;
+<style lang="scss">
+  .input-title {
+    width: 500px;
+    max-width: 500px;
     font-family: 'Montserrat-SemiBold', 'sans-serif';
     resize: none;
-    height: inherit;
-    outline: none;
-    padding: 6px 10px;
-    background-color: #ebf0ff;
-    border-bottom: 2px solid #171b946b;
     overflow-y: hidden;
-    transition: all 50ms ease-in-out;
 
-    &:focus {
-      border-bottom: 2px solid #414394;
-    }
+
   }
 </style>

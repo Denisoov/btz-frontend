@@ -12,6 +12,10 @@ export default Vue.extend({
         type: 2,
         typeName: 'Закрытый вопрос',
       },
+      {
+        type: 3,
+        typeName: 'На упорядочивание',
+      },
     ],
   }),
   computed: {
@@ -28,19 +32,25 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div>
-    <v-select
-      :items="typesQuestion"
-      label="Тип вопроса"
-      item-text="typeName"
-      item-value="type"
-      v-model="questionType"
-    ></v-select>
-  </div>
+  <v-select
+    :items="typesQuestion"
+    label="Тип вопроса"
+    item-text="typeName"
+    item-value="type"
+    v-model="questionType"
+  ></v-select>
 </template>
 
-<style scoped lang="scss">
-.v-list-item__title {
-  font-family: 'Montserrat-Regular', 'sans-serif';
+<style lang="scss">
+.v-input {
+  width: 300px;
+  max-width: 300px;
+  font-family: "Montserrat-Medium", "sans-serif";
+}
+.v-list-item__content {
+  font-family: "Montserrat-Medium", "sans-serif";
+}
+.v-menu__content {
+  border-radius: 8px;
 }
 </style>

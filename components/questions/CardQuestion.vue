@@ -8,6 +8,12 @@ export default Vue.extend({
   components: {
     OpenQuestion,
     ClosedQuestion,
+    TitleFormQuestion: () => 
+      import('@/components/questions/TitleFormQuestion'),
+    SelectTypeQuestion: () =>
+      import('@/components/questions/SelectTypeQuestion'),
+    OrderingQuestion: () =>
+      import('@/components/questions/OrderingQuestion'),
   },
   props: {
     question: {
@@ -37,6 +43,8 @@ export default Vue.extend({
           return 'OpenQuestion'
         case 2:
           return 'ClosedQuestion'
+        case 3:
+          return 'OrderingQuestion'
       }
     },
   },
@@ -45,16 +53,24 @@ export default Vue.extend({
 
 <template>
   <div @click="setActiveQuestion(question)">
-    <div>
-      <div v-if="activeQuestion.id !== question.id" >{{ question.question }}</div>
+    <div v-if="activeQuestion.id !== question.id" >{{ question.question }}</div>
+
+    <form v-else class="constructor">
+      <div class="header">
+        <title-form-question />
+        <select-type-question />
+      </div>
       <component
         v-if="determinantQuestionId(question.id)"
         :is="determinantTypeQuestion(activeQuestion.type_question_id)"
-      ></component>
-    </div>
+    ></component>
+    </form>
   </div>
 </template>
 
-<style lang="scss">
-
+<style scoped lang="scss">
+  .header {
+    margin-bottom: 20px;
+    @include flex-mix(flex, space-between);
+  }
 </style>

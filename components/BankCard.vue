@@ -20,9 +20,14 @@ export default Vue.extend({
         <span class="card-bank__count">67</span>
       </p>
     </div>
-    <div class="card-bank-control">
-      <button @click="goToDetailBank()" class="card-bank-control__detail">Подробнее...</button>
-      <button class="card-bank-control__remove">Удалить</button>
+    <div class="card-bank__control">
+      <button 
+        @click="goToDetailBank()" 
+        class="card-bank__control-detail"
+      > Подробнее...</button>
+      <button 
+        class="card-bank__control-remove"
+      >Удалить</button>
     </div>
   </article>
 </template>
@@ -36,41 +41,35 @@ export default Vue.extend({
     background: none;
     border-radius: 1em;
     border: 2px solid #d3dffd;
-    transition: box-shadow 250ms ease-in-out;
 
     &:hover {
       box-shadow: 4px 4px 25px #a695ff1f;
       border: none;
       background-color: #ffffff96;
-      transition: all 250ms ease-in-out;
-      transform: scale(1.03);
+      transition:  .3s ease;
     }
-
     &__title {
       margin-bottom: 20px;
       font-size: 16px;
     }
-
     &__amount-text {
       color: $light-gray;
       font-size: 14px;
     }
-
-    &-control {
+    &__control {
       @include flex-mix(flex, flex-end);
       font-family: "Montserrat-SemiBold", "sans-serif";
       font-size: 14px;
-
-      &__detail {
-        margin-right: 30px;
+    }
+    &__control-detail {
         color: #2AB1A9;
-      }
-
-      &__remove {
-        background: $background-button-red;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
+        margin-right: 30px;
+    }
+    &__control-remove {
+      background-clip: text;
+      background: $background-button-red;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
   }

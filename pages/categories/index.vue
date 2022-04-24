@@ -49,11 +49,12 @@ export default Vue.extend({
       :value="isDialogCreateCategory"
       v-bind="$attrs"
       v-on="$listeners"
-      >
+    >
         <template #content>
           <dialog-create-category
             v-click-outside="closeDialog"
-            @closeDialog="closeDialog" />
+            @closeDialog="closeDialog" 
+          />
         </template>
     </app-dialog>
     <section class="control-panel">

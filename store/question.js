@@ -8,6 +8,7 @@ const defaultState = {
       answer: [3],
       opinions: [
         {
+          isAnswer: true,
           id: 1,
           opinion: '1',
         },
@@ -27,6 +28,39 @@ const defaultState = {
     },
     {
       id: 1,
+      id_category: 1,
+      question: 'Neque "porro quisquam est" qui dolorem ipsum',
+      type_question_id: 2,
+      answer: ['был'],
+      opinions: null,
+    },
+    {
+      id: 2,
+      id_category: 2,
+      question: 'Расположите элементы в порядке убывания',
+      type_question_id: 2,
+      answer: ['был'],
+      opinions: [
+        {
+          id: 1,
+          opinion: '1',
+        },
+        {
+          id: 2,
+          opinion: '2',
+        },
+        {
+          id: 3,
+          opinion: '3',
+        },
+        {
+          id: 4,
+          opinion: '4',
+        },
+      ],
+    },
+    {
+      id: 3,
       id_category: 1,
       question: 'Я ___ и был',
       type_question_id: 2,
@@ -51,7 +85,13 @@ export const mutations = {
   },
   SET_QUESTION_TYPE({ activeQuestion }, type) {
     activeQuestion.type_question_id = type
-  }
+  },
+  REWRITE_OPEN_QUESTION_OPINION({ activeQuestion }, opinion) {
+    activeQuestion.opinions[opinion.index].opinion = opinion.text
+  },
+  REVIEW_CLOSED_QUESTION_ANSWERS({ activeQuestion }, answers) {
+    activeQuestion.answer = answers
+  },
 }
 
 export const actions = {}
