@@ -6,15 +6,14 @@ export default ({ $axios, redirect, store }, inject) => {
     api.setBaseURL('http://127.0.0.1:8000/api/')
 
 
-    // api.onRequest(config => {
-    //   console.log('Making request to ' + config.url)
-    // })
+    api.onRequest(config => {
+      console.log('Making request to ' + config.url)
+    })
 
     // api.interceptors.response.use(
     //     response => {
     //       if (response.status === 200) {
     //         if (response.request.responseURL && response.request.responseURL.includes('login')) {
-    //           store.dispatch("setUser", response);
     //         }
     //       }
     //       return response

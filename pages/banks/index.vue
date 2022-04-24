@@ -15,6 +15,17 @@ export default Vue.extend({
     AppButton,
     BankCard,
   },
+  async asyncData({ params, store, error, app }) {
+    try {
+      const data  = await store.dispatch('bank/fetchAllBanks')
+
+      const banks = data
+      console.log('banks', banks)
+      return { banks }
+    } catch (error) {
+      console.log(error)
+    }
+  },
 })
 </script>
 
