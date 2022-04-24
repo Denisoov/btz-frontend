@@ -3,7 +3,7 @@ export default {
     titleTemplate: 'btz-frontend',
     title: 'btz-frontend',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'ru',
     },
     meta: [
       { charset: 'utf-8' },
@@ -35,7 +35,8 @@ export default {
 
   modules: [
     '@nuxtjs/style-resources',
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    'cookie-universal-nuxt'
   ],
 
   vuetify: {

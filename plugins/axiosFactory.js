@@ -22,9 +22,6 @@ export default ({ $axios, redirect, store }, inject) => {
     //   )
 
       api.onError(error => {
-        if (error.response && error.response.status === 500) {
-          redirect('/')
-        }
         if (error.response && error.response.status === 404) {
             const { data } = error.response
             store.commit('OPEN_SNACKBAR', {

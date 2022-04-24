@@ -20,9 +20,20 @@ export const mutations = {
 export const actions = {
   async signIn({ commit }, dataForm) {
     try {
-      console.log(dataForm)
       const { data } = await this.$api.post('getToken', dataForm)
-      console.log(data)
+
+      commit('SET_JWT_TOKEN', data.token)
+    } catch (error) {
+      console.log(error)
+    }
+  },
+  
+  async registration({ dispatch, commit, rootState  }) {
+    try {
+      const { data } = await this.$api.post('registration', rootState.login.loginForm)
+
+      dispatch('login/changeCurrentForm', 'EmailVerify', { root: true })
+
     } catch (error) {
       console.log(error)
     }

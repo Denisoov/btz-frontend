@@ -20,12 +20,12 @@ export default Vue.extend({
     form(){
       return this.$refs.LogInForm
     },
-    secondNameValue: {
+    lastNameValue: {
       get() {
-        return this.$store.state.login.loginForm.second_name
+        return this.$store.state.login.loginForm.last_name
       },
       set(value){
-        this.$store.commit('login/SET_SECOND_NAME', value)
+        this.$store.commit('login/SET_LAST_NAME', value)
       },
     },
     firstNameValue: {
@@ -68,9 +68,11 @@ export default Vue.extend({
     async logIn() {
       const formObserver = await this.form.validate()
 
-      if (formObserver) {
-        alert('го регистрацию')
-      }
+      // if (formObserver) {
+        await this.$store.dispatch('user/registration')
+
+        // await this.$store.dispatch('login/changeCurrentForm', 'EmailVerify')
+      // }
     },
   },
 })
@@ -91,7 +93,7 @@ export default Vue.extend({
           :placeholder="'Фамилия'"
         >
           <v-text-field
-            v-model="secondNameValue"
+            v-model="lastNameValue"
             :error-messages="errors"
             autocomplete="off"
             placeholder="Фамилия"
@@ -164,7 +166,11 @@ export default Vue.extend({
       У меня
       <a @click="goToSignIn()">есть аккаунт</a>
     </div>
-    <app-button class="registration middle" @click="logIn" title="Регистрация" />
+    <app-button 
+      class="registration middle" 
+      @click="logIn" 
+      title="Регистрация"
+    />
   </div>
 </template>
 

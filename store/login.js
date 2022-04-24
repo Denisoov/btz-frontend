@@ -3,7 +3,7 @@ const defaultState = {
   currentForm: 'SignInForm',
   loginForm: {
     first_name: '',
-    second_name: '',
+    last_name: '',
     patronymic: '',
     email: '',
     password: '',
@@ -36,8 +36,8 @@ export const mutations = {
       state.loginForm[key] = ''
     })
   },
-  SET_SECOND_NAME: (state, secondName) => {
-    state.loginForm.second_name = secondName
+  SET_LAST_NAME: (state, lastName) => {
+    state.loginForm.last_name = lastName
   },
   SET_FIRST_NAME: (state, firstName) => {
     state.loginForm.first_name = firstName
@@ -64,10 +64,14 @@ export const actions = {
   changeCurrentForm({ commit }, formName) {
     commit('SET_CURRENT_FORM', formName)
 
-    if (formName === 'SignInForm') {
-      commit('RESET_LOGIN_DATA', defaultState.loginForm)
-    } else {
-      commit('RESET_SIGN_IN_DATA', defaultState.signInForm)
+    switch (formName) {
+      case 'SignInForm':
+        commit('RESET_LOGIN_DATA', defaultState.loginForm)
+      case 'LogInForm':
+        commit('RESET_LOGIN_DATA', defaultState.signInForm)
+      case 'EmailVerify':
+        commit('RESET_LOGIN_DATA', defaultState.loginForm)
+        commit('RESET_LOGIN_DATA', defaultState.logisignInFormnForm)
     }
   },
   clearState({ commit }) {
