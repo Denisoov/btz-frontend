@@ -11,8 +11,22 @@ const defaultState = {
 
 export const state = () => defaultState
 
-export const mutations = {}
+export const mutations = {
+  SET_JWT_TOKEN({ token }, data) {
+    token = data
+  }
+}
 
-export const actions = {}
+export const actions = {
+  async signIn({ commit }, dataForm) {
+    try {
+      console.log(dataForm)
+      const { data } = await this.$api.post('getToken', dataForm)
+      console.log(data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
 
 export const getters = {}

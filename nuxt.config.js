@@ -23,7 +23,8 @@ export default {
   css: [
     '~/assets/styles/index.scss'],
   plugins: [
-    '@/plugins/rules-validate'
+    '@/plugins/rules-validate',
+    '@/plugins/axiosFactory',
   ],
 
   components: true,
@@ -32,7 +33,10 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
-  modules: ['@nuxtjs/style-resources'],
+  modules: [
+    '@nuxtjs/style-resources',
+    '@nuxtjs/axios'
+  ],
 
   vuetify: {
     treeShake: true,
