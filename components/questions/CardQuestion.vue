@@ -8,9 +8,12 @@ export default Vue.extend({
   components: {
     OpenQuestion,
     ClosedQuestion,
-    TitleFormQuestion: () => import('@/components/questions/TitleFormQuestion'),
+    TitleFormQuestion: () => 
+      import('@/components/questions/TitleFormQuestion'),
     SelectTypeQuestion: () =>
       import('@/components/questions/SelectTypeQuestion'),
+    OrderingQuestion: () =>
+      import('@/components/questions/OrderingQuestion'),
   },
   props: {
     question: {
@@ -40,6 +43,8 @@ export default Vue.extend({
           return 'OpenQuestion'
         case 2:
           return 'ClosedQuestion'
+        case 3:
+          return 'OrderingQuestion'
       }
     },
   },

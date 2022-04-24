@@ -17,11 +17,12 @@ export default Vue.extend({
 
 <template>
   <div>
+    <h2>Новая категория</h2>
     <v-text-field />
     <app-button 
       :title="'Создать'" 
       @click="closeDialog" 
-      class="create" 
+      class="create middle" 
     />
   </div>
 </template>

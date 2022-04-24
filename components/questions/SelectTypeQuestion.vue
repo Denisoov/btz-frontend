@@ -12,6 +12,10 @@ export default Vue.extend({
         type: 2,
         typeName: 'Закрытый вопрос',
       },
+      {
+        type: 3,
+        typeName: 'На упорядочивание',
+      },
     ],
   }),
   computed: {

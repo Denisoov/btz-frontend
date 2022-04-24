@@ -36,11 +36,28 @@ const defaultState = {
     },
     {
       id: 2,
-      id_category: 1,
-      question: 'Я ___ и был',
+      id_category: 2,
+      question: 'Расположите элементы в порядке убывания',
       type_question_id: 2,
       answer: ['был'],
-      opinions: null,
+      opinions: [
+        {
+          id: 1,
+          opinion: '1',
+        },
+        {
+          id: 2,
+          opinion: '2',
+        },
+        {
+          id: 3,
+          opinion: '3',
+        },
+        {
+          id: 4,
+          opinion: '4',
+        },
+      ],
     },
     {
       id: 3,

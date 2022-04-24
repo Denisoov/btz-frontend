@@ -15,15 +15,15 @@ export default {
   },
   styleResources: {
     scss: [
-    '~/assets/styles/colors.scss',
-    '~/assets/styles/fonts.scss',
-    '~/assets/styles/mixins.scss'
+    '@/assets/styles/colors.scss',
+    '@/assets/styles/fonts.scss',
+    '@/assets/styles/mixins.scss'
     ],
   },
   css: [
     '~/assets/styles/index.scss'],
   plugins: [
-    '@/plugins/rules-validate',
+    '@/plugins/rules-validate'
   ],
 
   components: true,
