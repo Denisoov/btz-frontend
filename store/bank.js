@@ -24,6 +24,21 @@ export const actions = {
 
     } catch (error) {
       console.log('error', error)
+    } 
+  },
+  async createNewBank({ commit }, newTitleBank) {
+    try {
+      const { data }  = await this.$api.post('bank/create', newTitleBank, {
+        headers: {
+          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
+        },
+      })
+      // this.fetchAllBanks()
+
+      return data
+
+    } catch (error) {
+      console.log('error', error)
     }
   },
 }

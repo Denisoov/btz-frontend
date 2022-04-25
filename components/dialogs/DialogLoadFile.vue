@@ -5,26 +5,34 @@ export default Vue.extend({
   components: {
     AppButton: () => import('@/components/base/AppButton.vue'),
   },
+  data: () => ({ newTitleBank: null }),
   methods: {
     closeDialog() {
       this.$emit('input', false)
     },
-  }
+    async createNewBank() {
+      this.newTitleBank = null
+
+      await this.closeDialog()
+    },
+  },
 })
 </script>
 
 <template>
   <div>
-    <h3>Новая категория</h3>
-    <v-text-field />
+    <h3>Новый банк тестовых заданий</h3>
+    <v-file-input 
+      show-size 
+      label="Загрузка файла" 
+    />
     <div class="control-buttons">
-      <app-button 
-        :title="'Создать'" 
-        @click="closeDialog" 
-        class="create mini" 
+      <app-button
+        :title="'Загрузить'"
+        @click="createNewBank"
+        class="create mini"
       />
     </div>
-
   </div>
 </template>
 
@@ -37,6 +45,6 @@ export default Vue.extend({
   @include flex-mix(flex, flex-end)
 }
 .create {
-  background: $primary;
+  background: $backgorund-birch;
 }
 </style>

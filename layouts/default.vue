@@ -31,7 +31,6 @@ export default Vue.extend({
     min-height: 800px;
     padding: 30px;
     margin: 100px auto 0 auto;
-    // box-shadow: 0 6px 37px rgb(0 0 0 / 10%);
     box-shadow: 10px 10px 0px rgb(239 239 239);
     border-radius: 15px;
     background: $background-content;

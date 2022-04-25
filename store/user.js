@@ -37,6 +37,21 @@ export const actions = {
     } catch (error) {
       console.log(error)
     }
+  },
+
+  async fetchUserInfo({ dispatch, commit, rootState  }) {
+    try {
+      const { data } = await this.$api.get('user/me', {
+        headers: {
+          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
+        },
+      })
+
+      return data
+
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

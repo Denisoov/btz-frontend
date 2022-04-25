@@ -23,12 +23,20 @@ export default ({ $axios, redirect, store }, inject) => {
       api.onError(error => {
         if (error.response && error.response.status === 404) {
             const { data } = error.response
+
             store.commit('OPEN_SNACKBAR', {
                 isShowSnackbar: true,
                 message: data.error,
             })
-
           }
+        if (error.response && error.response.status === 404) {
+        const { data } = error.response
+        
+        store.commit('OPEN_SNACKBAR', {
+            isShowSnackbar: true,
+            message: data.error,
+        })
+        }
     })
 
     inject('api', api)

@@ -20,6 +20,9 @@ export default {
     '@/assets/styles/mixins.scss'
     ],
   },
+  router: {
+    middleware: ['authorization'],
+  },
   css: [
     '~/assets/styles/index.scss'],
   plugins: [
@@ -40,6 +43,7 @@ export default {
   ],
 
   vuetify: {
+    optionsPath: './vuetify.config.js',
     treeShake: true,
     defaultAssets: false,
   },

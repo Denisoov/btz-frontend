@@ -6,6 +6,7 @@ import InfoBlock from '@/components/InfoBlock'
 import AppInputSearch from '@/components/base/AppInputSearch'
 import AppButton from '@/components/base/AppButton'
 import BankCard from '@/components/BankCard'
+import BanksEmpty from '@/components/BanksEmpty'
 
 export default Vue.extend({
   components: {
@@ -14,8 +15,12 @@ export default Vue.extend({
     AppInputSearch,
     AppButton,
     BankCard,
+    BanksEmpty,
+    AppDialog: () => (import('@/components/base/AppDialog')),
+    DialogCreateBank: () => (import('@/components/dialogs/DialogCreateBank')),
+    DialogLoadFile: () => (import('@/components/dialogs/DialogLoadFile')),
   },
-  async asyncData({ params, store, error, app }) {
+  async asyncData({ store }) {
     try {
       const data  = await store.dispatch('bank/fetchAllBanks')
 
@@ -26,24 +31,88 @@ export default Vue.extend({
       console.log(error)
     }
   },
+  methods: {
+    closeDialog() {
+      this.isDialogCreateNewBank = false
+    },
+    openDialogCreateNewBank() {
+      this.isDialogCreateNewBank = true
+    },
+    closeDialogLoadFile() {
+      this.isDialogLoadFile = false
+    },
+    openDialogLoadFile() {
+      this.isDialogLoadFile = true
+    }
+  },
+  computed: {
+    questions() {
+      return this.$store.state.question.questions
+    },
+  },
+  data: () => ({
+    isDialogCreateNewBank: false,
+    isDialogLoadFile: false,
+  })
 })
 </script>
 
 <template>
-  <div class="content">
+  <div class="content" >
     <page-header :content-title="'Управление БТЗ'" />
     <!-- <info-block /> -->
-    <section class="control-panel">
+    <section v-if="banks.length !== 0" class="control-panel">
       <app-input-search
         class="control-panel__search"
         :placeholder="'Поиск по банку'"
       />
-      <app-button class="control-panel__create mini" :title="'Создать'" />
-      <app-button class="control-panel__upload mini" :title="'Загрузить'" />
+      <app-button
+        @click="openDialogCreateNewBank"
+        class="control-panel__create mini" 
+        :title="'Создать'" 
+      />
+      <app-button
+        @click="openDialogLoadFile"
+        class="control-panel__upload mini" 
+        :title="'Загрузить'"
+      />
     </section>
-    <section class="banks">
-      <bank-card v-for="i in 9" :key="i" />
+    <section v-if="banks.length !== 0" class="banks">
+      <!-- <bank-card v-for="i in 9" :key="i" /> -->
     </section>
+    <section v-else>
+      <banks-empty @openDialogCreateNewBank="openDialogCreateNewBank" />
+    </section>
+    <app-dialog
+      v-if="isDialogCreateNewBank"
+      ref="dialog"
+      :max-width="'680'"
+      :value="isDialogCreateNewBank"
+      v-bind="$attrs"
+      v-on="$listeners"
+    >
+        <template #content>
+          <dialog-create-bank
+            v-click-outside="closeDialog"
+            @closeDialog="closeDialog" 
+          />
+        </template>
+    </app-dialog>
+    <app-dialog
+      v-if="isDialogLoadFile"
+      ref="dialog"
+      :max-width="'680'"
+      :value="isDialogLoadFile"
+      v-bind="$attrs"
+      v-on="$listeners"
+    >
+        <template #content>
+          <dialog-load-file
+            v-click-outside="closeDialogLoadFile"
+            @closeDialogLoadFile="closeDialogLoadFile" 
+          />
+        </template>
+    </app-dialog>
   </div>
 </template>
 
