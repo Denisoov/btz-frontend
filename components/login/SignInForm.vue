@@ -43,13 +43,16 @@ export default Vue.extend({
     async signIn() {
       const formObserver = await this.form.validate()
 
-      // if (formObserver) {
+      if (formObserver) {
         await this.$store.dispatch('user/signIn', {
           email: this.email,
           password: this.password,
         })
 
-      // }
+        await this.$router.push(`/`)
+
+
+      }
     },
   },
 })

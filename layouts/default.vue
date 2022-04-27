@@ -13,7 +13,9 @@ export default Vue.extend({
   <v-app class="layout">
     <the-header></the-header>
     <main class="page">
-      <nuxt />
+      <transition name="view">
+        <nuxt />
+      </transition>
     </main>
   </v-app>
 </template>
@@ -35,5 +37,14 @@ export default Vue.extend({
     border-radius: 15px;
     background: $background-content;
   }
+}
+.view-enter-active,
+view-active {
+  transition: all 0.4s ease-in-out;
+}
+.view-enter,
+view-leave-to,
+view-preview {
+  opacity: 0;
 }
 </style>

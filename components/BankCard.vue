@@ -2,9 +2,17 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+  props: {
+    bank: {
+      type: Object
+    }
+  },
   methods: {
     goToDetailBank() {
-      alert('hello')
+      this.$router.push(`/banks/${this.bank.id}`)
+    },
+    deleteCurrentBank() {
+      this.$store.dispatch('bank/deleteCurrentBank', this.bank.id)
     }
   }
 })
@@ -13,7 +21,7 @@ export default Vue.extend({
 <template>
   <article class="card-bank">
     <h3 class="card-bank__title">
-      Разработка программного обеспечения по решению государственных задач
+      {{ bank.name }}
     </h3>
     <div class="card-bank__body">
       <p class="card-bank__amount-text">Количество вопросов: 
@@ -26,6 +34,7 @@ export default Vue.extend({
         class="card-bank__control-detail"
       > Подробнее...</button>
       <button 
+        @click="deleteCurrentBank()"
         class="card-bank__control-remove"
       >Удалить</button>
     </div>
@@ -34,23 +43,21 @@ export default Vue.extend({
 
 <style scoped lang="scss">
  .card-bank {
-    position: relative;
-    width: 100%;
-    height: 150px;
-    padding: 15px 30px 0 15px;
-    background: none;
+    padding: 20px;
     border-radius: 1em;
     border: 2px solid #d3dffd;
+    display: grid; 
+    grid-template-columns: 1fr; 
+    grid-template-rows: auto 0.6fr 0.2fr; 
 
     &:hover {
       box-shadow: 4px 4px 25px #a695ff1f;
-      border: none;
       background-color: #ffffff96;
       transition:  .3s ease;
     }
     &__title {
-      margin-bottom: 20px;
-      font-size: 16px;
+      margin-bottom: 10px;
+      font-size: 18px;
     }
     &__amount-text {
       color: $light-gray;

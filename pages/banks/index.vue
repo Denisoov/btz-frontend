@@ -22,11 +22,8 @@ export default Vue.extend({
   },
   async asyncData({ store }) {
     try {
-      const data  = await store.dispatch('bank/fetchAllBanks')
+      await store.dispatch('bank/fetchAllBanks')
 
-      const banks = data
-      console.log('banks', banks)
-      return { banks }
     } catch (error) {
       console.log(error)
     }
@@ -46,9 +43,16 @@ export default Vue.extend({
     }
   },
   computed: {
-    questions() {
-      return this.$store.state.question.questions
+    banks() {
+      return this.$store.state.bank.banks
     },
+    foundBanks() {
+      return this.$store.getters['bank/foundBanks']
+    },
+    checkAvailibleBanks() {
+      if (this.banks.length !== 0 && this.foundBanks.length !== 0) return true
+      else return false
+    }
   },
   data: () => ({
     isDialogCreateNewBank: false,
@@ -65,6 +69,8 @@ export default Vue.extend({
       <app-input-search
         class="control-panel__search"
         :placeholder="'Поиск по банку'"
+        :typeSearch="'searchBank'"
+
       />
       <app-button
         @click="openDialogCreateNewBank"
@@ -77,8 +83,12 @@ export default Vue.extend({
         :title="'Загрузить'"
       />
     </section>
-    <section v-if="banks.length !== 0" class="banks">
-      <!-- <bank-card v-for="i in 9" :key="i" /> -->
+    <section v-if="checkAvailibleBanks" class="banks">
+      <bank-card 
+        v-for="(bank, index) in foundBanks" 
+        :key="index"
+        :bank="bank"
+      />
     </section>
     <section v-else>
       <banks-empty @openDialogCreateNewBank="openDialogCreateNewBank" />

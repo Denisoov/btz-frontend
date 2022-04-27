@@ -68,11 +68,9 @@ export default Vue.extend({
     async logIn() {
       const formObserver = await this.form.validate()
 
-      // if (formObserver) {
+      if (formObserver) {
         await this.$store.dispatch('user/registration')
-
-        // await this.$store.dispatch('login/changeCurrentForm', 'EmailVerify')
-      // }
+      }
     },
   },
 })

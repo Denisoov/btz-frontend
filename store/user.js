@@ -22,6 +22,8 @@ export const actions = {
     try {
       const { data } = await this.$api.post('getToken', dataForm)
 
+      this.$cookies.set('jwt_token', data.token)
+
       commit('SET_JWT_TOKEN', data.token)
     } catch (error) {
       console.log(error)

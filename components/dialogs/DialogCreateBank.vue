@@ -7,18 +7,14 @@ export default Vue.extend({
   },
   data: () => ({ newTitleBank: null }),
   methods: {
-    closeDialog() {
-      this.$emit('input', false)
-    },
     async createNewBank() {
       await this.$store.dispatch(
         'bank/createNewBank',
         { name: this.newTitleBank }
       )
+      await this.$emit('closeDialog')
 
       this.newTitleBank = null;
-
-      await this.closeDialog()
     }
   },
 })

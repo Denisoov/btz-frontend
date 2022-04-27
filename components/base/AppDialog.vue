@@ -24,7 +24,10 @@ export default Vue.extend({
     v-on="$listeners"
   >
     <v-card class="dialog-card">
-      <slot name="content" />
+      <slot 
+        @closeDialog="closeDialog" 
+        name="content" 
+      />
     </v-card>
   </v-dialog>
 </template>
