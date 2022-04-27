@@ -1,6 +1,17 @@
+<script>
+import Vue from 'vue'
+
+export default Vue.extend({
+  components: {
+    AppSnackbar: () => (import('@/components/base/AppSnackbar'))
+  }
+})
+</script>
+
 <template>
   <div class="layout">
     <nuxt />
+    <app-snackbar />
   </div>
 </template>
 

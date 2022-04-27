@@ -3,7 +3,7 @@ export default {
     titleTemplate: 'btz-frontend',
     title: 'btz-frontend',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'ru',
     },
     meta: [
       { charset: 'utf-8' },
@@ -20,10 +20,14 @@ export default {
     '@/assets/styles/mixins.scss'
     ],
   },
+  router: {
+    middleware: ['authorization'],
+  },
   css: [
     '~/assets/styles/index.scss'],
   plugins: [
-    '@/plugins/rules-validate'
+    '@/plugins/rules-validate',
+    '@/plugins/axiosFactory',
   ],
 
   components: true,
@@ -32,9 +36,14 @@ export default {
     '@nuxtjs/vuetify',
   ],
 
-  modules: ['@nuxtjs/style-resources'],
+  modules: [
+    '@nuxtjs/style-resources',
+    '@nuxtjs/axios',
+    'cookie-universal-nuxt'
+  ],
 
   vuetify: {
+    optionsPath: './vuetify.config.js',
     treeShake: true,
     defaultAssets: false,
   },

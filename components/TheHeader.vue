@@ -37,7 +37,7 @@ export default Vue.extend({
           </nuxt-link>
         </li>
         <li>
-          <nuxt-link to="/guide">
+          <nuxt-link to="/profile">
             <icon-user />
           </nuxt-link>
         </li>
