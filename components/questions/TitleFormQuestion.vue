@@ -10,7 +10,7 @@ export default Vue.extend({
       set(value) {
         this.$store.commit('question/SET_QUESTION_NAME', value)
       },
-    }
+    },
   },
   methods: {
     getAnswer() {
@@ -18,24 +18,26 @@ export default Vue.extend({
         const question = this.questionName
         const answers = this.extractAnswer(question)
 
-        console.log('answers:', answers)
-        this.$store.commit('question/REVIEW_CLOSED_QUESTION_ANSWERS', answers)
+        this.$store.commit(
+          'question/REVIEW_CLOSED_QUESTION_ANSWERS', 
+          answers || []
+        )
       }
     },
     extractAnswer(str){
       let answer, positionStart, positionEnd;
-
-      let regStart = /{/ig;
-      let regEnd = /}/ig;
+      let regStart = /@/ig, regEnd = /@/ig;
 
       positionStart = regStart.exec(str)
       positionEnd = regEnd.exec(str)
 
       if (positionStart && positionEnd) {
-        answer = str.slice(positionStart.index + 1, positionEnd.index)
-                      .replace(/[^a-zа-яё\s]/gi, '')
-                        .split(' ');
+        // str =  str.replace(/\s+/g, ' ').trim()
 
+        answer = str.slice(positionStart.index + 1, positionEnd.index)
+                      .replace(/[^a-zа-яё0-9\s]/gi, ' ')
+                        .split(',');
+        console.log(answer)
         return answer
       }
     },
@@ -50,7 +52,7 @@ export default Vue.extend({
   <v-textarea
     filled
     auto-grow
-    label="Вопрос"
+    placeholder="Вопрос без заголовка"
     rows="2"
     hide-details
     row-height="20"

@@ -5,35 +5,45 @@ export default Vue.extend({
   components: {
     AppButton: () => import('@/components/base/AppButton.vue'),
   },
-  data: () => ({ newCategory: null }),
+  data: () => ({ newTitleSection: null }),
   methods: {
     closeDialog() {
       this.$emit('input', false)
-      this.newCategory = null
+      this.newTitleSection = null
     },
+    async createNewSection() {
+      await this.$store.dispatch(
+        'section/createNewSection',
+        { name: this.newTitleSection }
+      )
+
+      this.closeDialog()
+    }
   },
 })
 </script>
 
 <template>
   <div>
-    <h3>Новая категория</h3>
-    <v-text-field />
+    <h3>Новый раздел</h3>
+    <v-text-field
+      placeholder="Наименование раздела" 
+      v-model="newTitleSection" 
+    />
     <div class="control-buttons">
       <app-button 
         :title="'Создать'" 
-        @click="closeDialog" 
+        @click="createNewSection" 
         class="create mini" 
       />
     </div>
-
   </div>
 </template>
 
 <style scoped lang="scss">
 .v-input {
-  width: 100%;
-  max-width: 100%;
+    width: 100%;
+    max-width: 100%;
 }
 .control-buttons {
   @include flex-mix(flex, flex-end)

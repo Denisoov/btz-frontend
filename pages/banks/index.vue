@@ -52,7 +52,7 @@ export default Vue.extend({
     checkAvailibleBanks() {
       if (this.banks.length !== 0 && this.foundBanks.length !== 0) return true
       else return false
-    }
+    },
   },
   data: () => ({
     isDialogCreateNewBank: false,
@@ -70,7 +70,6 @@ export default Vue.extend({
         class="control-panel__search"
         :placeholder="'Поиск по банку'"
         :typeSearch="'searchBank'"
-
       />
       <app-button
         @click="openDialogCreateNewBank"
@@ -101,12 +100,12 @@ export default Vue.extend({
       v-bind="$attrs"
       v-on="$listeners"
     >
-        <template #content>
-          <dialog-create-bank
-            v-click-outside="closeDialog"
-            @closeDialog="closeDialog" 
-          />
-        </template>
+      <template #content>
+        <dialog-create-bank
+          v-click-outside="closeDialog"
+          @closeDialog="closeDialog" 
+        />
+      </template>
     </app-dialog>
     <app-dialog
       v-if="isDialogLoadFile"
@@ -126,7 +125,7 @@ export default Vue.extend({
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .content {
   &__header {
     position: relative;
@@ -150,8 +149,8 @@ export default Vue.extend({
 .banks {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 270px);
+  grid-template-rows: auto;
   gap: 20px 20px;
   margin-top: 30px;
 }

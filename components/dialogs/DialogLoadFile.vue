@@ -9,11 +9,10 @@ export default Vue.extend({
   methods: {
     closeDialog() {
       this.$emit('input', false)
+      this.newTitleBank = null
     },
     async createNewBank() {
-      this.newTitleBank = null
-
-      await this.closeDialog()
+      this.closeDialog()
     },
   },
 })

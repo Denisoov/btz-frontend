@@ -14,14 +14,16 @@ export default Vue.extend({
   <div class="question-closed">
     <div class="card-answer">
       <p v-if="answersQuestion" class="card-answer__body" >
-        Ответ: 
-        <p 
-          v-for="(answer, index) in answersQuestion" 
-          :key="index" 
-          class="card-answer__text"
-        >
-        {{answer}} 
-        </p>
+        Варианты ответов: 
+        <ul>
+          <li 
+            v-for="(answer, index) in answersQuestion" 
+            :key="index" 
+            class="card-answer__text"
+          >
+            <span>{{answer}}</span> 
+          </li>
+        </ul>
       </p>
     </div>
 
@@ -75,12 +77,9 @@ export default Vue.extend({
   }
 
   .card-answer {
-    @include flex-mix(flex, flex-start, flex-start);
-
     &__body {
       margin-right: 4px;
     }
-
     &__text {
       margin-right: 4px;
     }

@@ -66,16 +66,12 @@ export default Vue.extend({
         :title="'Создать'"
         @click="openDialogCreateCategory"
       />
-      <app-button 
-        class="control-panel__upload mini" 
-        :title="'Загрузить'" 
-      />
     </section>
     <list-questions :questions="questions" />
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .content {
   &__header {
     position: relative;
@@ -83,11 +79,11 @@ export default Vue.extend({
   }
 }
 .control-panel {
-  @include flex-mix(flex, space-between);
+  @include flex-mix(flex, flex-start);
   margin-top: 60px;
 
   &__search {
-    margin: 30px 0;
+    margin: 30px 30px 30px 0;
   }
   &__create {
     background: $background-button-red;
@@ -95,13 +91,5 @@ export default Vue.extend({
   &__upload {
     background: $backgorund-birch;
   }
-}
-.banks {
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
-  gap: 20px 20px;
-  margin-top: 30px;
 }
 </style>

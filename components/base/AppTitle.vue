@@ -23,6 +23,8 @@ export default Vue.extend({
   methods: {
     onClickOutside() {
       this.isEditorTitle = !this.isEditorTitle
+      
+      this.$listeners.accessChangesTitle(this.titleValue)
     }
   },
   data: () => ({ isEditorTitle: false })
@@ -36,7 +38,7 @@ export default Vue.extend({
       @click="isEditorTitle = !isEditorTitle"
       class="title__present" 
     >
-      <h2 class="title__present-text">Веб-дизайн</h2>
+      <h2 class="title__present-text">{{ titleValue }}</h2>
       <icon-pen />
     </div>
     <v-text-field
@@ -51,16 +53,20 @@ export default Vue.extend({
 
 <style lang="scss">
 .title {
-  margin-top: 30px;
+  margin: 30px 0;
 
   &__present {
     @include flex-mix(flex, flex-start);
 
     &-text {
       margin-right: 10px;
+      text-align: left;
     }
   }
-
+  .v-input {
+      width: 600px;
+      max-width: 600px
+  }
   .v-input__slot {
     font-size: 28px;
     margin: 0;
@@ -68,8 +74,12 @@ export default Vue.extend({
   input {
     font-family: "Montserrat-SemiBold", "sans-serif";
   }
+  .v-text-field__details {
+    display: none;
+  }
   .v-text-field {
     padding-top: 0;
+    margin-top: 0;
   }
 }
 </style>

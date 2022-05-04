@@ -9,7 +9,7 @@ export default Vue.extend({
   methods: {
     async createNewBank() {
       await this.$store.dispatch(
-        'bank/createNewBank',
+        'bank/addSectionInBank',
         { name: this.newTitleBank }
       )
       await this.$emit('closeDialog')
@@ -22,7 +22,7 @@ export default Vue.extend({
 
 <template>
   <div>
-    <h3>Новый банк тестовых заданий</h3>
+    <h3>Добавление раздела из списка</h3>
     <v-text-field
       placeholder="Наименование банка" 
       v-model="newTitleBank" 
@@ -31,7 +31,7 @@ export default Vue.extend({
       <app-button 
         :title="'Создать'" 
         @click="createNewBank" 
-        class="create mini" 
+        class="add mini" 
       />
     </div>
   </div>
@@ -45,7 +45,7 @@ export default Vue.extend({
 .control-buttons {
   @include flex-mix(flex, flex-end)
 }
-.create {
-  background: $background-button-red;
+.add {
+  background: $backgorund-birch;
 }
 </style>

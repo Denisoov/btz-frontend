@@ -44,6 +44,9 @@ export default Vue.extend({
     @include flex-mix(flex);
     flex-direction: column;
 
+    &__create {
+      background: $background-button-red;
+    }
     &__title {
       margin-bottom: 20px;
     }

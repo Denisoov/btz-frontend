@@ -90,7 +90,14 @@ export const mutations = {
     activeQuestion.opinions[opinion.index].opinion = opinion.text
   },
   REVIEW_CLOSED_QUESTION_ANSWERS({ activeQuestion }, answers) {
-    activeQuestion.answer = answers
+    const result = []
+    
+    for (let i = 0; i < answers.length; i++) {
+      result.push(answers[i])
+    }
+
+    activeQuestion.answer = result
+
   },
 }
 

@@ -1,6 +1,7 @@
 const defaultState = {
   banks: [],
   search: '',
+  detailBank: {}
 }
 
 export const state = () => defaultState
@@ -17,6 +18,12 @@ export const mutations = {
   },
   SET_NEW_SEARCH(state, str) {
     state.search = str
+  },
+  SET_DETAIL_BANK(state, detail) {
+    state.detailBank = detail
+  },
+  SET_NEW_TITLE_BANK(state, name) {
+    state.detailBank = Object.assign(state.detailBank, name)
   }
 }
 
@@ -56,7 +63,6 @@ export const actions = {
           Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
         },
       })
-      console.log(data)
       commit('REMOVE_BANK', idBank)
 
     } catch (error) {
@@ -66,7 +72,28 @@ export const actions = {
 
   async getDetailBank({ commit }, idBank) {
     try {
-      // const { data } = await this.$api.
+      const { data } = await this.$api.get(`bank/showDetails/${idBank}`, {
+        headers: {
+          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
+        },
+      })
+      console.log('data', data)
+      commit('SET_DETAIL_BANK', data)
+    } catch (error) {
+      
+    }
+  },
+
+  async changeTitleBank({ commit, rootState }, name) {
+    try {
+      const { id } = rootState.bank.detailBank
+      
+      await this.$api.put(`bank/update/${id}/`, name, {
+        headers: {
+          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
+        },
+      })
+
     } catch (error) {
       
     }

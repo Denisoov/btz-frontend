@@ -17,7 +17,6 @@ export default Vue.extend({
   methods: {
     onDrop(dropResult) {
       this.items = applyDrag(this.items, dropResult);
-      console.log(this.items)
     }
   },
   data: () => ({
