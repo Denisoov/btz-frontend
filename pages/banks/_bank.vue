@@ -36,7 +36,7 @@ export default Vue.extend({
       return this.$store.state.bank.detailBank
     },
     isLoadingPage() {
-      return this.$store.state.isLoadingBanks
+      return this.$store.state.isLoadingPageBank
     },
     tabSection: {
       get() {

@@ -4,6 +4,7 @@ import Vue from 'vue'
 export default Vue.extend({
   components: {
     AppButton: () => import('@/components/base/AppButton.vue'),
+    AppLoading: () => import('@/components/base/AppLoading.vue'),
   },
   props: {
     idBank: {
@@ -35,11 +36,7 @@ export default Vue.extend({
 <template>
   <div class="dialog-content">
     <h3>Подготовка файла, подождите...</h3>
-    <div class="loading">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+    <app-loading :min-height="120" />
   </div>
 </template>
 

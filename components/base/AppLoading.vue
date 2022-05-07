@@ -1,5 +1,21 @@
+<script>
+import Vue from 'vue'
+
+export default Vue.extend({
+  props: {
+    minHeight: {
+      type: Number,
+      default: () => 740
+    }
+  }
+})
+</script>
+
 <template>
-  <div class="wrapper-loading">
+  <div 
+    :style="{ height: `${this.minHeight}px` }"
+    class="wrapper-loading"
+  >
     <div class="loading">
       <span></span>
       <span></span>
@@ -11,7 +27,6 @@
 <style scoped lang="scss">
 .wrapper-loading {
   width: 100%;
-  min-height: 740px;
   @include flex-mix(flex);
 }
 .loading {
