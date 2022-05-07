@@ -17,9 +17,6 @@ export default Vue.extend({
       }
     }
   },
-  mounted() {
-    console.log(this.$store.state['category'])
-  }
 })
 </script>
 

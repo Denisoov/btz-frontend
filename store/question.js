@@ -104,11 +104,7 @@ export const mutations = {
 export const actions = {
   async getAllQuestions({ commit }, idCategory) {
     try {
-      const { data } = await this.$api.get(`question/show/${idCategory}`, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
-      })
+      const { data } = await this.$api.get(`question/show/${idCategory}`)
       
       console.log('questions', data)
     } catch (error) {

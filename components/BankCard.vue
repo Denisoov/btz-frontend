@@ -26,7 +26,7 @@ export default Vue.extend({
       </h3>
       <div class="card-bank__body">
         <p class="card-bank__amount-text">
-          Количество вопросов: 
+          Количество разделов: 
           <span class="card-bank__count">{{ bank.count_questions }}</span>
         </p>
       </div>

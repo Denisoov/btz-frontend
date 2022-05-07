@@ -12,7 +12,7 @@ export const mutations = {
     state.banks = list
   },
   UPDATE_BANKS({ banks }, newBank) {
-    banks.unshift(newBank)
+    banks.push(newBank)
   },
   REMOVE_BANK(state, idBank) {
     state.banks = state.banks.filter((bank) => bank.id !== idBank)
@@ -34,11 +34,7 @@ export const mutations = {
 export const actions = {
   async fetchAllBanks({ commit }, dataForm) {
     try {
-      const { data }  = await this.$api.get('bank/show', {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
-      })
+      const { data }  = await this.$api.get('bank/show')
       commit('SET_BANKS', data)
 
     } catch (error) {
@@ -47,11 +43,7 @@ export const actions = {
   },
   async createNewBank({ commit }, newTitleBank) {
     try {
-      const { data }  = await this.$api.post('bank/create', newTitleBank, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
-      })
+      const { data }  = await this.$api.post('bank/create', newTitleBank)
 
       commit('UPDATE_BANKS', data)
 
@@ -62,11 +54,7 @@ export const actions = {
 
   async fetchStatisticBanks({ commit }) {
     try {
-      const { data } = await this.$api.get('bank/showUnload', {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
-      })
+      const { data } = await this.$api.get('bank/showUnload')
       commit('SET_STATISTIC_BANKS', data)
     } catch (error) {
       
@@ -75,11 +63,7 @@ export const actions = {
 
   async deleteCurrentBank({ commit }, idBank) {
     try {
-      await this.$api.delete(`bank/delete/${idBank}`, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
-      })
+      await this.$api.delete(`bank/delete/${idBank}`)
       commit('REMOVE_BANK', idBank)
 
     } catch (error) {
@@ -89,11 +73,7 @@ export const actions = {
 
   async getDetailBank({ commit }, idBank) {
     try {
-      const { data } = await this.$api.get(`bank/showDetails/${idBank}`, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
-      })
+      const { data } = await this.$api.get(`bank/showDetails/${idBank}`)
 
       commit('SET_DETAIL_BANK', data)
     } catch (error) {
@@ -105,11 +85,7 @@ export const actions = {
     try {
       const { id } = rootState.bank.detailBank
       
-      await this.$api.put(`bank/update/${id}/`, name, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
-      })
+      await this.$api.put(`bank/update/${id}/`, name)
 
     } catch (error) {
       
@@ -120,9 +96,6 @@ export const actions = {
     try {
       const file = this.$api.post(`files/unloadingBank/bank/${idBank}`, {}, {
         responseType: "blob",
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
       })
 
       return file

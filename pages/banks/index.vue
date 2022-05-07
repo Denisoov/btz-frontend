@@ -9,6 +9,7 @@ import BankCard from '@/components/BankCard'
 import BanksEmpty from '@/components/BanksEmpty'
 
 export default Vue.extend({
+  name: 'index',
   components: {
     PageHeader,
     InfoBlock,

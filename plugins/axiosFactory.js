@@ -1,13 +1,11 @@
-import User from '@/api/user'
-
-export default ({ $axios, redirect, store }, inject) => {
+export default ({ $axios, redirect, store, $cookies }, inject) => {
 
     const api = $axios.create()
     api.setBaseURL('http://127.0.0.1:8000/api/')
 
 
     api.onRequest(config => {
-      console.log('Making request to ' + config.url)
+      config.headers.Authorization = `Bearer ${$cookies.get('jwt_token')}`
     })
 
     // api.interceptors.response.use(

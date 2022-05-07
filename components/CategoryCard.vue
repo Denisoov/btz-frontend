@@ -11,6 +11,9 @@ export default Vue.extend({
     goToDetailCategory() {
       this.$router.push(`/categories/${this.category.id}`)
     },
+    deleteCurrentBank() {
+      this.$store.dispatch('category/deleteCurrentCategory', this.category.id)
+    }
   }
 })
 </script>

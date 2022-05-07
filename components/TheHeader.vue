@@ -13,9 +13,13 @@ export default Vue.extend({
     IconQuestion,
     IconUser,
   },
-  data: () => ({
-    LogoType
-  })
+  data: () => ({ LogoType }),
+  methods: {
+    async goExit() {
+      await this.$store.dispatch('user/exit')
+      await this.$router.push('/login')
+    }
+  }
 })
 </script>
 
@@ -42,7 +46,7 @@ export default Vue.extend({
           </nuxt-link>
         </li>
         <li>
-          <button>Выйти</button>
+          <button @click="goExit" >Выйти</button>
         </li>
       </ul>
     </nav>

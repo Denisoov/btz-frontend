@@ -96,6 +96,7 @@ export default Vue.extend({
             autocomplete="off"
             placeholder="Пароль"
             type="password"
+            @keyup.enter="signIn()"
           ></v-text-field>
         </validation-provider>
       </v-form>
@@ -106,7 +107,7 @@ export default Vue.extend({
     </div>
     <app-button 
       class="signin middle" 
-      @click="signIn()" 
+      @click="signIn()"
       :title="'Войти'" 
     />
   </div>

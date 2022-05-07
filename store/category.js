@@ -21,16 +21,15 @@ export const mutations = {
   SET_NEW_SEARCH(state, str) {
     state.search = str
   },
+  REMOVE_CATEGORY(state, idCategory) {
+    state.categories = state.categories.filter((category) => category.id !== idCategory)
+  },
 }
 
 export const actions = {
   async createNewCategory({ dispatch }, newCategory) {
     try {
-      await this.$api.post(`category/create`, newCategory, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
-      })
+      await this.$api.post(`category/create`, newCategory)
 
       await dispatch('fetchAllCategories')
     } catch (error) {}
@@ -38,11 +37,7 @@ export const actions = {
 
   async fetchAllCategories({ commit }) {
     try {
-      const { data } = await this.$api.get(`category/show`, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
-      })
+      const { data } = await this.$api.get(`category/show`)
 
       commit('SET_CATEGORIES', data)
     } catch (error) {}
@@ -50,24 +45,26 @@ export const actions = {
 
   async getDetailCategory({ commit }, idCategory) {
     try {
-      const { data } = await this.$api.get(`category/showDetail/${idCategory}`, {
-        headers: {
-          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-        },
-      })
+      const { data } = await this.$api.get(`category/showDetail/${idCategory}`)
 
       commit('SET_DETAIL_CATEGORY', data)
     } catch (error) {}
   },
 
+  async deleteCurrentCategory({ commit }, idCategory) {
+    try {
+      await this.$api.delete(`category/delete/${idCategory}`)
+      commit('REMOVE_CATEGORY', idCategory)
+
+    } catch (error) {
+      console.log('error', error)
+    }
+  },
+
   async changeTitleCategory({ state }, name) {
     const { id } = state.detailCategory
 
-    await this.$api.put(`category/update/${id}/`, name, {
-      headers: {
-        Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
-      },
-    })
+    await this.$api.put(`category/update/${id}/`, name)
   }
 }
 

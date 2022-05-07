@@ -41,6 +41,16 @@ export const actions = {
     }
   },
 
+  async exit({ dispatch, rootState  }) {
+    try {
+      await this.$api.delete('user/dropToken')
+      await this.$cookies.remove('jwt_token')
+
+    } catch (error) {
+      console.log(error)
+    }
+  },
+
   async fetchUserInfo() {
     try {
       const { data } = await this.$api.get('user/me', {

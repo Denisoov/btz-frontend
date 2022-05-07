@@ -31,21 +31,23 @@ export default Vue.extend({
     detailBank() {
       return this.$store.state.bank.detailBank
     },
+    tabSection: {
+      get() {
+        this.$store.state.section.tabSection
+      },
+      set(tab) {
+        this.$store.commit('section/SET_TAB_SECTION', tab)
+      }
+    },
   },
   data: () => ({
     titleBank: 'Веб-дизайн',
     isDialogCreateNewSection: false,
     isDialogAddSection: false,
-    tab: 0,
   }),
   methods: {
     async getCategoriesOfSection() {
-      const { id } = this.detailBank.sections[this.tab]
-
-      await this.$store.dispatch(
-        'section/getCategoriesOfSection',
-         id
-      )
+      await this.$store.dispatch('section/getCategoriesOfSection')
     },
     changeTitleValue(value) {
       this.$store.commit(
@@ -104,7 +106,7 @@ export default Vue.extend({
           <v-tabs
             v-if="detailBank.sections"
             @change="getCategoriesOfSection"
-            v-model="tab"
+            v-model="tabSection"
             vertical
             color="basil"
             background-color="#f9faff"
@@ -120,7 +122,7 @@ export default Vue.extend({
           <p v-else >Разделы отсутствуют</p>
           <tab-categories
             v-if="detailBank.sections"
-            :tab="tab" 
+            :tab="tabSection" 
           />
         </section>
       </div>
@@ -143,7 +145,7 @@ export default Vue.extend({
     <app-dialog
       v-if="isDialogAddSection"
       ref="dialog"
-      :max-width="600"
+      :max-width="880"
       :value="isDialogAddSection"
       v-bind="$attrs"
       v-on="$listeners"

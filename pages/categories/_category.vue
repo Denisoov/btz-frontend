@@ -15,8 +15,6 @@ export default Vue.extend({
     TabCategories,
     ListQuestions,
     AppDialog: () => (import('@/components/base/AppDialog')),
-    DialogCreateSection: () => (import('@/components/dialogs/DialogCreateSection')),
-    DialogAddCategory: () => (import('@/components/dialogs/DialogAddCategory')),
   },
   async created() {
     await this.$store.dispatch(
@@ -80,21 +78,6 @@ export default Vue.extend({
         </section>
       </div>
     </div>
-    <app-dialog
-      v-if="isDialogCreateNewSection"
-      ref="dialog"
-      :max-width="600"
-      :value="isDialogCreateNewSection"
-      v-bind="$attrs"
-      v-on="$listeners"
-    >
-        <template #content>
-          <dialog-create-section
-            v-click-outside="closeDialogCreateSection"
-            @closeDialogLoadFile="closeDialogCreateSection" 
-          />
-        </template>
-    </app-dialog>
   </div>
 </template>
 
