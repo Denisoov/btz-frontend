@@ -7,28 +7,16 @@ export default Vue.extend({
   components: {
     AppButton
   },
-  methods: {
-    unloadBank() {
-
+  computed: {
+    statisticBanks() {
+      return this.$store.state.bank.statisticBanks
     }
   },
-  data: () => ({
-    desserts: [
-      {
-        name: 'Банк №1',
-        sections: 3,
-        categories: 15,
-        questions: 78
-        
-      },
-            {
-        name: 'Банк №1',
-        sections: 2,
-        categories: 7,
-        questions: 122
-      } 
-    ]
-  })
+  methods: {
+    unloadBank(idBank) {
+      this.$emit('openDialogUnloadBank', idBank)
+    }
+  },
 })
 </script>
 
@@ -56,20 +44,21 @@ export default Vue.extend({
         </thead>
         <tbody>
           <tr
-            v-for="(item, index) in desserts"
+            v-for="(item, index) in statisticBanks"
             :key="index"
           >
             <td>{{ item.name }}</td>
-            <td>{{ item.sections }}</td>
-            <td>{{ item.categories }}</td>
-            <td>{{ item.questions }}</td>
+            <td>{{ item.count_sections }}</td>
+            <td>{{ item.count_categories }}</td>
+            <td>{{ item.count_questions }}</td>
             <td>
               <div class="buttons">
                 <app-button 
-                  @click="unloadBank(item)"
+                  @click="unloadBank(item.id)"
                   class="micro unload-question" 
                   :title="'вопросы'" 
                 />
+                <!-- TODO: Сделать форму паспорта и выгрузку файла -->
                 <app-button 
                   class="micro unload-passport" 
                   :title="'паспорт'" 

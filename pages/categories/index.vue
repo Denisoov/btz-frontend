@@ -5,7 +5,6 @@ import PageHeader from '@/components/PageHeader'
 import InfoBlock from '@/components/InfoBlock'
 import AppInputSearch from '@/components/base/AppInputSearch'
 import AppButton from '@/components/base/AppButton'
-import ListQuestions from '@/components/ListQuestions'
 import CategoryCard from '@/components/CategoryCard.vue'
 
 export default Vue.extend({
@@ -15,7 +14,6 @@ export default Vue.extend({
     InfoBlock,
     AppInputSearch,
     AppButton,
-    ListQuestions,
     CategoryCard,
     AppDialog: () => (import('@/components/base/AppDialog')),
     DialogCreateCategory: () => (import('@/components/dialogs/DialogCreateCategory')),
@@ -40,6 +38,9 @@ export default Vue.extend({
     categories() {
       return this.$store.state.category.categories
     },
+    foundCategories() {
+      return this.$store.getters['category/foundCategories']
+    },
   },
   data: () => ({
     isDialogCreateCategory: false,
@@ -51,25 +52,11 @@ export default Vue.extend({
   <div class="content">
     <page-header :content-title="'Категории'" />
     <!-- <info-block /> -->
-    <app-dialog
-      v-if="isDialogCreateCategory"
-      ref="dialog"
-      :max-width="'680'"
-      :value="isDialogCreateCategory"
-      v-bind="$attrs"
-      v-on="$listeners"
-    >
-        <template #content>
-          <dialog-create-category
-            v-click-outside="closeDialog"
-            @closeDialog="closeDialog" 
-          />
-        </template>
-    </app-dialog>
     <section class="control-panel">
       <app-input-search
         class="control-panel__search"
         :placeholder="'Поиск по категориям'"
+        :type-search="'category'"
       />
       <app-button 
         class="control-panel__create mini" 
@@ -82,12 +69,26 @@ export default Vue.extend({
       class="categories"
     >
       <category-card 
-        v-for="(category, index) in categories"
+        v-for="(category, index) in foundCategories"
         :key="index"
         :category="category"
       />
     </section>
-    <!-- <list-questions :questions="questions" /> -->
+    <app-dialog
+      v-if="isDialogCreateCategory"
+      ref="dialog"
+      :max-width="600"
+      :value="isDialogCreateCategory"
+      v-bind="$attrs"
+      v-on="$listeners"
+    >
+        <template #content>
+          <dialog-create-category
+            v-click-outside="closeDialog"
+            @closeDialog="closeDialog" 
+          />
+        </template>
+    </app-dialog>
   </div>
 </template>
 

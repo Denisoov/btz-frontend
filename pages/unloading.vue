@@ -5,10 +5,32 @@ import PageHeader from '@/components/PageHeader'
 import TableBanksUnload from '@/components/TableBanksUnload'
 
 export default Vue.extend({
+  async asyncData({ store }) {
+    try {
+      await store.dispatch('bank/fetchStatisticBanks')
+
+    } catch (error) {
+      console.log(error)
+    }
+  },
   components: {
     PageHeader,
     TableBanksUnload,
-    AppDialog: () => (import('@/components/base/AppDialog'))
+    AppDialog: () => (import('@/components/base/AppDialog')),
+    DialogUnloadBank: () => (import('@/components/dialogs/DialogUnloadBank'))
+  },
+  data: () => ({
+    isDialogUnloadBank: false,
+    idBank: null,
+  }),
+  methods: {
+    closeDialogUnloadBank() {
+      this.isDialogUnloadBank = false
+    },
+    openDialogUnloadBank(idBank) {
+      this.idBank = idBank
+      this.isDialogUnloadBank = true;
+    }
   }
 })
 </script>
@@ -16,8 +38,22 @@ export default Vue.extend({
 <template>
   <div class="content">
     <page-header :content-title="'Выгрузка БТЗ'" />
-    <table-banks-unload  />
+    <table-banks-unload @openDialogUnloadBank="openDialogUnloadBank" />
+    <app-dialog
+      persistent
+      v-if="isDialogUnloadBank"
+      ref="dialog"
+      :max-width="388"
+      :value="isDialogUnloadBank"
+      v-bind="$attrs"
+      v-on="$listeners"
+    >
+      <template #content>
+        <dialog-unload-bank
+          :id-bank="idBank"
+          @closeDialogUnloadBank="closeDialogUnloadBank" 
+        />
+      </template>
+    </app-dialog>
   </div>
 </template>
-
-<style closed lang="scss"></style>

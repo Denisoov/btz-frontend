@@ -7,6 +7,9 @@ export default Vue.extend({
       type: Boolean,
       required: true,
     },
+    maxWidth: {
+      type: Number,
+    }
   },
   methods: {
     closeDialog() {
@@ -18,8 +21,8 @@ export default Vue.extend({
 <template>
   <v-dialog
     ref="dialog"
-    :max-width="600"
     v-bind="$attrs"
+    :max-width="maxWidth"
     :value="value"
     v-on="$listeners"
   >

@@ -1,7 +1,8 @@
 const defaultState = {
   banks: [],
   search: '',
-  detailBank: {}
+  detailBank: {},
+  statisticBanks: []
 }
 
 export const state = () => defaultState
@@ -24,6 +25,9 @@ export const mutations = {
   },
   SET_NEW_TITLE_BANK(state, name) {
     state.detailBank = Object.assign(state.detailBank, name)
+  },
+  SET_STATISTIC_BANKS(state, banks) {
+    state.statisticBanks = banks
   }
 }
 
@@ -56,9 +60,22 @@ export const actions = {
     }
   },
 
+  async fetchStatisticBanks({ commit }) {
+    try {
+      const { data } = await this.$api.get('bank/showUnload', {
+        headers: {
+          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
+        },
+      })
+      commit('SET_STATISTIC_BANKS', data)
+    } catch (error) {
+      
+    }
+  },
+
   async deleteCurrentBank({ commit }, idBank) {
     try {
-      const { data } = await this.$api.delete(`bank/delete/${idBank}`, {
+      await this.$api.delete(`bank/delete/${idBank}`, {
         headers: {
           Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
         },
@@ -94,6 +111,21 @@ export const actions = {
         },
       })
 
+    } catch (error) {
+      
+    }
+  },
+
+  unloadBank({}, idBank) {
+    try {
+      const file = this.$api.post(`files/unloadingBank/bank/${idBank}`, {}, {
+        responseType: "blob",
+        headers: {
+          Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
+        },
+      })
+
+      return file
     } catch (error) {
       
     }

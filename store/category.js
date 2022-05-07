@@ -2,7 +2,8 @@ const defaultState = {
   categories: [],
   detailCategory: {
     name: null
-  }
+  },
+  search: '',
 }
 
 export const state = () => defaultState
@@ -16,7 +17,10 @@ export const mutations = {
   },
   SET_NEW_TITLE_CATEGORY(state, name) {
     state.detailCategory = Object.assign(state.detailCategory, name)
-  }
+  },
+  SET_NEW_SEARCH(state, str) {
+    state.search = str
+  },
 }
 
 export const actions = {
@@ -67,4 +71,14 @@ export const actions = {
   }
 }
 
-export const getters = {}
+export const getters = {
+  foundCategories(state) {
+    const categories = state.categories
+
+    if (state.search === '') return categories
+    
+    return categories.filter(category => {
+      return category.name.toLowerCase().includes(state.search.toLowerCase())
+    })
+  }
+}

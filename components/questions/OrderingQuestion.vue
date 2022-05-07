@@ -1,49 +1,69 @@
 <script>
 import Vue from 'vue'
 
-import { Container, Draggable } from "vue-smooth-dnd";
-import { applyDrag } from '@/helpers/smooth-dnd'
+import Draggable from 'vuedraggable';
+
+import IconClose from '@/components/icons/IconClose';
+import IconDrag from '@/components/icons/IconDrag';
+
 
 export default Vue.extend({
   components: {
-    Container,
-    Draggable
+    Draggable,
+    IconClose,
+    IconDrag
   },
   computed: {
     opinionsOpenQuestion() {
       return this.$store.state.question.activeQuestion.opinions
-    }
+    },
   },
   methods: {
-    onDrop(dropResult) {
-      this.items = applyDrag(this.items, dropResult);
+    removeAt(idx) {
+      this.list.splice(idx, 1);
+    },
+    add: function() {
+      id++;
+      this.list.push({ name: "Juan " + id, id, text: "" });
     }
   },
   data: () => ({
-    items: [
-        { id: 1, data: "1 Draggable "},
-        { id: 2, data: "2 Draggable "},
-        { id: 3, data: "3 Draggable "}
-    ]
+      list: [
+        { name: "John", text: "1", id: 0 },
+        { name: "Joao", text: "2", id: 1 },
+        { name: "Jean", text: "3", id: 2 }
+      ],
+      dragging: false
   })
 })
 </script>
 
 <template>
   <form class="question-open">
-    <Container  @drop="onDrop">            
-      <Draggable 
-        v-for="(item, index) in items" 
-        :key="index"
-      >
-        <div class="draggable-item">
-          <v-text-field 
-            v-model="item.data" 
-            type="text" 
-          />
+    <draggable tag="div" :list="list" class="list-group" handle=".handle">
+      <transition-group type="transition" name="flip-list">
+        <div
+          class="list-group__item"
+          v-for="(element, idx) in list"
+          :key="element.name"
+        >
+          <v-btn 
+            icon
+            class="btn-drag handle"
+          >
+            <icon-drag color="#171b94" />
+          </v-btn>
+          <input v-model="element.text" />
+          <v-btn 
+            icon
+            @click="removeAt(idx)"
+            class="btn-close"
+          >
+            <icon-close class="btn-close__icon" />
+          </v-btn>
         </div>
-      </Draggable>
-    </Container>
+      </transition-group>
+    </draggable>
   </form>
 </template>
 
@@ -66,13 +86,51 @@ export default Vue.extend({
     margin-bottom: 0;
   }
 }
-.smooth-dnd-draggable-wrapper {
-  width: 500px;
-  box-shadow: 6px 6px 13px rgb(166 149 255 / 12%);
-  border: 2px dashed #3cd36f;
-  background-color: #fff;
-  border-radius: 8px;
-  margin-bottom: 2px;
-  padding-left: 30px;
+.btn-drag {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+}
+.btn-close {
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+
+&__icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+.list-group {
+  &__item {
+    @include flex-mix(flex, flex-start, center);
+    margin-bottom: 12px;
+
+    &:hover input {
+      border-bottom: 1px solid #171b946c;
+    }
+    input {
+      width: 40%;
+      height: 30px;
+      font-size: 14px;
+      outline: none;
+      padding: 2px 0 0 5px;
+
+      &:focus {
+        border-bottom: 2px solid #414394;
+      }
+    }
+  }
+}
+.handle {
+  float: left;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.text {
+  margin: 20px;
+}
+.flip-list-move {
+  transition: transform 0.5s;
 }
 </style>

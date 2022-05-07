@@ -69,7 +69,7 @@ export default Vue.extend({
       <app-input-search
         class="control-panel__search"
         :placeholder="'Поиск по банку'"
-        :typeSearch="'searchBank'"
+        :type-search="'bank'"
       />
       <app-button
         @click="openDialogCreateNewBank"
@@ -97,7 +97,7 @@ export default Vue.extend({
     <app-dialog
       v-if="isDialogCreateNewBank"
       ref="dialog"
-      :max-width="'680'"
+      :max-width="600"
       :value="isDialogCreateNewBank"
       v-bind="$attrs"
       v-on="$listeners"
@@ -112,7 +112,7 @@ export default Vue.extend({
     <app-dialog
       v-if="isDialogLoadFile"
       ref="dialog"
-      :max-width="'680'"
+      :max-width="600"
       :value="isDialogLoadFile"
       v-bind="$attrs"
       v-on="$listeners"

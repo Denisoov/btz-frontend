@@ -128,7 +128,7 @@ export default Vue.extend({
     <app-dialog
       v-if="isDialogCreateNewSection"
       ref="dialog"
-      :max-width="'680'"
+      :max-width="600"
       :value="isDialogCreateNewSection"
       v-bind="$attrs"
       v-on="$listeners"
@@ -143,7 +143,7 @@ export default Vue.extend({
     <app-dialog
       v-if="isDialogAddSection"
       ref="dialog"
-      :max-width="'680'"
+      :max-width="600"
       :value="isDialogAddSection"
       v-bind="$attrs"
       v-on="$listeners"
