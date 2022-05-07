@@ -2,11 +2,14 @@
 import Vue from 'vue'
 
 import PageHeader from '@/components/PageHeader'
-import AppTitle from '@/components/base/AppTitle'
+import TabCategories from '@/components/TabCategories'
+
 import IconClose from '@/components/icons/IconClose'
 
-import TabCategories from '@/components/TabCategories'
 import AppButton from '@/components/base/AppButton'
+import AppTitle from '@/components/base/AppTitle'
+import AppLoading from '@/components/base/AppLoading'
+
 
 export default Vue.extend({
   components: {
@@ -15,6 +18,7 @@ export default Vue.extend({
     IconClose,
     AppButton,
     TabCategories,
+    AppLoading,
     AppDialog: () => (import('@/components/base/AppDialog')),
     DialogCreateSection: () => (import('@/components/dialogs/DialogCreateSection')),
     DialogAddCategory: () => (import('@/components/dialogs/DialogAddCategory')),
