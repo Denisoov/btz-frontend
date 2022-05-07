@@ -9,6 +9,9 @@ export default Vue.extend({
     },
     searchList: {
       type: Array
+    },
+    status: {
+      type: String
     }
   },
   components: {
@@ -16,16 +19,23 @@ export default Vue.extend({
   },
   methods: {
     openDialog() {
-      this.$emit('openDialogCreateNewBank')
+      this.$emit('openDialogCreate')
     }
-  }
+  },
+  data: () => ({
+    listStatuses: {
+      emptyListBanks: 'У вас нет ни одного банка. Чтобы создать свой первый банк, нажмите на кнопку ниже',
+      emptyListCategories: 'У вас нет категорий. Чтобы создать категорию, нажмите на кнопку ниже',
+      notFound: 'Ничего не найдено'
+    }
+  })
 })
 </script>
 
 <template>
   <div>
     <section v-if="list.length === 0" class="empty">
-      <p class="empty__title" >У вас нет ни одного банка. Чтобы создать свой первый банк, нажмите на кнопку ниже</p>
+      <p class="empty__title" >{{ listStatuses[this.status] }}</p>
       <app-button
         @click="openDialog"
         class="empty__create mini" 

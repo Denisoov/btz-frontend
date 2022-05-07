@@ -59,7 +59,8 @@ export default Vue.extend({
                   :title="'вопросы'" 
                 />
                 <!-- TODO: Сделать форму паспорта и выгрузку файла -->
-                <app-button 
+                <app-button
+                  :disabled="true"
                   class="micro unload-passport" 
                   :title="'паспорт'" 
                 />

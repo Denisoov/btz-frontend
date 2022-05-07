@@ -89,9 +89,11 @@ export default Vue.extend({
       />
     </section>
     <list-empty
+      v-else
       :list="banks"
       :search-list="foundBanks"
-      @openDialogCreateNewBank="openDialogCreateNewBank" 
+      :status="'emptyListBanks'"
+      @openDialogCreate="openDialogCreateNewBank" 
     />
     <app-dialog
       v-if="isDialogCreateNewBank"

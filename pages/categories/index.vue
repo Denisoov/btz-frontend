@@ -2,16 +2,15 @@
 import Vue from 'vue'
 
 import PageHeader from '@/components/PageHeader'
-import InfoBlock from '@/components/InfoBlock'
+import CategoryCard from '@/components/CategoryCard.vue'
+
 import AppInputSearch from '@/components/base/AppInputSearch'
 import AppButton from '@/components/base/AppButton'
-import CategoryCard from '@/components/CategoryCard.vue'
 
 export default Vue.extend({
   
   components: {
     PageHeader,
-    InfoBlock,
     AppInputSearch,
     AppButton,
     CategoryCard,
@@ -41,6 +40,10 @@ export default Vue.extend({
     foundCategories() {
       return this.$store.getters['category/foundCategories']
     },
+    checkAvailibleCategories() {
+      if (this.categories.length !== 0 && this.foundCategories.length !== 0) return true
+      else return false
+    },
   },
   data: () => ({
     isDialogCreateCategory: false,
@@ -51,8 +54,7 @@ export default Vue.extend({
 <template>
   <div class="content">
     <page-header :content-title="'Категории'" />
-    <!-- <info-block /> -->
-    <section class="control-panel">
+    <section v-if="categories.length !== 0" class="control-panel">
       <app-input-search
         class="control-panel__search"
         :placeholder="'Поиск по категориям'"
@@ -65,7 +67,7 @@ export default Vue.extend({
       />
     </section>
     <section 
-      v-if="categories.length > 0"
+      v-if="checkAvailibleCategories"
       class="categories"
     >
       <category-card 
@@ -74,6 +76,13 @@ export default Vue.extend({
         :category="category"
       />
     </section>
+    <list-empty
+      v-else
+      :list="categories"
+      :search-list="foundCategories"
+      :status="'emptyListCategories'"
+      @openDialogCreate="openDialogCreateCategory" 
+    />
     <app-dialog
       v-if="isDialogCreateCategory"
       ref="dialog"
@@ -83,12 +92,12 @@ export default Vue.extend({
       v-on="$listeners"
       @input="closeDialog"
     >
-        <template #content>
-          <dialog-create-category
-            v-click-outside="closeDialog"
-            @closeDialog="closeDialog" 
-          />
-        </template>
+      <template #content>
+        <dialog-create-category
+          v-click-outside="closeDialog"
+          @closeDialog="closeDialog" 
+        />
+      </template>
     </app-dialog>
   </div>
 </template>
