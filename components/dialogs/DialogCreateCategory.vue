@@ -5,12 +5,17 @@ export default Vue.extend({
   components: {
     AppButton: () => import('@/components/base/AppButton.vue'),
   },
-  data: () => ({ newCategory: null }),
+  data: () => ({ newTitleCategory: null }),
   methods: {
-    closeDialog() {
-      this.$emit('input', false)
-      this.newCategory = null
-    },
+    async createNewCategory() {
+    await this.$store.dispatch(
+      'category/createNewCategory',
+      { name: this.newTitleCategory }
+    )
+    await this.$emit('closeDialog')
+
+    this.newTitleCategory = null;
+    }
   },
 })
 </script>
@@ -18,11 +23,14 @@ export default Vue.extend({
 <template>
   <div>
     <h3>Новая категория</h3>
-    <v-text-field />
+    <v-text-field 
+      v-model="newTitleCategory"
+      placeholder="Наименование категории" 
+      />
     <div class="control-buttons">
       <app-button 
         :title="'Создать'" 
-        @click="closeDialog" 
+        @click="createNewCategory" 
         class="create mini" 
       />
     </div>

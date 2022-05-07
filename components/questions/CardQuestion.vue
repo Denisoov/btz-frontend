@@ -4,10 +4,13 @@ import Vue from 'vue'
 import OpenQuestion from '@/components/questions/OpenQuestion'
 import ClosedQuestion from '@/components/questions/ClosedQuestion'
 
+import IconDelete from '@/components/icons/IconDelete'
+
 export default Vue.extend({
   components: {
     OpenQuestion,
     ClosedQuestion,
+    IconDelete,
     TitleFormQuestion: () => 
       import('@/components/questions/TitleFormQuestion'),
     SelectTypeQuestion: () =>
@@ -64,6 +67,23 @@ export default Vue.extend({
         v-if="determinantQuestionId(question.id)"
         :is="determinantTypeQuestion(activeQuestion.type_question_id)"
     ></component>
+      <div class="footer">
+        <hr class="footer__line">
+        <div class="footer__container">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                icon
+                v-bind="attrs"
+                v-on="on"
+              >
+              <icon-delete />
+              </v-btn>
+            </template>
+            <span>Удалить</span>
+          </v-tooltip>
+        </div>
+      </div>
     </form>
   </div>
 </template>
@@ -72,5 +92,16 @@ export default Vue.extend({
   .header {
     margin-bottom: 20px;
     @include flex-mix(flex, space-between);
+  }
+  .footer {
+    height: 46px;
+
+    &__line {
+      margin: 20px 0 10px 0;
+      background: $light-gray;
+    }
+    &__container {
+      @include flex-mix(flex, flex-end)
+    }
   }
 </style>

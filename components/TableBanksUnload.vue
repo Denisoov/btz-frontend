@@ -7,6 +7,11 @@ export default Vue.extend({
   components: {
     AppButton
   },
+  methods: {
+    unloadBank() {
+
+    }
+  },
   data: () => ({
     desserts: [
       {
@@ -33,7 +38,7 @@ export default Vue.extend({
         <thead>
           <tr>
             <th class="text-left">
-              Банк
+              Наименование банка
             </th>
             <th class="text-left">
               Разделы 
@@ -60,8 +65,15 @@ export default Vue.extend({
             <td>{{ item.questions }}</td>
             <td>
               <div class="buttons">
-                <app-button class="micro unload-question" :title="'вопросы'" />
-                <app-button class="micro unload-passport" :title="'паспорт'" />
+                <app-button 
+                  @click="unloadBank(item)"
+                  class="micro unload-question" 
+                  :title="'вопросы'" 
+                />
+                <app-button 
+                  class="micro unload-passport" 
+                  :title="'паспорт'" 
+                />
               </div>
             </td>
           </tr>

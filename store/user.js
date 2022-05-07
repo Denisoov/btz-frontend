@@ -12,8 +12,8 @@ const defaultState = {
 export const state = () => defaultState
 
 export const mutations = {
-  SET_JWT_TOKEN({ token }, data) {
-    token = data
+  SET_JWT_TOKEN(state, data) {
+    state.token = data
   }
 }
 
@@ -30,9 +30,9 @@ export const actions = {
     }
   },
   
-  async registration({ dispatch, commit, rootState  }) {
+  async registration({ dispatch, rootState  }) {
     try {
-      const { data } = await this.$api.post('registration', rootState.login.loginForm)
+      await this.$api.post('registration', rootState.login.loginForm)
 
       dispatch('login/changeCurrentForm', 'EmailVerify', { root: true })
 
@@ -41,7 +41,7 @@ export const actions = {
     }
   },
 
-  async fetchUserInfo({ dispatch, commit, rootState  }) {
+  async fetchUserInfo() {
     try {
       const { data } = await this.$api.get('user/me', {
         headers: {

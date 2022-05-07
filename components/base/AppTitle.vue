@@ -44,6 +44,7 @@ export default Vue.extend({
     <v-text-field
       autofocus
       v-click-outside="onClickOutside"
+      @keyup.enter="onClickOutside"
       v-model="titleValue" 
       class="title__input" 
       v-else  

@@ -17,15 +17,16 @@ export default Vue.extend({
       return this.$store.state.section.categories
     }
   },
-  data: () => ({
-  })
 })
 </script>
 
 <template>
   <div class="shell">
     <h3 class="shell__title" >Входящие категории</h3>
-    <section v-if="categories.length > 0" class="cards-category">
+    <section
+       v-if="categories.length > 0" 
+       class="cards-category"
+    >
       <article 
         v-for="(category, index) in categories" 
         class="card-category"
@@ -35,11 +36,16 @@ export default Vue.extend({
         <p class="card-category__description">Вопросов:
           <span class="card-category__description-amount">{{ category.count_questions }}</span>
         </p>
-        <icon-close :color="'#ff2e2e'" class="card-category__close" />
+        <icon-close 
+          :color="'#ff2e2e'" 
+          class="card-category__close" 
+        />
       </article>
     </section>
     <section v-else class="shell__absence">
-      <p class="shell__absence-text" >У раздела отсутствуют входящие категории</p>
+      <p class="shell__absence-text" >
+        У раздела отсутствуют входящие категории
+      </p>
     </section>
   </div>
 </template>

@@ -90,7 +90,9 @@ export default Vue.extend({
       />
     </section>
     <section v-else>
-      <banks-empty @openDialogCreateNewBank="openDialogCreateNewBank" />
+      <banks-empty 
+        @openDialogCreateNewBank="openDialogCreateNewBank" 
+      />
     </section>
     <app-dialog
       v-if="isDialogCreateNewBank"

@@ -1,7 +1,12 @@
 <script>
 import Vue from 'vue'
 
+import IconClose from '@/components/icons/IconClose'
+
 export default Vue.extend({
+  components: {
+    IconClose
+  },
   props: {
     opinion: {
       type: Object | String
@@ -10,9 +15,7 @@ export default Vue.extend({
       type: Number
     }
   },
-  data: () => ({
-    isCheked: true
-  }),
+  data: () => ({ isCheked: true }),
   computed: {
     isChekedOpinions() {
       return this.$store.question.activeQuestion.answer
@@ -45,6 +48,9 @@ export default Vue.extend({
       class="wrapper-checkbox__input" 
       type="text"
     >
+    <v-btn icon>
+      <icon-close class="icon-close" />
+    </v-btn>
   </div>
 </template>
 
@@ -55,6 +61,10 @@ export default Vue.extend({
 .wrapper-checkbox {
   @include flex-mix(flex, flex-start);
     margin-bottom: 6px;
+  
+  &:hover &__input {
+    border-bottom: 1px solid rgba(23, 27, 148, 0.425);
+  }
 
   &__checkbox {
     margin-right: 10px;
@@ -67,13 +77,16 @@ export default Vue.extend({
     padding: 2px 0 0 5px;
     font-family: "Montserrat-Medium", "sans-serif";
 
-    &:hover {
-      border-bottom: 1px solid rgba(23, 27, 148, 0.425);
-    }
-
     &:focus {
       border-bottom: 2px solid #414394;
     }
+  }
+  .v-btn {
+    margin-left: 10px;
+  }
+  .icon-close {
+    width: 24px;
+    height: 24px;
   }
 }
 </style>

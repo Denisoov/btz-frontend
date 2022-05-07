@@ -77,14 +77,14 @@ export const actions = {
           Authorization: `Bearer ${this.$cookies.get('jwt_token')}`,
         },
       })
-      console.log('data', data)
+
       commit('SET_DETAIL_BANK', data)
     } catch (error) {
       
     }
   },
 
-  async changeTitleBank({ commit, rootState }, name) {
+  async changeTitleBank({ rootState }, name) {
     try {
       const { id } = rootState.bank.detailBank
       

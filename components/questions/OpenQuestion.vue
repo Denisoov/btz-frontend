@@ -14,7 +14,7 @@ export default Vue.extend({
 </script>
 
 <template>
-  <form class="question-open">
+  <div class="question-open">
     <check-box-form-question
       v-for="(opinion, index) in opinionsOpenQuestion"
       :key="index"
@@ -24,7 +24,7 @@ export default Vue.extend({
     <!-- <check-box-form-question
       :opinion="'Добавить вариант'"
     /> -->
-  </form>
+  </div>
 </template>
 
 <style lang="scss">

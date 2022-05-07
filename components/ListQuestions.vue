@@ -32,6 +32,7 @@ export default Vue.extend({
   @include flex-mix(flex, flex-start);
   flex-direction: column;
   flex-wrap: wrap;
+  width: 90%;
   height: 100%;
 
   &__question {

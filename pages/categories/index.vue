@@ -6,6 +6,7 @@ import InfoBlock from '@/components/InfoBlock'
 import AppInputSearch from '@/components/base/AppInputSearch'
 import AppButton from '@/components/base/AppButton'
 import ListQuestions from '@/components/ListQuestions'
+import CategoryCard from '@/components/CategoryCard.vue'
 
 export default Vue.extend({
   
@@ -15,8 +16,17 @@ export default Vue.extend({
     AppInputSearch,
     AppButton,
     ListQuestions,
+    CategoryCard,
     AppDialog: () => (import('@/components/base/AppDialog')),
     DialogCreateCategory: () => (import('@/components/dialogs/DialogCreateCategory')),
+  },
+  async asyncData({ store }) {
+    try {
+      await store.dispatch('category/fetchAllCategories')
+
+    } catch (error) {
+      console.log(error)
+    }
   },
   methods: {
     closeDialog() {
@@ -27,8 +37,8 @@ export default Vue.extend({
     }
   },
   computed: {
-    questions() {
-      return this.$store.state.question.questions
+    categories() {
+      return this.$store.state.category.categories
     },
   },
   data: () => ({
@@ -40,7 +50,7 @@ export default Vue.extend({
 <template>
   <div class="content">
     <page-header :content-title="'Категории'" />
-    <info-block />
+    <!-- <info-block /> -->
     <app-dialog
       v-if="isDialogCreateCategory"
       ref="dialog"
@@ -67,7 +77,17 @@ export default Vue.extend({
         @click="openDialogCreateCategory"
       />
     </section>
-    <list-questions :questions="questions" />
+    <section 
+      v-if="categories.length > 0"
+      class="categories"
+    >
+      <category-card 
+        v-for="(category, index) in categories"
+        :key="index"
+        :category="category"
+      />
+    </section>
+    <!-- <list-questions :questions="questions" /> -->
   </div>
 </template>
 
@@ -91,5 +111,14 @@ export default Vue.extend({
   &__upload {
     background: $backgorund-birch;
   }
+}
+
+.categories {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 270px);
+  grid-template-rows: auto;
+  gap: 20px 20px;
+  margin-top: 30px;
 }
 </style>

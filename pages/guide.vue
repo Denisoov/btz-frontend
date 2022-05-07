@@ -64,7 +64,7 @@ export default Vue.extend({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .expansion {
   margin-top: 60px;
 }
