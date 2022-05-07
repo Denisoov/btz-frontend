@@ -2,21 +2,19 @@
 import Vue from 'vue'
 
 import PageHeader from '@/components/PageHeader'
-import InfoBlock from '@/components/InfoBlock'
 import AppInputSearch from '@/components/base/AppInputSearch'
 import AppButton from '@/components/base/AppButton'
 import BankCard from '@/components/BankCard'
-import BanksEmpty from '@/components/BanksEmpty'
+import ListEmpty from '@/components/ListEmpty'
 
 export default Vue.extend({
   name: 'index',
   components: {
     PageHeader,
-    InfoBlock,
     AppInputSearch,
     AppButton,
     BankCard,
-    BanksEmpty,
+    ListEmpty,
     AppDialog: () => (import('@/components/base/AppDialog')),
     DialogCreateBank: () => (import('@/components/dialogs/DialogCreateBank')),
     DialogLoadFile: () => (import('@/components/dialogs/DialogLoadFile')),
@@ -65,7 +63,6 @@ export default Vue.extend({
 <template>
   <div class="content" >
     <page-header :content-title="'Управление БТЗ'" />
-    <!-- <info-block /> -->
     <section v-if="banks.length !== 0" class="control-panel">
       <app-input-search
         class="control-panel__search"
@@ -78,6 +75,7 @@ export default Vue.extend({
         :title="'Создать'" 
       />
       <app-button
+        :disabled="true"
         @click="openDialogLoadFile"
         class="control-panel__upload mini" 
         :title="'Загрузить'"
@@ -90,11 +88,11 @@ export default Vue.extend({
         :bank="bank"
       />
     </section>
-    <section v-else>
-      <banks-empty 
-        @openDialogCreateNewBank="openDialogCreateNewBank" 
-      />
-    </section>
+    <list-empty
+      :list="banks"
+      :search-list="foundBanks"
+      @openDialogCreateNewBank="openDialogCreateNewBank" 
+    />
     <app-dialog
       v-if="isDialogCreateNewBank"
       ref="dialog"
@@ -102,6 +100,7 @@ export default Vue.extend({
       :value="isDialogCreateNewBank"
       v-bind="$attrs"
       v-on="$listeners"
+      @input="closeDialog"
     >
       <template #content>
         <dialog-create-bank
@@ -117,6 +116,7 @@ export default Vue.extend({
       :value="isDialogLoadFile"
       v-bind="$attrs"
       v-on="$listeners"
+      @input="closeDialogLoadFile"
     >
         <template #content>
           <dialog-load-file

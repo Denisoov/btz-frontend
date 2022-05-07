@@ -81,6 +81,7 @@ export default Vue.extend({
       :value="isDialogCreateCategory"
       v-bind="$attrs"
       v-on="$listeners"
+      @input="closeDialog"
     >
         <template #content>
           <dialog-create-category

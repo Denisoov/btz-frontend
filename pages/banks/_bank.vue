@@ -48,8 +48,7 @@ export default Vue.extend({
     },
   },
   data: () => ({
-    titleBank: 'Веб-дизайн',
-    isDialogCreateNewSection: false,
+    isDialogCreateSection: false,
     isDialogAddSection: false,
   }),
   methods: {
@@ -69,10 +68,10 @@ export default Vue.extend({
       )
     },
     closeDialogCreateSection() {
-      this.isDialogCreateNewSection = false
+      this.isDialogCreateSection = false
     },
-    openDialogCreateNewSection() {
-      this.isDialogCreateNewSection = true
+    openDialogCreateSection() {
+      this.isDialogCreateSection = true
     },
     openDialogAddSection() {
       this.isDialogAddSection = true
@@ -97,7 +96,7 @@ export default Vue.extend({
       <div class="section">
         <section  class="section__control">
           <app-button
-            @click="openDialogCreateNewSection"
+            @click="openDialogCreateSection"
             class="section__control-create micro" 
             :title="'Создать раздел'" 
           />
@@ -136,19 +135,20 @@ export default Vue.extend({
       </div>
     </div>
     <app-dialog
-      v-if="isDialogCreateNewSection"
+      v-if="isDialogCreateSection"
       ref="dialog"
       :max-width="600"
-      :value="isDialogCreateNewSection"
+      :value="isDialogCreateSection"
       v-bind="$attrs"
       v-on="$listeners"
+      @input="closeDialogCreateSection"
     >
-        <template #content>
-          <dialog-create-section
-            v-click-outside="closeDialogCreateSection"
-            @closeDialogLoadFile="closeDialogCreateSection" 
-          />
-        </template>
+      <template #content>
+        <dialog-create-section
+          v-click-outside="closeDialogCreateSection"
+          @closeDialogCreateSection="closeDialogCreateSection" 
+        />
+      </template>
     </app-dialog>
     <app-dialog
       v-if="isDialogAddSection"
@@ -157,13 +157,14 @@ export default Vue.extend({
       :value="isDialogAddSection"
       v-bind="$attrs"
       v-on="$listeners"
+      @input="closeDialogAddSection"
     >
-        <template #content>
-          <dialog-add-category
-            v-click-outside="closeDialogAddSection"
-            @closeDialogLoadFile="closeDialogAddSection" 
-          />
-        </template>
+      <template #content>
+        <dialog-add-category
+          v-click-outside="closeDialogAddSection"
+          @closeDialogLoadFile="closeDialogAddSection" 
+        />
+      </template>
     </app-dialog>
   </div>
 </template>

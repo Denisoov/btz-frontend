@@ -25,6 +25,7 @@ export default Vue.extend({
     :max-width="maxWidth"
     :value="value"
     v-on="$listeners"
+    @keydown.esc="closeDialog"
   >
     <v-card class="dialog-card">
       <slot 

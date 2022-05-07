@@ -19,11 +19,13 @@ export const mutations = {
 }
 
 export const actions = {
-  async createNewSection({ commit, rootState }, newSection) {
-    const { id } = rootState.bank.detailBank
-
+  async createNewSection({ dispatch, rootState }, newSection) {
     try {
+      const { id } = rootState.bank.detailBank
+
       await this.$api.post(`section/create/${id}`, newSection)
+
+      await dispatch('bank/getDetailBank', id, { root: true })
       
     } catch (error) {
       

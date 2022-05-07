@@ -7,17 +7,15 @@ export default Vue.extend({
   },
   data: () => ({ newTitleSection: null }),
   methods: {
-    closeDialog() {
-      this.$emit('input', false)
-      this.newTitleSection = null
-    },
     async createNewSection() {
       await this.$store.dispatch(
         'section/createNewSection',
         { name: this.newTitleSection }
       )
 
-      this.closeDialog()
+      this.$emit('closeDialogCreateSection')
+
+      this.newTitleBank = null;
     }
   },
 })
