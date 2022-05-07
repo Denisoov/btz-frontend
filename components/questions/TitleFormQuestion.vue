@@ -16,7 +16,7 @@ export default Vue.extend({
     getAnswer() {
       if (this.$store.state.question.activeQuestion.type_question_id === 2) {
         const question = this.questionName
-        const answers = this.extractAnswer(question)
+        const answers = this.extractWords(question)
 
         this.$store.commit(
           'question/REVIEW_CLOSED_QUESTION_ANSWERS', 
@@ -24,21 +24,20 @@ export default Vue.extend({
         )
       }
     },
-    extractAnswer(str){
-      let answer, positionStart, positionEnd;
-      let regStart = /@/ig, regEnd = /@/ig;
+    extractWords(str){
+      let segment, 
+          regStart = /@.*?@/ig;
 
-      positionStart = regStart.exec(str)
-      positionEnd = regEnd.exec(str)
+      segment = regStart.exec(str)
 
-      if (positionStart && positionEnd) {
-        // str =  str.replace(/\s+/g, ' ').trim()
+      if (segment) {
+        // обрезаем спецсимволы, и двойные проблемы, разбиваем на массив слов
+        segment = segment[0].replace(/\s+/g, ' ')
+                              .replace(/^.|.$/g,"")
+                                .trim()
+                                  .split(/[,]+/);
 
-        answer = str.slice(positionStart.index + 1, positionEnd.index)
-                      .replace(/[^a-zа-яё0-9\s]/gi, ' ')
-                        .split(',');
-        console.log(answer)
-        return answer
+        return segment
       }
     },
   },
@@ -68,7 +67,5 @@ export default Vue.extend({
     font-family: 'Montserrat-SemiBold', 'sans-serif';
     resize: none;
     overflow-y: hidden;
-
-
   }
 </style>

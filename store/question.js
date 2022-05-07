@@ -93,7 +93,7 @@ export const mutations = {
     const result = []
     
     for (let i = 0; i < answers.length; i++) {
-      result.push(answers[i])
+      result.push(answers[i].replace(/\s/g, ''))
     }
 
     activeQuestion.answer = result
