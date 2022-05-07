@@ -32,7 +32,7 @@ export const mutations = {
 }
 
 export const actions = {
-  async fetchAllBanks({ commit }, dataForm) {
+  async fetchAllBanks({ commit }) {
     try {
       const { data }  = await this.$api.get('bank/show')
       commit('SET_BANKS', data)
@@ -73,9 +73,18 @@ export const actions = {
 
   async getDetailBank({ commit }, idBank) {
     try {
+      commit(
+        'SET_LOADING_STATUS', 
+        { typeLoading: 'isLoadingPageBank', status: true }, { root: true }
+      )
+      
       const { data } = await this.$api.get(`bank/showDetails/${idBank}`)
 
       commit('SET_DETAIL_BANK', data)
+      commit(
+        'SET_LOADING_STATUS', 
+        { typeLoading: 'isLoadingPageBank', status: false }, { root: true }
+      )
     } catch (error) {
       
     }

@@ -35,6 +35,9 @@ export default Vue.extend({
     detailBank() {
       return this.$store.state.bank.detailBank
     },
+    isLoadingPage() {
+      return this.$store.state.isLoadingBanks
+    },
     tabSection: {
       get() {
         this.$store.state.section.tabSection
@@ -82,7 +85,8 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div class="content" >
+  <app-loading v-if="isLoadingPage" />
+  <div v-else class="content" >
     <page-header />
     <app-title 
       :title="detailBank.name"

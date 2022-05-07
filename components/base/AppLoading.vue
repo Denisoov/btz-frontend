@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrapper-loading">
     <div class="loading">
       <span></span>
       <span></span>
@@ -9,14 +9,19 @@
 </template>
 
 <style scoped lang="scss">
+.wrapper-loading {
+  width: 100%;
+  min-height: 740px;
+  @include flex-mix(flex);
+}
 .loading {
   color: rgba(255, 255, 255, 0);
 
   span {
-    height: 5px;
-    width: 5px;
+    height: 20px;
+    width: 20px;
     border-radius: 50%;
-    background: #fff;
+    background: linear-gradient(180deg, #171b94 0%, #242ace 100%);
     display: inline-block;
     animation: loading 0.5s infinite linear alternate;
 

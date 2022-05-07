@@ -3,6 +3,8 @@ const defaultState = {
     isShowSnackbar: false,
     message: null,
   },
+  isLoadingPageBank: false,
+  isLoadingPageCategory: false,
 }
 
 export const state = () => defaultState
@@ -14,6 +16,9 @@ export const mutations = {
   CLOSE_SNACKBAR(state) {
     state.snackbar.isShowSnackbar = false
   },
+  SET_LOADING_STATUS(state, date) {
+    state[date.typeLoading] = date.status
+  }
 }
 
 export const actions = {}

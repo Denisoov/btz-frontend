@@ -41,7 +41,7 @@ export const actions = {
     }
   },
 
-  async exit({ dispatch, rootState  }) {
+  async exit() {
     try {
       await this.$api.delete('user/dropToken')
       await this.$cookies.remove('jwt_token')

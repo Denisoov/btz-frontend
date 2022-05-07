@@ -3,15 +3,18 @@ import Vue from 'vue'
 
 import PageHeader from '@/components/PageHeader'
 import TabCategories from '@/components/TabCategories'
-import AppTitle from '@/components/base/AppTitle'
-import AppButton from '@/components/base/AppButton'
 import ListQuestions from '@/components/ListQuestions'
+
+import AppTitle from '@/components/base/AppTitle'
+import AppLoading from '@/components/base/AppLoading'
+import AppButton from '@/components/base/AppButton'
 
 export default Vue.extend({
   components: {
     PageHeader,
     AppTitle,
     AppButton,
+    AppLoading,
     TabCategories,
     ListQuestions,
     AppDialog: () => (import('@/components/base/AppDialog')),
@@ -29,6 +32,9 @@ export default Vue.extend({
 
   },
   computed: {
+    isLoadingPage() {
+      return this.$store.state.isLoadingPageCategory
+    },
     detailCategory() {
       return this.$store.state.category.detailCategory
     },
@@ -58,7 +64,8 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div class="content" >
+  <app-loading v-if="isLoadingPage" />
+  <div v-else class="content">
     <page-header />
     <app-title 
       :title="detailCategory.name"
