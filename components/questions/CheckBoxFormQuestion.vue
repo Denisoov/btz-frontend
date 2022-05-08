@@ -2,10 +2,13 @@
 import Vue from 'vue'
 
 import IconClose from '@/components/icons/IconClose'
+import { VueMathjax } from 'vue-mathjax'
+
 
 export default Vue.extend({
   components: {
-    IconClose
+    IconClose,
+    'vue-mathjax': VueMathjax
   },
   props: {
     opinion: {
@@ -15,7 +18,7 @@ export default Vue.extend({
       type: Number
     }
   },
-  data: () => ({ isCheked: true }),
+  data: () => ({ isCheked: true, formula: '$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$' }),
   computed: {
     isChekedOpinions() {
       return this.$store.question.activeQuestion.answer
@@ -44,13 +47,14 @@ export default Vue.extend({
       type="checkbox"
     >
     <input 
-      v-model="opinionQuestion" 
+      v-model="formula" 
       class="wrapper-checkbox__input" 
       type="text"
     >
     <v-btn icon>
       <icon-close class="icon-close" />
     </v-btn>
+  <vue-mathjax :formula="formula"></vue-mathjax>
   </div>
 </template>
 

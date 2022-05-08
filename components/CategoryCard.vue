@@ -5,14 +5,20 @@ export default Vue.extend({
   props: {
     category: {
       type: Object
+    },
+    isTabs: {
+      type: Boolean
     }
   },
   methods: {
     goToDetailCategory() {
       this.$router.push(`/categories/${this.category.id}`)
     },
-    deleteCurrentBank() {
-      this.$store.dispatch('category/deleteCurrentCategory', this.category.id)
+    deleteCurrentCategory() {
+      this.isTabs 
+        ? this.$store.dispatch('section/removeCategoryInSection', this.category.id)
+        : this.$store.dispatch('category/deleteCurrentCategory', this.category.id)
+
     }
   }
 })
@@ -30,13 +36,14 @@ export default Vue.extend({
       </div>
       <div class="card-category__control">
         <button 
+          v-if="!isTabs"
           @click="goToDetailCategory()" 
           class="card-category__control-detail"
         > Подробнее...</button>
         <button 
-          @click="deleteCurrentBank()"
+          @click="deleteCurrentCategory()"
           class="card-category__control-remove"
-        >Удалить</button>
+        > {{ isTabs ? 'Удалить из раздела' : 'Удалить' }} </button>
       </div>
     </div>
   </article>
@@ -52,7 +59,9 @@ export default Vue.extend({
   overflow: hidden;
   height: auto;
   min-height: 160px;
+  height: inherit;
   transition: all 250ms ease-in-out;
+  line-height: 1.1;
 
   &:hover {
     box-shadow: 4px 4px 25px #a695ff1f;
@@ -66,7 +75,12 @@ export default Vue.extend({
     z-index: 1;
     padding: 20px;
   }
+  &__body {
+    height: 20px;
+    margin: 20px 0;
+  }
   &__title {
+    height: initial;
     color: $small-title;
     font-size: 18px;
   }
@@ -75,10 +89,10 @@ export default Vue.extend({
   }
   &__control {
     position: absolute;
-    bottom: 0;
+    bottom: 20px;
     left: 0;
     width: 100%;
-    height: 60px; 
+    height: 20px; 
     @include flex-mix(flex, space-around);
     font-family: 'Montserrat-SemiBold', 'sans-serif';
     font-size: 14px;

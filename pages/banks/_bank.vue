@@ -101,6 +101,7 @@ export default Vue.extend({
             :title="'Создать раздел'" 
           />
           <app-button
+            :disabled="detailBank.sections <= 0"
             @click="openDialogAddSection"
             class="section__control-upload micro" 
             :title="'Добавить категорию'"
@@ -162,7 +163,7 @@ export default Vue.extend({
       <template #content>
         <dialog-add-category
           v-click-outside="closeDialogAddSection"
-          @closeDialogLoadFile="closeDialogAddSection" 
+          @closeDialogAddSection="closeDialogAddSection" 
         />
       </template>
     </app-dialog>

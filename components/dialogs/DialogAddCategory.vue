@@ -7,8 +7,14 @@ export default Vue.extend({
     AppButton: () => import('@/components/base/AppButton.vue'),
   },
   methods: {
-    addCategoryInSection() {
-      console.log(this.freeCategories[0][this.selectCategory])
+    async addCategoryInSection() {
+      console.log(this.freeCategories[0])
+      console.log(this.selectCategory)
+      const { id } = this.freeCategories[0][this.selectCategory]
+
+      await this.$store.dispatch('section/addCategoryInSection', id)
+
+      this.$emit('closeDialogAddSection')
     },
   },
   computed: {
@@ -49,7 +55,8 @@ export default Vue.extend({
       </v-slide-item>
     </v-slide-group>
     <div class="control-buttons">
-      <app-button 
+      <app-button
+        :disabled="typeof selectCategory !== 'number'"
         :title="'Добавить'" 
         @click="addCategoryInSection"
         class="add mini" 

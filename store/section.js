@@ -15,6 +15,9 @@ export const mutations = {
   },
   SET_TAB_SECTION(state, tab) {
     state.tabSection = tab
+  },
+  REMOVE_CATEGORY_IN_SECTION(state, idCategory) {
+    state.categories = state.categories.filter((category) => category.id !== idCategory)
   }
 }
 
@@ -31,11 +34,10 @@ export const actions = {
       
     }
   },
+
   async getFreeCategories({ state, commit, rootState }) {
-
-    const { id } = rootState.bank.detailBank.sections[state.tabSection]
-
     try {
+      const { id } = rootState.bank.detailBank.sections[state.tabSection]
       const { data } = await this.$api.get(`section/showNotCategory/${id}`)
 
       commit('SET_FREE_CATEGORIES', data)
@@ -45,16 +47,41 @@ export const actions = {
   },
 
   async getCategoriesOfSection({ state, commit, rootState }) {
-
     if (rootState.bank.detailBank.sections.length <= 0) return
 
-    // Вытягиваем id раздела для первого отображения категорий
-    const { id } = rootState.bank.detailBank.sections[state.tabSection]
-
     try {
+      // Вытягиваем id раздела для первого отображения категорий
+      const { id } = rootState.bank.detailBank.sections[state.tabSection]
       const { data } = await this.$api.get(`section/showCategory/${id}`)
 
       commit('SET_CATEGORIES', data)
+    } catch (error) {
+      
+    }
+  },
+
+  async addCategoryInSection({ state, rootState }, idCategory) {
+    if (rootState.bank.detailBank.sections.length <= 0) return
+    
+    try {
+      const { id } = rootState.bank.detailBank.sections[state.tabSection]
+
+      await this.$api.get(`section/createCategory/${id}/category/${idCategory}`)
+
+      await dispatch('bank/getDetailBank', id, { root: true })
+
+    } catch (error) {
+      
+    }
+  },
+
+  async removeCategoryInSection({ state, commit }, idCategory) {
+    try {
+      const { id } = rootState.bank.detailBank.sections[state.tabSection]
+
+      await this.$api.delete(`section/deleteCategory/${id}/category/${idCategory}`)
+
+      commit('REMOVE_CATEGORY_IN_SECTION', idCategory)
     } catch (error) {
       
     }

@@ -2,6 +2,7 @@
 import Vue from 'vue'
 
 import IconClose from '@/components/icons/IconClose'
+import CategoryCard from '@/components/CategoryCard'
 
 export default Vue.extend({
   props: {
@@ -10,7 +11,8 @@ export default Vue.extend({
     }
   },
   components: {
-    IconClose
+    IconClose,
+    CategoryCard
   },
   computed: {
     categories() {
@@ -27,7 +29,13 @@ export default Vue.extend({
        v-if="categories.length > 0" 
        class="cards-category"
     >
-      <article 
+      <category-card 
+        v-for="(category, index) in categories" 
+        :key="index"
+        :category="category"
+        :is-tabs="true"
+      />
+      <!-- <article 
         v-for="(category, index) in categories" 
         class="card-category"
         :key="index"
@@ -40,7 +48,7 @@ export default Vue.extend({
           :color="'#ff2e2e'" 
           class="card-category__close" 
         />
-      </article>
+      </article> -->
     </section>
     <section v-else class="shell__absence">
       <p class="shell__absence-text" >
@@ -85,31 +93,31 @@ export default Vue.extend({
        }
     }
   }
-  .card-category {
-    position: relative;
-    border-radius: 8px;
-    padding: 30px;
-    margin-bottom: 10px;
-    background-color: white;
-    box-shadow: 0px 4px 4px rgb(149 149 149 / 22%);
+  // .card-category {
+  //   position: relative;
+  //   border-radius: 8px;
+  //   padding: 30px;
+  //   margin-bottom: 10px;
+  //   background-color: white;
+  //   box-shadow: 0px 4px 4px rgb(149 149 149 / 22%);
 
-    &__title {
-      text-decoration: underline #000;
-      cursor: pointer;
-    }
-    &__close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      width: 28px;
-      height: 28px;
-    }
+  //   &__title {
+  //     text-decoration: underline #000;
+  //     cursor: pointer;
+  //   }
+  //   &__close {
+  //     position: absolute;
+  //     top: 10px;
+  //     right: 10px;
+  //     width: 28px;
+  //     height: 28px;
+  //   }
 
-    &__description {
-      color: $light-gray;
-      &-amount {
-        font-weight: 600;
-      }
-    }
-  }
+  //   &__description {
+  //     color: $light-gray;
+  //     &-amount {
+  //       font-weight: 600;
+  //     }
+  //   }
+  // }
 </style>

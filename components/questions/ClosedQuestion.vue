@@ -31,14 +31,14 @@ export default Vue.extend({
       <p class="card-description__text" >
         Ответом является - слова, которые нужно обернуть в
         <span class="card-description__symbol">
-          { }
+          @
         </span>
       </p>
       <p class="card-description__example-text">
         Например: Машина это -
-        <span class="card-description__symbol">{ </span>
+        <span class="card-description__symbol">@ </span>
         автомобиль, транспорт
-        <span class="card-description__symbol"> }</span>
+        <span class="card-description__symbol"> @</span>
       </p>
     </div>
   </div>

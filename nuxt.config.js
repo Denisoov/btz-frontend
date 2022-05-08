@@ -28,7 +28,8 @@ export default {
   plugins: [
     '@/plugins/rules-validate',
     '@/plugins/axiosFactory',
-    { src: '@/plugins/vuedraggable', mode: 'client' }
+    { src: '@/plugins/vuedraggable', mode: 'client' },
+    { src: '@/plugins/vuelatex', mode: 'client' },
   ],
 
   components: true,

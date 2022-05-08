@@ -1,9 +1,11 @@
 <script>
 import Vue from 'vue'
 
+import CheckBoxFormQuestion from '@/components/questions/CheckBoxFormQuestion'
+
 export default Vue.extend({
   components: {
-    CheckBoxFormQuestion: () => import('@/components/questions/CheckBoxFormQuestion'),
+    CheckBoxFormQuestion,
   },
   computed: {
     opinionsOpenQuestion() {
