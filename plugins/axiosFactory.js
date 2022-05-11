@@ -19,21 +19,18 @@ export default ({ $axios, redirect, store, $cookies }, inject) => {
     //   )
 
       api.onError(error => {
-        if (error.response && error.response.status === 404) {
+        if (error.response && error.response.status === 401) {
             const { data } = error.response
 
-            store.commit('OPEN_SNACKBAR', {
-                isShowSnackbar: true,
-                message: data.error,
-            })
+            // store.dispatch('user/exit')
           }
         if (error.response && error.response.status === 404) {
-        const { data } = error.response
+          const { data } = error.response
         
-        store.commit('OPEN_SNACKBAR', {
-            isShowSnackbar: true,
-            message: data.error,
-        })
+          store.commit('OPEN_SNACKBAR', {
+              isShowSnackbar: true,
+              message: data.error,
+          })
         }
     })
 

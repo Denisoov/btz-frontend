@@ -5,6 +5,7 @@ const defaultState = {
   },
   isLoadingPageBank: false,
   isLoadingPageCategory: false,
+  isLoadingPageUnloading: false,
 }
 
 export const state = () => defaultState

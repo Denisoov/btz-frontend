@@ -18,6 +18,7 @@ export default Vue.extend({
     TabCategories,
     ListQuestions,
     AppDialog: () => (import('@/components/base/AppDialog')),
+    DialogCreateQuestion: () => (import('@/components/dialogs/DialogCreateQuestion')),
   },
   async created() {
     await this.$store.dispatch(
@@ -43,8 +44,7 @@ export default Vue.extend({
     }
   },
   data: () => ({
-    isDialogCreateNewSection: false,
-    isDialogAddSection: false,
+    isDialogCreateQuestion: false,
   }),
   methods: {
     changeTitleValue(value) {
@@ -59,6 +59,17 @@ export default Vue.extend({
         { name: value }
       )
     },
+    closeDialogCreateQuestion() {
+      this.isDialogCreateQuestion = false
+    },
+    openDialogCreateQuestion() {
+      this.isDialogCreateQuestion = true
+    },
+    async createQuestion(typeQuestion) {
+      this.closeDialogCreateQuestion()
+
+      await this.$store.dispatch('question/createQuestion', typeQuestion)
+    }
   }
 })
 </script>
@@ -80,11 +91,29 @@ export default Vue.extend({
         <section class="section__body" >
           <list-questions 
             v-if="questions"
-            :questions="questions" 
+            :questions="questions"
+            @openDialogCreateQuestion="openDialogCreateQuestion"
           />
         </section>
       </div>
     </div>
+    <app-dialog
+      v-if="isDialogCreateQuestion"
+      ref="dialog"
+      :max-width="800"
+      :value="isDialogCreateQuestion"
+      v-bind="$attrs"
+      v-on="$listeners"
+      @input="closeDialogCreateQuestion"
+    >
+        <template #content>
+          <dialog-create-question
+            v-click-outside="closeDialogCreateQuestion"
+            @closeDialogLoadFile="closeDialogCreateQuestion" 
+            @createQuestion="createQuestion"
+          />
+        </template>
+    </app-dialog>
   </div>
 </template>
 

@@ -1,16 +1,14 @@
 <script>
 import Vue from 'vue'
 
-
 export default Vue.extend({
   components: {
+    AppLoading: () => import('@/components/base/AppLoading.vue'),
     AppButton: () => import('@/components/base/AppButton.vue'),
   },
   methods: {
     async addCategoryInSection() {
-      console.log(this.freeCategories[0])
-      console.log(this.selectCategory)
-      const { id } = this.freeCategories[0][this.selectCategory]
+      const { id } = await this.freeCategories[this.selectCategory]
 
       await this.$store.dispatch('section/addCategoryInSection', id)
 
@@ -20,17 +18,23 @@ export default Vue.extend({
   computed: {
     freeCategories() {
       return this.$store.state.section.freeCategories
-    }
+    },
   },
-  data: () => ({ selectCategory: null }),
+  data: () => ({ 
+    selectCategory: null,
+    isLoadingFreeCategory: false,
+  }),
   async mounted() {
+    this.isLoadingFreeCategory = true
     await this.$store.dispatch('section/getFreeCategories')
+    this.isLoadingFreeCategory = false
   }
 })
 </script>
 
 <template>
-  <div>
+  <app-loading :min-height="246" v-if="isLoadingFreeCategory" />
+  <div v-else>
     <h3>Добавление категории в раздел</h3>
     <v-slide-group
       v-model="selectCategory"
@@ -39,7 +43,7 @@ export default Vue.extend({
       show-arrows
     >
       <v-slide-item
-        v-for="(category, index) in freeCategories[0]"
+        v-for="(category, index) in freeCategories"
         :key="index"
         v-slot="{ active, toggle }"
       >

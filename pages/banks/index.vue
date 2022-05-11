@@ -75,7 +75,7 @@ export default Vue.extend({
         :title="'Создать'" 
       />
       <app-button
-        :disabled="true"
+        :disabled="false"
         @click="openDialogLoadFile"
         class="control-panel__upload mini" 
         :title="'Загрузить'"

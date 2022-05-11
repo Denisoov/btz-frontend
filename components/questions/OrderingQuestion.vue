@@ -1,74 +1,63 @@
 <script>
 import Vue from 'vue'
 
-import Draggable from 'vuedraggable';
-
-import IconClose from '@/components/icons/IconClose';
-import IconDrag from '@/components/icons/IconDrag';
-
+import DragOpinions from '@/components/questions/DragOpinions';
 
 export default Vue.extend({
   components: {
-    Draggable,
-    IconClose,
-    IconDrag
+    DragOpinions,
   },
   computed: {
-    opinionsOpenQuestion() {
-      return this.$store.state.question.activeQuestion.opinions
+    opinionsOpenQuestion: {
+      get() {
+        return this.$store.state.question.activeQuestion.opinions
+      },
+      set(value) {
+        this.$store.commit('question/SET_ORDERING_QUESTION_OPINIONS', value)
+      }
     },
   },
   methods: {
     removeAt(idx) {
-      this.list.splice(idx, 1);
+      this.question.splice(idx, 1);
     },
     add: function() {
-      id++;
-      this.list.push({ name: "Juan " + id, id, text: "" });
+      this.question.push({ opinion: "Juan ", id: 3,});
+    },
+    emitterDrag(value) {
+      console.log(value)
+      this.$store.commit('question/SET_LIST_AT', value)
+    },
+    inputChanged(value) {
+      this.$store.commit('question/SET_LIST_AT', value)
+
+    },
+    realValue() {
+      return this.listAt
     }
   },
   data: () => ({
-      list: [
-        { name: "John", text: "1", id: 0 },
-        { name: "Joao", text: "2", id: 1 },
-        { name: "Jean", text: "3", id: 2 }
-      ],
-      dragging: false
+    question: [],
+    listAt: [    {
+      id: 1,
+      opinion: 'Вариант 1'
+    },
+    {
+      id: 2,
+      opinion: 'Вариант 2'
+    },]
   })
 })
 </script>
 
 <template>
-  <form class="question-open">
-    <draggable tag="div" :list="list" class="list-group" handle=".handle">
-      <transition-group type="transition" name="flip-list">
-        <div
-          class="list-group__item"
-          v-for="(element, idx) in list"
-          :key="element.name"
-        >
-          <v-btn 
-            icon
-            class="btn-drag handle"
-          >
-            <icon-drag color="#171b94" />
-          </v-btn>
-          <input v-model="element.text" />
-          <v-btn 
-            icon
-            @click="removeAt(idx)"
-            class="btn-close"
-          >
-            <icon-close class="btn-close__icon" />
-          </v-btn>
-        </div>
-      </transition-group>
-    </draggable>
+  <form class="question-ordering">
+    <drag-opinions class="col-8" v-model="opinionsOpenQuestion" />
   </form>
 </template>
 
 <style scoped lang="scss">
-.question-open {
+.question-ordering {
   &::before {
     content: '';
     position: absolute;

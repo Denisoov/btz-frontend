@@ -5,19 +5,20 @@ import PageHeader from '@/components/PageHeader'
 import TableBanksUnload from '@/components/TableBanksUnload'
 
 export default Vue.extend({
-  async asyncData({ store }) {
-    try {
-      await store.dispatch('bank/fetchStatisticBanks')
-
-    } catch (error) {
-      console.log(error)
-    }
+  async created() {
+    await this.$store.dispatch('bank/fetchStatisticBanks')
   },
   components: {
     PageHeader,
     TableBanksUnload,
+    AppLoading: () => import('@/components/base/AppLoading.vue'),
     AppDialog: () => (import('@/components/base/AppDialog')),
     DialogUnloadBank: () => (import('@/components/dialogs/DialogUnloadBank'))
+  },
+  computed: {
+    isLoadingPageUnloading() {
+      return this.$store.state.isLoadingPageUnloading
+    },
   },
   data: () => ({
     isDialogUnloadBank: false,
@@ -36,7 +37,8 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div class="content">
+  <app-loading v-if="isLoadingPageUnloading" />
+  <div v-else class="content">
     <page-header :content-title="'Выгрузка БТЗ'" />
     <table-banks-unload @openDialogUnloadBank="openDialogUnloadBank" />
     <app-dialog

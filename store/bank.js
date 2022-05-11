@@ -17,6 +17,10 @@ export const mutations = {
   REMOVE_BANK(state, idBank) {
     state.banks = state.banks.filter((bank) => bank.id !== idBank)
   },
+  REMOVE_SECTION_IN_BANK(state, idSection) {
+    console.log('hello')
+    state.detailBank.sections = state.detailBank.sections.filter((section) => section.id !== idSection)
+  },
   SET_NEW_SEARCH(state, str) {
     state.search = str
   },
@@ -54,8 +58,18 @@ export const actions = {
 
   async fetchStatisticBanks({ commit }) {
     try {
+      commit(
+        'SET_LOADING_STATUS', 
+        { typeLoading: 'isLoadingPageUnloading', status: true }, { root: true }
+      )
+
       const { data } = await this.$api.get('bank/showUnload')
+
       commit('SET_STATISTIC_BANKS', data)
+      commit(
+        'SET_LOADING_STATUS', 
+        { typeLoading: 'isLoadingPageUnloading', status: false }, { root: true }
+      )
     } catch (error) {
       
     }

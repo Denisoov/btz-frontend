@@ -47,9 +47,14 @@ export default Vue.extend({
         case 2:
           return 'ClosedQuestion'
         case 3:
+          return 'СomplianceQuestion'
+        case 4:
           return 'OrderingQuestion'
       }
     },
+    async deleteCurrentQuestion(idQuestion) {
+      await this.$store.dispatch('question/deleteCurrentQuestion', idQuestion)
+    }
   },
 })
 </script>
@@ -66,6 +71,7 @@ export default Vue.extend({
       <component
         v-if="determinantQuestionId(question.id)"
         :is="determinantTypeQuestion(activeQuestion.type_question_id)"
+        :activeQuestion="activeQuestion"
     ></component>
       <div class="footer">
         <hr class="footer__line">
@@ -76,6 +82,7 @@ export default Vue.extend({
                 icon
                 v-bind="attrs"
                 v-on="on"
+                @click="deleteCurrentQuestion(activeQuestion.id)"
               >
               <icon-delete />
               </v-btn>

@@ -4,8 +4,6 @@ import Vue from 'vue'
 import PageHeader from '@/components/PageHeader'
 import TabCategories from '@/components/TabCategories'
 
-import IconClose from '@/components/icons/IconClose'
-
 import AppButton from '@/components/base/AppButton'
 import AppTitle from '@/components/base/AppTitle'
 import AppLoading from '@/components/base/AppLoading'
@@ -15,7 +13,6 @@ export default Vue.extend({
   components: {
     PageHeader,
     AppTitle,
-    IconClose,
     AppButton,
     TabCategories,
     AppLoading,
@@ -35,17 +32,25 @@ export default Vue.extend({
     detailBank() {
       return this.$store.state.bank.detailBank
     },
+    categories() {
+      return this.$store.state.section.categories
+    },
     isLoadingPage() {
       return this.$store.state.isLoadingPageBank
     },
     tabSection: {
       get() {
-        this.$store.state.section.tabSection
+        return this.$store.state.section.tabSection
       },
       set(tab) {
         this.$store.commit('section/SET_TAB_SECTION', tab)
       }
     },
+    isCheckDeleteSection() {
+      return this.tabSection || !this.detailBank.sections.length <= 0 
+        ? true
+        : false
+    }
   },
   data: () => ({
     isDialogCreateSection: false,
@@ -61,11 +66,14 @@ export default Vue.extend({
         { name: value }
       )
     },
-    accessChangesTitle(value) {
-      this.$store.dispatch(
+    async accessChangesTitle(value) {
+      await this.$store.dispatch(
         'bank/changeTitleBank', 
         { name: value }
       )
+    },
+    async deleteCurrentSection() {
+      await this.$store.dispatch('section/deleteCurrentSection')
     },
     closeDialogCreateSection() {
       this.isDialogCreateSection = false
@@ -73,11 +81,11 @@ export default Vue.extend({
     openDialogCreateSection() {
       this.isDialogCreateSection = true
     },
-    openDialogAddSection() {
-      this.isDialogAddSection = true
-    },
     closeDialogAddSection() {
       this.isDialogAddSection = false
+    },
+    openDialogAddSection() {
+      this.isDialogAddSection = true
     },
   }
 })
@@ -106,6 +114,12 @@ export default Vue.extend({
             class="section__control-upload micro" 
             :title="'Добавить категорию'"
           />
+          <app-button
+            v-if="isCheckDeleteSection"
+            @click="deleteCurrentSection"
+            class="section__control-delete micro" 
+            :title="'Удалить раздел'"
+          />
         </section>
         <div class="section__header">
           <h3>Входящие разделы</h3>
@@ -130,6 +144,7 @@ export default Vue.extend({
           <p v-else >Разделы отсутствуют</p>
           <tab-categories
             v-if="detailBank.sections"
+            :categories="categories"
             :tab="tabSection" 
           />
         </section>
@@ -195,6 +210,11 @@ export default Vue.extend({
         background: $backgorund-birch;
         margin-left: 20px;
       }
+      &-delete {
+        width: 226px;
+        background: $error-message;
+        margin-left: 20px;
+      }
     }
 
     &__header {
@@ -234,6 +254,10 @@ export default Vue.extend({
     margin-bottom: 10px;
   }
 }
+.v-tabs-slider-wrapper {
+  display: none;
+  width: 0px;
+}
 .v-tabs--vertical > .v-tabs-bar .v-tab {
   font-family: 'Montserrat-Medium', 'sans-serif';
   max-width: 250px;
@@ -249,6 +273,5 @@ export default Vue.extend({
     border: none;
     background: $dark-blue;
   }
-
 }
 </style>

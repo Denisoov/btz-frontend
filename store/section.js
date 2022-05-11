@@ -18,6 +18,9 @@ export const mutations = {
   },
   REMOVE_CATEGORY_IN_SECTION(state, idCategory) {
     state.categories = state.categories.filter((category) => category.id !== idCategory)
+  },
+  REDEFINITION_TAB_SECTION(state) {
+    state.tabSection--
   }
 }
 
@@ -28,8 +31,19 @@ export const actions = {
 
       await this.$api.post(`section/create/${id}`, newSection)
 
-      await dispatch('bank/getDetailBank', id, { root: true })
+      dispatch('bank/getDetailBank', id, { root: true })
       
+    } catch (error) {
+      
+    }
+  },
+
+  async deleteCurrentSection({ state, commit, rootState }, newSection) {
+    try {
+      const { id } = rootState.bank.detailBank.sections[state.tabSection]
+
+      await this.$api.delete(`section/delete/${id}`)
+      commit('bank/REMOVE_SECTION_IN_BANK', id, { root: true })
     } catch (error) {
       
     }
@@ -47,8 +61,6 @@ export const actions = {
   },
 
   async getCategoriesOfSection({ state, commit, rootState }) {
-    if (rootState.bank.detailBank.sections.length <= 0) return
-
     try {
       // Вытягиваем id раздела для первого отображения категорий
       const { id } = rootState.bank.detailBank.sections[state.tabSection]
@@ -60,22 +72,20 @@ export const actions = {
     }
   },
 
-  async addCategoryInSection({ state, rootState }, idCategory) {
+  async addCategoryInSection({ state, commit, rootState }, idCategory) {
     if (rootState.bank.detailBank.sections.length <= 0) return
-    
+
     try {
       const { id } = rootState.bank.detailBank.sections[state.tabSection]
 
       await this.$api.get(`section/createCategory/${id}/category/${idCategory}`)
-
-      await dispatch('bank/getDetailBank', id, { root: true })
-
+      dispatch('getCategoriesOfSection')
     } catch (error) {
       
     }
   },
 
-  async removeCategoryInSection({ state, commit }, idCategory) {
+  async removeCategoryInSection({ state, commit, rootState }, idCategory) {
     try {
       const { id } = rootState.bank.detailBank.sections[state.tabSection]
 
@@ -83,7 +93,7 @@ export const actions = {
 
       commit('REMOVE_CATEGORY_IN_SECTION', idCategory)
     } catch (error) {
-      
+      console.log('er')
     }
   }
 }

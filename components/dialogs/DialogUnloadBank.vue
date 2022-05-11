@@ -15,11 +15,12 @@ export default Vue.extend({
   async mounted() {
       const file = await this.$store.dispatch('bank/unloadBank', this.idBank)
 
-      let excel = new Blob([file.data])
-        let url = URL.createObjectURL(excel)
-        let a = document.createElement("a")
+      let excel = new Blob([file.data]),
+          url = URL.createObjectURL(excel),
+          a = document.createElement("a")
+
         a.href = url
-        a.download = "hello.gift"
+        a.download = 'Вопросы.gift'
         a.click()
 
         this.closeDialog();

@@ -48,6 +48,7 @@ export const actions = {
 
     } catch (error) {
       console.log(error)
+      this.$cookies.remove('jwt_token')
     }
   },
 

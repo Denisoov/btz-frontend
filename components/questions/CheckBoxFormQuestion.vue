@@ -28,6 +28,7 @@ export default Vue.extend({
         return this.opinion
       },
       set(value) {
+        console.log(value)
         this.$store.commit('question/REWRITE_OPEN_QUESTION_OPINION', 
         {
           index: this.index,

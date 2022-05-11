@@ -20,14 +20,22 @@ export default Vue.extend({
       }
     }
   },
+  mounted() {
+    this.oldTitle = this.titleValue
+  },
   methods: {
     onClickOutside() {
+      this.titleValue.length <= 0 
+        ? this.titleValue = this.oldTitle
+        : this.$listeners.accessChangesTitle(this.titleValue)
+        
       this.isEditorTitle = !this.isEditorTitle
-      
-      this.$listeners.accessChangesTitle(this.titleValue)
     }
   },
-  data: () => ({ isEditorTitle: false })
+  data: () => ({ 
+    isEditorTitle: false,
+    oldTitle: null,
+    })
 })
 </script>
 

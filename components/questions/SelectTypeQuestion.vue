@@ -14,6 +14,10 @@ export default Vue.extend({
       },
       {
         type: 3,
+        typeName: 'На соответствие',
+      },
+      {
+        type: 4,
         typeName: 'На упорядочивание',
       },
     ],
