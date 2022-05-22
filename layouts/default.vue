@@ -6,6 +6,7 @@ import TheHeader from '@/components/TheHeader.vue'
 export default Vue.extend({
   components: {
     TheHeader,
+    AppSnackbar: () => (import('@/components/base/AppSnackbar'))
   },
 })
 </script>
@@ -15,7 +16,9 @@ export default Vue.extend({
     <main class="page">
       <transition name="view">
         <nuxt />
+        
       </transition>
+      <app-snackbar />
     </main>
   </v-app>
 </template>

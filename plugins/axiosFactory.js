@@ -8,31 +8,50 @@ export default ({ $axios, redirect, store, $cookies }, inject) => {
       config.headers.Authorization = `Bearer ${$cookies.get('jwt_token')}`
     })
 
-    // api.interceptors.response.use(
-    //     response => {
-    //       if (response.status === 200) {
-    //         if (response.request.responseURL && response.request.responseURL.includes('login')) {
-    //         }
-    //       }
-    //       return response
-    //     }
-    //   )
-
-      api.onError(error => {
-        if (error.response && error.response.status === 401) {
-            const { data } = error.response
-
-            // store.dispatch('user/exit')
-          }
-        if (error.response && error.response.status === 404) {
-          const { data } = error.response
-        
-          store.commit('OPEN_SNACKBAR', {
-              isShowSnackbar: true,
-              message: data.error,
-          })
+    api.interceptors.response.use(
+      response => response,
+      error => {
+        if (!error.response) {
+            console.log("Пожалуйста проверьте ваше соединение.");
         }
-    })
+        else {
+          switch (error.response.status) {
+            case 401:
+              store.dispatch('user/exit')
+              break;
+          
+            default:
+              store.commit('OPEN_SNACKBAR', {
+                isShowSnackbar: true,
+                message: 'Что-то пошло не так',
+              }),
+              store.commit('SET_ERROR', {
+                status: error.response.status,
+                message: 'Что-то пошло не так',
+              })
+              break;
+          }
+        }
+      }
+  )
 
-    inject('api', api)
+  //   api.onError(error => {
+  //     console.log(error?.response.status)
+  //     if (error.response.status === 401) {
+  //         store.dispatch('user/exit')
+  //     }
+  //     else if (error.request) {
+  //       store.dispatch('user/exit')
+  //     }
+  //     else if (error?.response.status === 500) {
+  //       const { data } = error.response
+      
+  //       store.commit('OPEN_SNACKBAR', {
+  //           isShowSnackbar: true,
+  //           message: data.error,
+  //       })
+  //     }
+  // })
+
+  inject('api', api)
 }

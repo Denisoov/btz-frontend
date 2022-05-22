@@ -18,7 +18,6 @@ export default Vue.extend({
       this.isTabs 
         ? this.$store.dispatch('section/removeCategoryInSection', this.category.id)
         : this.$store.dispatch('category/deleteCurrentCategory', this.category.id)
-
     }
   }
 })

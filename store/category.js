@@ -52,10 +52,6 @@ export const actions = {
       const { data } = await this.$api.get(`category/showDetail/${idCategory}`)
 
       commit('SET_DETAIL_CATEGORY', data)
-      commit(
-        'SET_LOADING_STATUS', 
-        { typeLoading: 'isLoadingPageCategory', status: false }, { root: true }
-      )
     } catch (error) {}
   },
 

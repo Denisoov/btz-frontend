@@ -15,11 +15,12 @@ export const mutations = {
     banks.push(newBank)
   },
   REMOVE_BANK(state, idBank) {
-    state.banks = state.banks.filter((bank) => bank.id !== idBank)
+    state.banks = state.banks.filter(
+      (bank) => bank.id !== idBank)
   },
   REMOVE_SECTION_IN_BANK(state, idSection) {
-    console.log('hello')
-    state.detailBank.sections = state.detailBank.sections.filter((section) => section.id !== idSection)
+    state.detailBank.sections = state.detailBank.sections.filter(
+      (section) => section.id !== idSection)
   },
   SET_NEW_SEARCH(state, str) {
     state.search = str
@@ -38,7 +39,7 @@ export const mutations = {
 export const actions = {
   async fetchAllBanks({ commit }) {
     try {
-      const { data }  = await this.$api.get('bank/show')
+      const { data } = await this.$api.get('bank/show')
       commit('SET_BANKS', data)
 
     } catch (error) {
@@ -47,7 +48,7 @@ export const actions = {
   },
   async createNewBank({ commit }, newTitleBank) {
     try {
-      const { data }  = await this.$api.post('bank/create', newTitleBank)
+      const { data } = await this.$api.post('bank/create', newTitleBank)
 
       commit('UPDATE_BANKS', data)
 

@@ -1,11 +1,15 @@
 const defaultState = {
   snackbar: {
     isShowSnackbar: false,
-    message: null,
+    message: 'Что-то пошло не так',
   },
   isLoadingPageBank: false,
   isLoadingPageCategory: false,
   isLoadingPageUnloading: false,
+  error: {
+    status: null,
+    message: null
+  }
 }
 
 export const state = () => defaultState
@@ -19,6 +23,9 @@ export const mutations = {
   },
   SET_LOADING_STATUS(state, date) {
     state[date.typeLoading] = date.status
+  },
+  SET_ERROR(state, error) {
+    state.error = error
   }
 }
 

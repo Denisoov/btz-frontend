@@ -1,41 +1,44 @@
 import defaultsTypesQuestion from '@/helpers/defaultsTypesQuestion'
 
+const defaultActiveQuestion = {
+  id: null,
+  opinions: [],
+  type_question_id: 0,
+  answer: [],
+} 
+
 const defaultState = {
   questions: [],
   activeQuestion: {
     id: null,
-    opinions: []
+    opinions: [],
+    type_question_id: 0,
+    answer: []
   },
-  listAt: [
-    {
-      id: 1,
-      opinion: 'Вариант 1'
-    },
-    {
-      id: 2,
-      opinion: 'Вариант 2'
-    },
-  ],
 }
 
 export const state = () => defaultState
   
 export const mutations = {
-  SET_LIST_AT(state, listAt) {
-    state.listAt = listAt
-  },
   SET_LIST_QUESTIONS(state, questions) {
     state.questions = questions
   },
   SET_ACTIVE_QUESTION(state, question) {
+    console.log(' у нас что перезапись?')
     if (state.activeQuestion?.id !== question.id)
-      state.activeQuestion = Object.assign({}, {...question, active: true})
+      state.activeQuestion = Object.assign(
+        state.activeQuestion, 
+        {...question}
+      )
   },
   SET_QUESTION_NAME({ activeQuestion }, text) {
     activeQuestion.question = text
   },
-  SET_QUESTION_TYPE({ activeQuestion }, type) {
-    activeQuestion.type_question_id = type
+  CHANGE_TYPE_QUESTION(state, typeQuestion) {
+    const question = defaultsTypesQuestion.find(
+      (obj) => obj.type_question_id === typeQuestion)
+
+    Object.assign(state.activeQuestion, {...question, active: true })
   },
   REWRITE_OPEN_QUESTION_OPINION({ activeQuestion }, { index, text }) {
     activeQuestion.opinions[index].opinion = text
@@ -61,7 +64,19 @@ export const mutations = {
     state.questions.push(question)
   },
   DELETE_QUESTION(state, idQuestion) {
-    state.questions = state.questions.filter((question) => question.id !== idQuestion)
+    state.questions = state.questions.filter(
+      (question) => question.id !== idQuestion)
+
+    state.activeQuestion = defaultActiveQuestion
+  },
+  DELETE_OPINION(state, index) {
+    state.activeQuestion.opinions.splice(index,1)
+  },
+  ADD_OPINION_TYPE_OPEN(state, newOpinion) {
+    state.activeQuestion.opinions.push(newOpinion)
+  },
+  ADD_OPINION_TYPE_ORDERING(state, newOpinion) {
+    state.activeQuestion.opinions.push(newOpinion)
   }
 }
 
@@ -76,15 +91,15 @@ export const actions = {
     }
   },
 
-  async createQuestion({ commit, dispatch, rootState }, typeQuestion) {
+  async createQuestion({ commit, rootState }, typeQuestion) {
     try {
       const { id } = rootState.category.detailCategory
-      const question = defaultsTypesQuestion.find((obj) => obj.type_question_id === typeQuestion)
+      const question = defaultsTypesQuestion.find(
+        (obj) => obj.type_question_id === typeQuestion)
 
       const { data } = await this.$api.post(`question/create/category/${id}`, question)
 
-      console.log(data)
-      commit('ADD_NEW_QUESTION', data)
+      commit('ADD_NEW_QUESTION', Object.assign({}, data))
       
     } catch (error) {
       console.log(error)
@@ -98,6 +113,18 @@ export const actions = {
 
       await commit('DELETE_QUESTION', idQuestion)
       
+    } catch (error) {
+      
+    }
+  },
+  async changeQuestion({ commit, state }, { typeCommit, data}) {
+    try {
+      const { id } = state.activeQuestion
+
+      if (id) {
+        await this.$api.put(`question/update/${id}`, {...state.activeQuestion})
+        await commit(`${typeCommit}`, data)
+      }
     } catch (error) {
       
     }

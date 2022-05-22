@@ -203,7 +203,7 @@ export default Vue.extend({
       
       &-create {
         width: 236px;
-        background: $background-button-red;
+        background: $backgorund-birch;
       }
       &-upload {
         width: 256px;

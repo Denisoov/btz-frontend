@@ -7,6 +7,7 @@ export default Vue.extend({
   components: {
     PageHeader,
   },
+    data: () => ({ isCheked: true }),
 })
 </script>
 

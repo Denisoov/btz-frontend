@@ -31,6 +31,10 @@ export default Vue.extend({
       this.$route.params.category
     )
 
+    await this.$store.commit('SET_LOADING_STATUS', 
+        { typeLoading: 'isLoadingPageCategory', status: false }
+    )
+
   },
   computed: {
     isLoadingPage() {

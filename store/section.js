@@ -38,12 +38,14 @@ export const actions = {
     }
   },
 
-  async deleteCurrentSection({ state, commit, rootState }, newSection) {
+  async deleteCurrentSection({ state, commit, dispatch, rootState }, newSection) {
     try {
       const { id } = rootState.bank.detailBank.sections[state.tabSection]
 
       await this.$api.delete(`section/delete/${id}`)
       commit('bank/REMOVE_SECTION_IN_BANK', id, { root: true })
+
+      dispatch('getCategoriesOfSection')
     } catch (error) {
       
     }
@@ -72,13 +74,14 @@ export const actions = {
     }
   },
 
-  async addCategoryInSection({ state, commit, rootState }, idCategory) {
+  async addCategoryInSection({ state, dispatch, rootState }, idCategory) {
     if (rootState.bank.detailBank.sections.length <= 0) return
 
     try {
       const { id } = rootState.bank.detailBank.sections[state.tabSection]
 
       await this.$api.get(`section/createCategory/${id}/category/${idCategory}`)
+
       dispatch('getCategoriesOfSection')
     } catch (error) {
       
@@ -92,6 +95,7 @@ export const actions = {
       await this.$api.delete(`section/deleteCategory/${id}/category/${idCategory}`)
 
       commit('REMOVE_CATEGORY_IN_SECTION', idCategory)
+
     } catch (error) {
       console.log('er')
     }

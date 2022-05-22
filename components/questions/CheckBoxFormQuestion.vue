@@ -2,13 +2,10 @@
 import Vue from 'vue'
 
 import IconClose from '@/components/icons/IconClose'
-import { VueMathjax } from 'vue-mathjax'
-
 
 export default Vue.extend({
   components: {
     IconClose,
-    'vue-mathjax': VueMathjax
   },
   props: {
     opinion: {
@@ -16,12 +13,17 @@ export default Vue.extend({
     },
     index: {
       type: Number
+    },
+    lengthOpinions: {
+      type: Number,
     }
   },
-  data: () => ({ isCheked: true, formula: '$$x = {-b \\pm \\sqrt{b^2-4ac} \\over 2a}.$$' }),
+  data: () => ({ isCheked: true }),
   computed: {
-    isChekedOpinions() {
-      return this.$store.question.activeQuestion.answer
+    definitionClass() {
+      return this.isButton 
+        ? 'wrapper-checkbox__button'
+        : 'wrapper-checkbox__input'
     },
     opinionQuestion: {
       get() {
@@ -37,6 +39,11 @@ export default Vue.extend({
       }
     }
   },
+  methods: {
+    deleteOpinion(index) {
+      this.$emit('deleteOpinion', index)
+    },
+  }
 })
 </script>
 
@@ -48,14 +55,17 @@ export default Vue.extend({
       type="checkbox"
     >
     <input 
-      v-model="formula" 
-      class="wrapper-checkbox__input" 
+      v-model="opinionQuestion" 
+      :class="definitionClass"
       type="text"
     >
-    <v-btn icon>
-      <icon-close class="icon-close" />
+    <v-btn 
+      v-if="lengthOpinions > 1"
+      @click="deleteOpinion(index)" 
+      icon
+    >
+      <icon-close class="icon-close"/>
     </v-btn>
-  <vue-mathjax :formula="formula"></vue-mathjax>
   </div>
 </template>
 
@@ -65,7 +75,9 @@ export default Vue.extend({
 }
 .wrapper-checkbox {
   @include flex-mix(flex, flex-start);
-    margin-bottom: 6px;
+  margin-bottom: 6px;
+  font-family: "Montserrat-Medium", "sans-serif";
+
   
   &:hover &__input {
     border-bottom: 1px solid rgba(23, 27, 148, 0.425);
@@ -80,7 +92,6 @@ export default Vue.extend({
     font-size: 14px;
     outline: none;
     padding: 2px 0 0 5px;
-    font-family: "Montserrat-Medium", "sans-serif";
 
     &:focus {
       border-bottom: 2px solid #414394;

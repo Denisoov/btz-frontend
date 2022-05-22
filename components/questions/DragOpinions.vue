@@ -10,6 +10,13 @@ export default Vue.extend({
     emitterDrag(value) {
       this.$emit("input", value);
     },
+    addOpinion() {
+      this.$emit('addOpinion')
+    },
+    deleteOpinion(index) {
+      console.log(index)
+      this.$emit('deleteOpinion', index)
+    }
   },
   components: {
     draggable,
@@ -21,6 +28,9 @@ export default Vue.extend({
         animation: 300,
         disabled: false,
       };
+    },
+    opinionsOpenQuestion() {
+      return this.$store.state.question.activeQuestion.opinions
     },
     realValue() {
       return this.value ? this.value : this.list;
@@ -36,7 +46,7 @@ export default Vue.extend({
       required: false,
       type: Array,
       default: null
-    }
+    },
   }
 });
 </script>
@@ -48,6 +58,7 @@ export default Vue.extend({
     :list="list"
     :value="value"
     @input="emitterDrag"
+    handle=".handle"
   >
     <drag-opinion       
       v-for="(element, index) in realValue"
@@ -55,8 +66,16 @@ export default Vue.extend({
       :key="element.id" 
       class="list-group__item"
       :drag-opinion="element"
-      @input="element"
+      @deleteOpinion="deleteOpinion"
     />
+    <button
+      v-if="opinionsOpenQuestion.length < 6"
+      type="button"
+      class="question-open__add"
+      @click="addOpinion"
+    >
+    Добавить вариант
+    </button>
   </draggable>
 </template>
 <style scoped lang="scss">

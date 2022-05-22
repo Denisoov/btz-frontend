@@ -30,26 +30,29 @@ export default Vue.extend({
         })
       }
     }
+  },
+  methods: {
+    deleteOpinion() {
+      this.$emit('deleteOpinion', this.index)
+    }
   }
 })
 </script>
 
 <template>
-  <div
-    class="list-group__item"
-  >
-    <v-btn 
-      icon
-      class="btn-drag handle"
-    >
+  <div class="list-group__item">
+    <v-btn icon class="btn-drag handle">
       <icon-drag color="#171b94" />
     </v-btn>
     <input v-model="opinion" />
     <v-btn 
-      icon
+      icon 
       class="btn-close"
+      @click="deleteOpinion"
     >
-      <icon-close class="btn-close__icon" />
+      <icon-close
+        class="btn-close__icon" 
+      />
     </v-btn>
     </div>
 </template>

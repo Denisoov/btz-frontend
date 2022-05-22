@@ -9,6 +9,7 @@ import ListEmpty from '@/components/ListEmpty'
 
 export default Vue.extend({
   name: 'index',
+  layout: 'default',
   components: {
     PageHeader,
     AppInputSearch,

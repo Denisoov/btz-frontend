@@ -23,23 +23,29 @@ export default Vue.extend({
       type: Object,
       required: true,
     },
+    activeQuestion: {
+      type: Object
+    }
   },
-  data: () => ({
-    title: '',
-  }),
-  computed: {
-    activeQuestion() {
-      return this.$store.getters['question/activeQuestion']
-    },
-  },
+  data: () => ({ title: '' }),
   methods: {
     setActiveQuestion(question) {
+      if (!this.determinantQuestionId(question.id)) {
+        this.$store.dispatch('question/changeQuestion', { 
+          typeCommit: 'SET_ACTIVE_QUESTION', 
+          data: question
+        })
+      }
       if (this.activeQuestion.id !== question.id) 
         this.$store.commit('question/SET_ACTIVE_QUESTION', question)
+
     },
+    //Проверка на схождение id вопроса и активного вопроса
     determinantQuestionId(id) {
       return this.activeQuestion.id === id
     },
+
+    //определяем тип вопроса
     determinantTypeQuestion(type) {
       switch (type) {
         case 1:
@@ -52,8 +58,8 @@ export default Vue.extend({
           return 'OrderingQuestion'
       }
     },
-    async deleteCurrentQuestion(idQuestion) {
-      await this.$store.dispatch('question/deleteCurrentQuestion', idQuestion)
+    deleteCurrentQuestion(idQuestion) {
+      this.$store.dispatch('question/deleteCurrentQuestion', idQuestion)
     }
   },
 })

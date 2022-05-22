@@ -13,6 +13,11 @@ export default Vue.extend({
       default: () => [],
     },
   },
+  computed: {
+    activeQuestion() {
+      return this.$store.getters['question/activeQuestion']
+    },
+  },
   methods: {
     openDialogCreateQuestion() {
       this.$emit('openDialogCreateQuestion')
@@ -27,6 +32,7 @@ export default Vue.extend({
       v-for="(question, index) in questions"
       :key="index"
       :question="question"
+      :active-question="activeQuestion"
       class="questions__question"
     />
     <button

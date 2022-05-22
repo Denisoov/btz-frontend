@@ -11,6 +11,22 @@ export default Vue.extend({
     opinionsOpenQuestion() {
       return this.$store.state.question.activeQuestion.opinions
     }
+  },
+  methods: {
+    searchMaxId() {
+      const id = Math.max(...this.opinionsOpenQuestion.map(i => i.id))
+      return id + 1
+    },
+    deleteOpinion(index) {
+      this.$store.commit('question/DELETE_OPINION', index)
+    },
+    addOpinion() {
+      this.$store.commit(
+        'question/ADD_OPINION_TYPE_OPEN', {
+          id: this.searchMaxId,
+          opinion: `Новый вариант`
+      })
+    }
   }
 })
 </script>
@@ -22,10 +38,17 @@ export default Vue.extend({
       :key="index"
       :opinion="opinion.opinion"
       :index="index"
+      :length-opinions="opinionsOpenQuestion.length"
+      @deleteOpinion="deleteOpinion"
     />
-    <!-- <check-box-form-question
-      :opinion="'Добавить вариант'"
-    /> -->
+    <button
+      v-if="opinionsOpenQuestion.length < 6"
+      type="button"
+      class="question-open__add"
+      @click="addOpinion"
+    >
+    Добавить вариант
+    </button>
   </div>
 </template>
 
@@ -40,6 +63,19 @@ export default Vue.extend({
     width: 6px;
     background-color: #45cdec;
     border-radius: 15px;
+  }
+  &__add {
+    height: 24px;
+    margin-top: 10px;
+    font-family: "Montserrat-Medium", "sans-serif";
+    font-size: 14px;
+    color: $light-gray;
+    cursor: pointer;
+    outline: none;
+    
+    &:hover {
+      border-bottom: 1px solid rgba(151, 151, 151, 0.425);
+    }
   }
 }
 </style>

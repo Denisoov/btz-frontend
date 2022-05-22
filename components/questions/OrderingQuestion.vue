@@ -16,13 +16,16 @@ export default Vue.extend({
         this.$store.commit('question/SET_ORDERING_QUESTION_OPINIONS', value)
       }
     },
+    activeQuestion() {
+      return this.$store.getters['question/activeQuestion']
+    },
   },
   methods: {
-    removeAt(idx) {
-      this.question.splice(idx, 1);
-    },
-    add: function() {
-      this.question.push({ opinion: "Juan ", id: 3,});
+    deleteOpinion(index) {
+      this.$store.commit(
+        'question/DELETE_OPINION', 
+        index
+      )
     },
     emitterDrag(value) {
       console.log(value)
@@ -30,29 +33,29 @@ export default Vue.extend({
     },
     inputChanged(value) {
       this.$store.commit('question/SET_LIST_AT', value)
-
     },
-    realValue() {
-      return this.listAt
-    }
+    searchMaxId() {
+      const id = Math.max(...this.opinionsOpenQuestion.map(i => i.id))
+      return id + 1
+    },
+    addOpinion() {
+      this.$store.commit(
+        'question/ADD_OPINION_TYPE_ORDERING', {
+          id: this.searchMaxId(),
+          opinion: `Новый вариант`
+      })
+    },
   },
-  data: () => ({
-    question: [],
-    listAt: [    {
-      id: 1,
-      opinion: 'Вариант 1'
-    },
-    {
-      id: 2,
-      opinion: 'Вариант 2'
-    },]
-  })
 })
 </script>
 
 <template>
   <form class="question-ordering">
-    <drag-opinions class="col-8" v-model="opinionsOpenQuestion" />
+    <drag-opinions 
+      v-model="opinionsOpenQuestion"
+      @addOpinion="addOpinion"
+      @deleteOpinion="deleteOpinion"
+    />
   </form>
 </template>
 
