@@ -28,9 +28,9 @@ export default Vue.extend({
         return this.$store.state.question.activeQuestion.type_question_id
       },
       set(value) {
-        this.$store.dispatch('question/changeQuestion', { 
+        this.$store.dispatch('question/changeTypeQuestion', { 
           typeCommit: 'CHANGE_TYPE_QUESTION', 
-          data: value
+          typeQuestion: value
         })
       },
     },

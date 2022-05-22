@@ -24,11 +24,13 @@ export default {
     middleware: ['authorization'],
   },
   css: [
-    '~/assets/styles/index.scss'],
+    '~/assets/styles/index.scss',
+  ],
   plugins: [
     '@/plugins/rules-validate',
     '@/plugins/axiosFactory',
     { src: '@/plugins/vuedraggable', mode: 'client' },
+    { src: '@/plugins/mathjax', mode: 'client' },
   ],
   components: true,
   buildModules: [

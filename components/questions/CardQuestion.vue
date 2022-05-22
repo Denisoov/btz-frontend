@@ -30,21 +30,25 @@ export default Vue.extend({
   data: () => ({ title: '' }),
   methods: {
     setActiveQuestion(question) {
-      if (!this.determinantQuestionId(question.id)) {
-        this.$store.dispatch('question/changeQuestion', { 
+      // if (!this.determinantQuestionId(question.id)) {
+      //   this.$store.dispatch('question/changeActiveQuestion', { 
+      //     typeCommit: 'SET_ACTIVE_QUESTION', 
+      //     data: question
+      //   })
+      // }
+      // else if (this.activeQuestion.id)
+      //   console.log('тут сущесутвует id')
+      //   this.$store.commit('question/SET_ACTIVE_QUESTION', question)
+        this.$store.dispatch('question/changeActiveQuestion', { 
           typeCommit: 'SET_ACTIVE_QUESTION', 
-          data: question
+          bodyQuestion: question
         })
-      }
-      if (this.activeQuestion.id !== question.id) 
-        this.$store.commit('question/SET_ACTIVE_QUESTION', question)
 
     },
     //Проверка на схождение id вопроса и активного вопроса
     determinantQuestionId(id) {
       return this.activeQuestion.id === id
     },
-
     //определяем тип вопроса
     determinantTypeQuestion(type) {
       switch (type) {
@@ -62,6 +66,7 @@ export default Vue.extend({
       this.$store.dispatch('question/deleteCurrentQuestion', idQuestion)
     }
   },
+
 })
 </script>
 

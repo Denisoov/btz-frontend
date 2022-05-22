@@ -3,6 +3,7 @@ import Vue from 'vue'
 
 import PageHeader from '@/components/PageHeader'
 import AppInputSearch from '@/components/base/AppInputSearch'
+import AppContentPage from '@/components/base/AppContentPage'
 import AppButton from '@/components/base/AppButton'
 import BankCard from '@/components/BankCard'
 import ListEmpty from '@/components/ListEmpty'
@@ -11,6 +12,7 @@ export default Vue.extend({
   name: 'index',
   layout: 'default',
   components: {
+    AppContentPage,
     PageHeader,
     AppInputSearch,
     AppButton,
@@ -43,6 +45,9 @@ export default Vue.extend({
     }
   },
   computed: {
+    getContentStatus() {
+      return this.$store.state.contentStatusBanks
+    },
     banks() {
       return this.$store.state.bank.banks
     },
@@ -63,7 +68,44 @@ export default Vue.extend({
 
 <template>
   <div class="content" >
-    <page-header :content-title="'Управление БТЗ'" />
+    <app-content-page :status="getContentStatus">
+      <template #content>
+        <page-header :content-title="'Управление БТЗ'" />
+        <section v-if="banks.length !== 0" class="control-panel">
+          <app-input-search
+            class="control-panel__search"
+            :placeholder="'Поиск по банку'"
+            :type-search="'bank'"
+          />
+          <app-button
+            @click="openDialogCreateNewBank"
+            class="control-panel__create mini" 
+            :title="'Создать'" 
+          />
+          <app-button
+            :disabled="false"
+            @click="openDialogLoadFile"
+            class="control-panel__upload mini" 
+            :title="'Загрузить'"
+          />
+        </section>
+        <section v-if="checkAvailibleBanks" class="banks">
+          <bank-card 
+            v-for="(bank, index) in foundBanks" 
+            :key="index"
+            :bank="bank"
+          />
+        </section>
+        <list-empty
+          v-else
+          :list="banks"
+          :search-list="foundBanks"
+          :status="'emptyListBanks'"
+          @openDialogCreate="openDialogCreateNewBank" 
+        />
+      </template>
+    </app-content-page>
+    <!-- <page-header :content-title="'Управление БТЗ'" />
     <section v-if="banks.length !== 0" class="control-panel">
       <app-input-search
         class="control-panel__search"
@@ -95,7 +137,7 @@ export default Vue.extend({
       :search-list="foundBanks"
       :status="'emptyListBanks'"
       @openDialogCreate="openDialogCreateNewBank" 
-    />
+    /> -->
     <app-dialog
       v-if="isDialogCreateNewBank"
       ref="dialog"

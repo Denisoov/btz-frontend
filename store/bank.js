@@ -1,3 +1,5 @@
+import { ContentStatuses } from '@/helpers/content-statuses'
+
 const defaultState = {
   banks: [],
   search: '',
@@ -40,10 +42,12 @@ export const actions = {
   async fetchAllBanks({ commit }) {
     try {
       const { data } = await this.$api.get('bank/show')
-      commit('SET_BANKS', data)
 
+      commit('SET_BANKS', data)
+      commit('SET_CONTENT_STATUS', ContentStatuses.Ready, { root: true })
     } catch (error) {
-      console.log('error', error)
+      console.log(ContentStatuses)
+      commit('SET_CONTENT_STATUS', ContentStatuses.Error, { root: true })
     } 
   },
   async createNewBank({ commit }, newTitleBank) {

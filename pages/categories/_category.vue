@@ -36,6 +36,9 @@ export default Vue.extend({
     )
 
   },
+  destroyed() {
+    this.$store.commit('question/RESET_STATE')
+  },
   computed: {
     isLoadingPage() {
       return this.$store.state.isLoadingPageCategory

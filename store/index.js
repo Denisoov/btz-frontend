@@ -9,7 +9,8 @@ const defaultState = {
   error: {
     status: null,
     message: null
-  }
+  },
+  contentStatusBanks: null
 }
 
 export const state = () => defaultState
@@ -26,6 +27,9 @@ export const mutations = {
   },
   SET_ERROR(state, error) {
     state.error = error
+  },
+  SET_CONTENT_STATUS(state, status) {
+    state.contentStatusBanks = status
   }
 }
 

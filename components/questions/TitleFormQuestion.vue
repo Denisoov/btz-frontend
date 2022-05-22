@@ -8,9 +8,13 @@ export default Vue.extend({
         return this.$store.state.question.activeQuestion.question
       },
       set(value) {
+        this.extractLatex(value)
         this.$store.commit('question/SET_QUESTION_NAME', value)
       },
     },
+    questionType() {
+      return this.$store.state.question.activeQuestion.type_question_id
+    }
   },
   methods: {
     getAnswer() {
@@ -24,7 +28,7 @@ export default Vue.extend({
         )
       }
     },
-    extractWords(str){
+    extractWords(str) {
       let segment, 
           regStart = /@.*?@/ig;
 
@@ -36,28 +40,48 @@ export default Vue.extend({
                               .replace(/^.|.$/g,"")
                                 .trim()
                                   .split(/[,]+/);
-
         return segment
       }
     },
+    extractLatex(str) {
+      // запрещаем латех для второго типа вопроса
+      if (this.questionType === 2) return
+
+      let segment, 
+          regStart = /(\${2})((?:\\.|.)*)\1/;
+
+      segment = regStart.exec(str)
+      
+      if (segment) {
+        this.formula = segment[0]       
+        console.log(segment)
+      }
+      else this.formula = ''
+    }
   },
+  data: () => ({
+    formula: ''
+  }),
   updated() {
     this.getAnswer()
-  }
+  },
 })
 </script>
 
 <template>
-  <v-textarea
-    filled
-    auto-grow
-    placeholder="Вопрос без заголовка"
-    rows="2"
-    hide-details
-    row-height="20"
-    class="input-title"
-    v-model="questionName"
+  <div>
+    <v-textarea
+      filled
+      auto-grow
+      placeholder="Вопрос без заголовка"
+      rows="2"
+      hide-details
+      row-height="20"
+      class="input-title"
+      v-model="questionName"
   ></v-textarea>
+    <math-jax :latex="formula" />
+  </div>
 </template>
 
 <style lang="scss">
@@ -67,5 +91,9 @@ export default Vue.extend({
     font-family: 'Montserrat-SemiBold', 'sans-serif';
     resize: none;
     overflow-y: hidden;
+  }
+  .MathJax {
+    font-size: 160%;
+    top: 10px;
   }
 </style>

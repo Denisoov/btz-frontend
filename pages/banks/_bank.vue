@@ -246,6 +246,7 @@ export default Vue.extend({
 }
 .v-tabs {
   width: 300px;
+  word-break: break-word;
 }
 .v-tabs-items {
   background-color: #f9faff;
