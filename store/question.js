@@ -142,7 +142,7 @@ export const actions = {
       
     }
   },
-  async changeActiveQuestion({ commit, state }, { typeCommit, bodyQuestion}) {
+  async changeActiveQuestion({ commit, state }, bodyQuestion) {
     try {
       const { id } = state.activeQuestion
 
@@ -158,7 +158,7 @@ export const actions = {
     }
   },
 
-  async changeTypeQuestion({ commit, state }, { typeCommit, typeQuestion}) {
+  async changeTypeQuestion({ commit, state }, typeQuestion) {
     try {
       const { id } = state.activeQuestion
 

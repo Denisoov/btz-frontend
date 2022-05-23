@@ -30,20 +30,7 @@ export default Vue.extend({
   data: () => ({ title: '' }),
   methods: {
     setActiveQuestion(question) {
-      // if (!this.determinantQuestionId(question.id)) {
-      //   this.$store.dispatch('question/changeActiveQuestion', { 
-      //     typeCommit: 'SET_ACTIVE_QUESTION', 
-      //     data: question
-      //   })
-      // }
-      // else if (this.activeQuestion.id)
-      //   console.log('тут сущесутвует id')
-      //   this.$store.commit('question/SET_ACTIVE_QUESTION', question)
-        this.$store.dispatch('question/changeActiveQuestion', { 
-          typeCommit: 'SET_ACTIVE_QUESTION', 
-          bodyQuestion: question
-        })
-
+        this.$store.dispatch('question/changeActiveQuestion', question)
     },
     //Проверка на схождение id вопроса и активного вопроса
     determinantQuestionId(id) {
@@ -71,8 +58,7 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div @click="setActiveQuestion(question)">
-    <div v-if="activeQuestion.id !== question.id" >{{ question.question }}</div>
+    <div @click="setActiveQuestion(question)" v-if="activeQuestion.id !== question.id" >{{ question.question }}</div>
 
     <form v-else class="constructor">
       <div class="header">
@@ -103,7 +89,6 @@ export default Vue.extend({
         </div>
       </div>
     </form>
-  </div>
 </template>
 
 <style scoped lang="scss">
