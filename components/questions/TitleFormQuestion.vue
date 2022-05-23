@@ -79,7 +79,7 @@ export default Vue.extend({
       row-height="20"
       class="input-title"
       v-model="questionName"
-  ></v-textarea>
+    />
     <math-jax :latex="formula" />
   </div>
 </template>

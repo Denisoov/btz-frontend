@@ -34,9 +34,9 @@ export default Vue.extend({
       background: white;
   }
   .v-snack__content {
-    color: $error-message;
-    font-family: 'Montserrat-SemiBold', 'sans-serif';
-    background: white;
+    color: #383838;
+    font-family: "Montserrat-SemiBold", "sans-serif";
+    background: #f9faff;
     border-radius: 8px;
   }
   .theme--dark.v-sheet {

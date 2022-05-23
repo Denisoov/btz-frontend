@@ -53,7 +53,6 @@ export default Vue.extend({
       this.$store.dispatch('question/deleteCurrentQuestion', idQuestion)
     }
   },
-
 })
 </script>
 

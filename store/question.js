@@ -1,4 +1,5 @@
 import defaultsTypesQuestion from '@/helpers/defaultsTypesQuestion'
+import { defaultStateQuestion } from '@/helpers/default-states'
 
 const defaultActiveQuestion = {
   id: null,
@@ -7,31 +8,18 @@ const defaultActiveQuestion = {
   answer: [],
 } 
 
-const getDefaultState = () => {
-  return {
-    questions: [],
-    activeQuestion: {
-      question: '',
-      id: null,
-      opinions: [],
-      type_question_id: 0,
-      answer: []
-    }
-  }
-}
+// const getDefaultState = ({
+//   questions: [],
+//   activeQuestion: {
+//     question: '',
+//     id: null,
+//     opinions: [],
+//     type_question_id: 0,
+//     answer: []
+//   }
+// })
 
-const defaultState = {
-  questions: [],
-  activeQuestion: {
-    question: '',
-    id: null,
-    opinions: [],
-    type_question_id: 0,
-    answer: []
-  },
-}
-
-export const state = getDefaultState()
+export const state = () => defaultStateQuestion()
   
 export const mutations = {
   SET_LIST_QUESTIONS(state, questions) {
@@ -93,6 +81,7 @@ export const mutations = {
   },
   CHANGE_BODY_QUESTION(state, bodyQuestion) {
     state.activeQuestion = Object.assign(state.activeQuestion, bodyQuestion)
+    
     state.questions.forEach(element => {
       if (element.id === state.activeQuestion.id) {
         element = Object.assign(element, state.activeQuestion)
@@ -101,7 +90,7 @@ export const mutations = {
     });
   },
   RESET_STATE(state) {
-    Object.assign(state, getDefaultState())
+    Object.assign(state, defaultStateQuestion())
   }
 }
 

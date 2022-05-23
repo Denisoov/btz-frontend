@@ -44,9 +44,13 @@ export const actions = {
       const { data } = await this.$api.get('bank/show')
 
       commit('SET_BANKS', data)
-      commit('SET_CONTENT_STATUS', ContentStatuses.Ready, { root: true })
+      commit(
+        'SET_CONTENT_STATUS', 
+        data.length !== 0 ? ContentStatuses.Ready : ContentStatuses.Empty,
+        { root: true }
+      )
+
     } catch (error) {
-      console.log(ContentStatuses)
       commit('SET_CONTENT_STATUS', ContentStatuses.Error, { root: true })
     } 
   },
@@ -55,6 +59,7 @@ export const actions = {
       const { data } = await this.$api.post('bank/create', newTitleBank)
 
       commit('UPDATE_BANKS', data)
+      commit('SET_CONTENT_STATUS', ContentStatuses.Ready, { root: true })
 
     } catch (error) {
       console.log('error', error)
@@ -80,11 +85,12 @@ export const actions = {
     }
   },
 
-  async deleteCurrentBank({ commit }, idBank) {
+  async deleteCurrentBank({ commit, state }, idBank) {
     try {
       await this.$api.delete(`bank/delete/${idBank}`)
-      commit('REMOVE_BANK', idBank)
 
+      commit('REMOVE_BANK', idBank)
+      if (state.banks.length === 0) commit('SET_CONTENT_STATUS', ContentStatuses.Empty, { root: true })
     } catch (error) {
       console.log('error', error)
     }

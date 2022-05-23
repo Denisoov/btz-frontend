@@ -2,6 +2,7 @@
 import Vue from 'vue'
 
 import AppButton from '@/components/base/AppButton'
+
 export default Vue.extend({
   props: {
     list: {
@@ -34,17 +35,17 @@ export default Vue.extend({
 
 <template>
   <div>
-    <section v-if="list.length === 0" class="empty">
-      <p class="empty__title" >{{ listStatuses[this.status] }}</p>
-      <app-button
-        @click="openDialog"
-        class="empty__create mini" 
-        :title="'Создать'" 
-      />
-    </section>
-    <section v-if="list.length !== 0 && searchList.length === 0" class="empty">
-      <p class="empty__title" >Ничего не найдено</p>
-    </section>
+      <section v-if="list.length === 0" class="empty">
+    <p class="empty__title" >{{ listStatuses[this.status] }}</p>
+    <app-button
+      @click="openDialog"
+      class="empty__create mini" 
+      :title="'Создать'" 
+    />
+  </section>
+  <section v-if="list.length !== 0 && searchList.length === 0" class="empty">
+    <p class="empty__title" >Ничего не найдено</p>
+  </section>
   </div>
 </template>
 
