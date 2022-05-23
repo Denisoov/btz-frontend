@@ -10,7 +10,8 @@ const defaultState = {
     status: null,
     message: null
   },
-  contentStatusBanks: null
+  contentStatusBanks: null,
+  contentStatusCategories: null,
 }
 
 export const state = () => defaultState
@@ -30,6 +31,9 @@ export const mutations = {
   },
   SET_CONTENT_STATUS(state, status) {
     state.contentStatusBanks = status
+  },
+  SET_CONTENT_STATUS_CATEGORIES(state, status) {
+    state.contentStatusCategories = status
   }
 }
 

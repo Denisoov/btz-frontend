@@ -8,17 +8,6 @@ const defaultActiveQuestion = {
   answer: [],
 } 
 
-// const getDefaultState = ({
-//   questions: [],
-//   activeQuestion: {
-//     question: '',
-//     id: null,
-//     opinions: [],
-//     type_question_id: 0,
-//     answer: []
-//   }
-// })
-
 export const state = () => defaultStateQuestion()
   
 export const mutations = {
@@ -46,6 +35,8 @@ export const mutations = {
   },
   SET_ORDERING_QUESTION_OPINIONS(state, opinions) {
     state.activeQuestion.opinions = opinions
+    state.activeQuestion.answer = state.activeQuestion.opinions.map(
+      (item) => item.id)
   },
   REWRITE_ORDERING_QUESTION_OPINION({ activeQuestion }, {index, opinion}) {
     activeQuestion.opinions[index].opinion = opinion

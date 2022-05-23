@@ -27,13 +27,6 @@ export default Vue.extend({
         index
       )
     },
-    emitterDrag(value) {
-      console.log(value)
-      this.$store.commit('question/SET_LIST_AT', value)
-    },
-    inputChanged(value) {
-      this.$store.commit('question/SET_LIST_AT', value)
-    },
     searchMaxId() {
       const id = Math.max(...this.opinionsOpenQuestion.map(i => i.id))
       return id + 1

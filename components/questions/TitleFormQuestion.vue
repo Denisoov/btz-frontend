@@ -2,6 +2,9 @@
 import Vue from 'vue'
 
 export default Vue.extend({
+  created() {
+    this.extractLatex(this.questionName)
+  },
   computed: {
     questionName: {
       get() {
@@ -62,6 +65,11 @@ export default Vue.extend({
   data: () => ({
     formula: ''
   }),
+  watch: {
+    questionType(val, old) {
+      if (val !== old) this.formula = ''
+    }
+  },
   updated() {
     this.getAnswer()
   },

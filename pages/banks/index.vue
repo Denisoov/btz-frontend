@@ -2,10 +2,11 @@
 import Vue from 'vue'
 
 import PageHeader from '@/components/PageHeader'
-import AppInputSearch from '@/components/base/AppInputSearch'
-import AppContentPage from '@/components/base/AppContentPage'
-import AppButton from '@/components/base/AppButton'
 import BankCard from '@/components/BankCard'
+
+import AppContentPage from '@/components/base/AppContentPage'
+import AppInputSearch from '@/components/base/AppInputSearch'
+import AppButton from '@/components/base/AppButton'
 
 export default Vue.extend({
   layout: 'default',
@@ -68,9 +69,10 @@ export default Vue.extend({
   <div class="content" >
     <page-header :content-title="'Управление БТЗ'" />
     <app-content-page 
+      :page="'banks'"
       :empty-text="emptyListBanks" 
       :status="getContentStatus"
-      @openDialogCreateNewBank="openDialogCreateNewBank"
+      @openDialog="openDialogCreateNewBank"
     >
       <template #content>
         <section v-if="banks.length !== 0" class="control-panel">
@@ -99,6 +101,7 @@ export default Vue.extend({
           />
         </section>
       </template>
+      <template #empty />
     </app-content-page>
     <app-dialog
       v-if="isDialogCreateNewBank"

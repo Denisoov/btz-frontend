@@ -57,7 +57,10 @@ export default Vue.extend({
 </script>
 
 <template>
-    <div @click="setActiveQuestion(question)" v-if="activeQuestion.id !== question.id" >{{ question.question }}</div>
+    <div 
+      @click="setActiveQuestion(question)" 
+      v-if="activeQuestion.id !== question.id" 
+    >{{ question.question }}</div>
 
     <form v-else class="constructor">
       <div class="header">

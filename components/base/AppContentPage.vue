@@ -6,17 +6,17 @@ import { ContentStatuses } from '@/helpers/content-statuses'
 import AppLoading from '@/components/base/AppLoading'
 import AppButton from '@/components/base/AppButton'
 
-import ListEmpty from '@/components/ListEmpty'
-
 import ErrorContent from '@/assets/images/error.png'
 
 export default Vue.extend({
   components: {
     AppLoading,
     AppButton,
-    ListEmpty
   },
   props: {
+    page: {
+      type: String
+    },
     status: {
       type: String,
       required: true,
@@ -31,7 +31,7 @@ export default Vue.extend({
   }),
   methods: {
     openDialog() {
-      this.$emit('openDialogCreateNewBank')
+      this.$emit('openDialog')
     }
   },
 })
@@ -55,7 +55,7 @@ export default Vue.extend({
     </slot>
     <slot v-else-if="status === ContentStatuses.Empty" name="empty">
       <div class="slot-empty">
-        <p class="slot-empty__title" >{{ emptyText }}</p>
+        <p class="slot-empty__title">{{ emptyText }}</p>
         <app-button
           @click="openDialog"
           class="slot-empty__create mini" 
@@ -69,7 +69,7 @@ export default Vue.extend({
 <style lang="scss" scoped>
   .slot-error {
     width: 100%;
-    height: 740px;
+    height: 700px;
     flex-direction: column;
     @include flex-mix(flex);
 

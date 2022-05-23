@@ -27,6 +27,7 @@ export default Vue.extend({
     <v-text-field
       placeholder="Наименование раздела" 
       v-model="newTitleSection" 
+      autofocus
     />
     <div class="control-buttons">
       <app-button 

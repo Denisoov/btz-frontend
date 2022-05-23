@@ -51,7 +51,7 @@ export default Vue.extend({
 
 <style scoped lang="scss">
   .empty {
-    min-height: 500px;
+    min-height: 700px;
     @include flex-mix(flex);
     flex-direction: column;
 

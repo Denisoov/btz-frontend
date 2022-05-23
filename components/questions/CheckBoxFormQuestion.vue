@@ -58,6 +58,7 @@ export default Vue.extend({
       v-model="opinionQuestion" 
       :class="definitionClass"
       type="text"
+      placeholder="Без текста"
     >
     <v-btn 
       v-if="lengthOpinions > 1"

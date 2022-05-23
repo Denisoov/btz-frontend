@@ -8,13 +8,10 @@ export default Vue.extend({
   data: () => ({ newTitleCategory: null }),
   methods: {
     async createNewCategory() {
-    await this.$store.dispatch(
-      'category/createNewCategory',
-      { name: this.newTitleCategory }
-    )
-    await this.$emit('closeDialog')
-
-    this.newTitleCategory = null;
+      await this.$store.dispatch('category/createNewCategory',{ name: this.newTitleCategory })
+      await this.$emit('closeDialog')
+      
+      this.newTitleCategory = null;
     }
   },
 })
@@ -26,7 +23,8 @@ export default Vue.extend({
     <v-text-field 
       v-model="newTitleCategory"
       placeholder="Наименование категории" 
-      />
+      autofocus
+    />
     <div class="control-buttons">
       <app-button 
         :title="'Создать'" 

@@ -54,13 +54,22 @@ export const actions = {
       commit('SET_CONTENT_STATUS', ContentStatuses.Error, { root: true })
     } 
   },
-  async createNewBank({ commit }, newTitleBank) {
+  async createNewBank({ dispatch }, newTitleBank) {
     try {
-      const { data } = await this.$api.post('bank/create', newTitleBank)
+      await this.$api.post('bank/create', newTitleBank)
 
-      commit('UPDATE_BANKS', data)
-      commit('SET_CONTENT_STATUS', ContentStatuses.Ready, { root: true })
+      dispatch('fetchAllBanks')
+    } catch (error) {
+      console.log('error', error)
+    }
+  },
+  
+  async deleteCurrentBank({ commit, state }, idBank) {
+    try {
+      await this.$api.delete(`bank/delete/${idBank}`)
 
+      commit('REMOVE_BANK', idBank)
+      if (state.banks.length === 0) commit('SET_CONTENT_STATUS', ContentStatuses.Empty, { root: true })
     } catch (error) {
       console.log('error', error)
     }
@@ -82,17 +91,6 @@ export const actions = {
       )
     } catch (error) {
       
-    }
-  },
-
-  async deleteCurrentBank({ commit, state }, idBank) {
-    try {
-      await this.$api.delete(`bank/delete/${idBank}`)
-
-      commit('REMOVE_BANK', idBank)
-      if (state.banks.length === 0) commit('SET_CONTENT_STATUS', ContentStatuses.Empty, { root: true })
-    } catch (error) {
-      console.log('error', error)
     }
   },
 

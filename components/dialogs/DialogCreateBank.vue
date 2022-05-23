@@ -26,6 +26,7 @@ export default Vue.extend({
     <v-text-field
       placeholder="Наименование банка" 
       v-model="newTitleBank" 
+      autofocus
     />
     <div class="control-buttons">
       <app-button 

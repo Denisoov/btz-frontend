@@ -35,29 +35,19 @@ export default Vue.extend({
 <template>
   <app-loading :min-height="246" v-if="isLoadingFreeCategory" />
   <div v-else>
-    <h3>Добавление категории в раздел</h3>
-    <v-slide-group
+    <h3 class="dialog__title">Добавление категории в раздел</h3>
+     <v-chip-group
       v-model="selectCategory"
-      class="pa-4"
-      center-active
-      show-arrows
+      active-class="chip-active"
+      column
     >
-      <v-slide-item
+      <v-chip
         v-for="(category, index) in freeCategories"
         :key="index"
-        v-slot="{ active, toggle }"
       >
-        <v-card
-          :color="active ? '#681bff' : '#727272'"
-          class="ma-2"
-          @click="toggle"
-        >
-          <div class="v-card__content">
-            {{ category.name }}
-          </div>
-        </v-card>
-      </v-slide-item>
-    </v-slide-group>
+        {{ category.name }}
+      </v-chip>
+    </v-chip-group>
     <div class="control-buttons">
       <app-button
         :disabled="typeof selectCategory !== 'number'"
@@ -70,20 +60,14 @@ export default Vue.extend({
 </template>
 
 <style scoped lang="scss">
-.v-input {
-    width: 100%;
-    max-width: 100%;
-}
-.v-card {
-  height: 120px;
-  width: 160px;
-  @include flex-mix(flex);
-  text-align: center;
-  padding: 10px;
-
-  &__content {
-    color: white;
+.dialog {
+  &__title {
+    margin-bottom: 10px;
   }
+}
+.chip-active {
+  color: white;
+  background: $backgorund-birch;
 }
 .control-buttons {
   @include flex-mix(flex, flex-end)
