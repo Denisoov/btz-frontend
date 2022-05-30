@@ -134,6 +134,18 @@ export const actions = {
     } catch (error) {
       
     }
+  },
+
+  unloadPassport({}, idBank) {
+    try {
+      const file = this.$api.post(`files/passport/${idBank}`, {}, {
+        responseType: "blob",
+      })
+
+      return file
+    } catch (error) {
+      
+    }
   }
 }
 

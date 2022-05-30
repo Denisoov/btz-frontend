@@ -49,6 +49,16 @@ export default Vue.extend({
           return 'OrderingQuestion'
       }
     },
+    preColor(type) {
+      switch (type) {
+        case 1:
+          return { borderLeft: '6px solid #45cdec' }
+        case 2:
+          return { borderLeft: '6px solid #f3467e' }
+        case 4:
+          return { borderLeft: '6px solid #46f380' }
+      }
+    },
     deleteCurrentQuestion(idQuestion) {
       this.$store.dispatch('question/deleteCurrentQuestion', idQuestion)
     }
@@ -58,9 +68,12 @@ export default Vue.extend({
 
 <template>
     <div 
+      :style="preColor(question.type_question_id)"
+      v-if="!determinantQuestionId(question.id)" 
       @click="setActiveQuestion(question)" 
-      v-if="activeQuestion.id !== question.id" 
-    >{{ question.question }}</div>
+    >
+      {{ question.question }}
+    </div>
 
     <form v-else class="constructor">
       <div class="header">

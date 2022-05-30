@@ -13,7 +13,8 @@ export default Vue.extend({
     TableBanksUnload,
     AppLoading: () => import('@/components/base/AppLoading.vue'),
     AppDialog: () => (import('@/components/base/AppDialog')),
-    DialogUnloadBank: () => (import('@/components/dialogs/DialogUnloadBank'))
+    DialogUnloadBank: () => (import('@/components/dialogs/DialogUnloadBank')),
+    DialogUnloadPassport: () => (import('@/components/dialogs/DialogUnloadPassport'))
   },
   computed: {
     isLoadingPageUnloading() {
@@ -22,6 +23,7 @@ export default Vue.extend({
   },
   data: () => ({
     isDialogUnloadBank: false,
+    isDialogUnloadPassport: false,
     idBank: null,
   }),
   methods: {
@@ -31,7 +33,14 @@ export default Vue.extend({
     openDialogUnloadBank(idBank) {
       this.idBank = idBank
       this.isDialogUnloadBank = true;
-    }
+    },
+    openDialogPassport(idBank) {
+      this.idBank = idBank
+      this.isDialogUnloadPassport = true
+    },
+    closeDialogUnloadPassport() {
+      this.isDialogUnloadPassport = false
+    },
   }
 })
 </script>
@@ -40,7 +49,10 @@ export default Vue.extend({
   <app-loading v-if="isLoadingPageUnloading" />
   <div v-else class="content">
     <page-header :content-title="'Выгрузка БТЗ'" />
-    <table-banks-unload @openDialogUnloadBank="openDialogUnloadBank" />
+    <table-banks-unload 
+      @openDialogUnloadBank="openDialogUnloadBank" 
+      @openDialogPassport="openDialogPassport"
+    />
     <app-dialog
       persistent
       v-if="isDialogUnloadBank"
@@ -54,6 +66,22 @@ export default Vue.extend({
         <dialog-unload-bank
           :id-bank="idBank"
           @closeDialogUnloadBank="closeDialogUnloadBank" 
+        />
+      </template>
+    </app-dialog>
+    <app-dialog
+      persistent
+      v-if="isDialogUnloadPassport"
+      ref="dialog"
+      :max-width="388"
+      :value="isDialogUnloadPassport"
+      v-bind="$attrs"
+      v-on="$listeners"
+    >
+      <template #content>
+        <dialog-unload-passport
+          :id-bank="idBank"
+          @closeDialogUnloadPassport="closeDialogUnloadPassport" 
         />
       </template>
     </app-dialog>

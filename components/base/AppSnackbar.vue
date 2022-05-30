@@ -20,6 +20,7 @@ export default Vue.extend({
 
 <template>
   <v-snackbar
+    :timeout="1500"
     absolute
     v-model="isShowSnackbar"
     top

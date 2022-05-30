@@ -21,7 +21,7 @@ export default Vue.extend({
   methods: {
     openDialogCreateQuestion() {
       this.$emit('openDialogCreateQuestion')
-    }
+    },
   }
 })
 </script>

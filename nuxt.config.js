@@ -28,7 +28,7 @@ export default {
   ],
   plugins: [
     '@/plugins/rules-validate',
-    '@/plugins/axiosFactory',
+    '@/plugins/axios-init',
     { src: '@/plugins/vuedraggable', mode: 'client' },
     { src: '@/plugins/mathjax', mode: 'client' },
   ],

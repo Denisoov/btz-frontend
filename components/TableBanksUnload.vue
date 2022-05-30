@@ -15,6 +15,9 @@ export default Vue.extend({
   methods: {
     unloadBank(idBank) {
       this.$emit('openDialogUnloadBank', idBank)
+    },
+    unloadPassport(idBank) {
+      this.$emit('openDialogPassport', idBank)
     }
   },
 })
@@ -58,9 +61,8 @@ export default Vue.extend({
                   class="micro unload-question" 
                   :title="'вопросы'" 
                 />
-                <!-- TODO: Сделать форму паспорта и выгрузку файла -->
                 <app-button
-                  :disabled="true"
+                  @click="unloadPassport(item.id)"
                   class="micro unload-passport" 
                   :title="'паспорт'" 
                 />
