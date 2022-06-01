@@ -29,6 +29,7 @@ export default {
   plugins: [
     '@/plugins/rules-validate',
     '@/plugins/axios-init',
+    '@plugins/v-mask.js',
     { src: '@/plugins/vuedraggable', mode: 'client' },
     { src: '@/plugins/mathjax', mode: 'client' },
   ],

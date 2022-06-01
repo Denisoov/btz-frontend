@@ -70,13 +70,13 @@ export default Vue.extend({
       </template>
     </app-dialog>
     <app-dialog
-      persistent
       v-if="isDialogUnloadPassport"
       ref="dialog"
-      :max-width="388"
+      :max-width="600"
       :value="isDialogUnloadPassport"
       v-bind="$attrs"
       v-on="$listeners"
+      @input="closeDialogUnloadPassport"
     >
       <template #content>
         <dialog-unload-passport

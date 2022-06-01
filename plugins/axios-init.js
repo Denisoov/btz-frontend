@@ -32,6 +32,7 @@ export default ({ $axios, redirect, store, $cookies }, inject) => {
               break;
           }
         }
+        return error
       }
   )
 

@@ -153,6 +153,20 @@ export const actions = {
       
     }
   },
+
+  async autoSaveActiveQuestion({ commit, state }) {
+    try {
+      const activeQuestion = state.activeQuestion
+
+      if (activeQuestion.id) {
+        await this.$api.put(`question/update/${activeQuestion.id}`, {...activeQuestion})
+
+        await commit('RESET_STATE')
+      }
+    } catch (error) {
+      
+    }
+  },
 }
 
 export const getters = {

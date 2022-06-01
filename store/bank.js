@@ -52,7 +52,8 @@ export const actions = {
 
     } catch (error) {
       commit('SET_CONTENT_STATUS', ContentStatuses.Error, { root: true })
-    } 
+    }
+    
   },
   async createNewBank({ dispatch }, newTitleBank) {
     try {
@@ -126,7 +127,7 @@ export const actions = {
 
   unloadBank({}, idBank) {
     try {
-      const file = this.$api.post(`files/unloadingBank/bank/${idBank}`, {}, {
+      const file = this.$api.get(`files/unloadingBank/bank/${idBank}`, {}, {
         responseType: "blob",
       })
 
@@ -136,9 +137,9 @@ export const actions = {
     }
   },
 
-  unloadPassport({}, idBank) {
+  unloadPassport({}, {idBank, formPassport}) {
     try {
-      const file = this.$api.post(`files/passport/${idBank}`, {}, {
+      const file = this.$api.post(`files/passport/${idBank}`, {...formPassport}, {
         responseType: "blob",
       })
 

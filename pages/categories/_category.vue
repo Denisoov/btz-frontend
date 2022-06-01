@@ -37,7 +37,7 @@ export default Vue.extend({
 
   },
   destroyed() {
-    this.$store.commit('question/RESET_STATE')
+    this.$store.dispatch('question/autoSaveActiveQuestion')
   },
   computed: {
     isLoadingPage() {

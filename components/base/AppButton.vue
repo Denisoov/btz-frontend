@@ -24,6 +24,7 @@ export default Vue.extend({
     class="app-button ripple" 
     v-on="$listeners"
     ref="app-button"
+    type="button"
     @click="handleButton"
   >
     <span v-if="!isLoadingButton" class="app-button__title">
