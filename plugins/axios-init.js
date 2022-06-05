@@ -1,4 +1,4 @@
-export default ({ $axios, redirect, store, $cookies }, inject) => {
+export default ({ $axios, store, $cookies }, inject) => {
 
     const api = $axios.create()
     api.setBaseURL('http://127.0.0.1:8000/api/')
@@ -31,6 +31,7 @@ export default ({ $axios, redirect, store, $cookies }, inject) => {
               })
               break;
           }
+          return 
         }
         return error
       }

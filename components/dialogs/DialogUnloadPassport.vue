@@ -44,14 +44,13 @@ export default Vue.extend({
     closeDialog() {
       this.$emit('closeDialogUnloadPassport')
     },
-    loadPassport() {
+    async loadPassport() {
       if (!this.formPassportValidate) return
       // TO-DO: Поправить метод
-      const file = this.$store.dispatch('bank/unloadPassport', {
+      const file = await this.$store.dispatch('bank/unloadPassport', {
         idBank: this.idBank,
         formPassport: this.formPassport
       })
-
       let excel = new Blob([file.data]),
           url = URL.createObjectURL(excel),
           a = document.createElement("a")
