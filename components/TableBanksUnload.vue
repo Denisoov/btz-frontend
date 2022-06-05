@@ -7,23 +7,19 @@ export default Vue.extend({
   components: {
     AppButton
   },
-  data: () => ({
-    desserts: [
-      {
-        name: 'Банк №1',
-        sections: 3,
-        categories: 15,
-        questions: 78
-        
-      },
-            {
-        name: 'Банк №1',
-        sections: 2,
-        categories: 7,
-        questions: 122
-      } 
-    ]
-  })
+  computed: {
+    statisticBanks() {
+      return this.$store.state.bank.statisticBanks
+    }
+  },
+  methods: {
+    unloadBank(idBank) {
+      this.$emit('openDialogUnloadBank', idBank)
+    },
+    unloadPassport(idBank) {
+      this.$emit('openDialogPassport', idBank)
+    }
+  },
 })
 </script>
 
@@ -33,7 +29,7 @@ export default Vue.extend({
         <thead>
           <tr>
             <th class="text-left">
-              Банк
+              Наименование банка
             </th>
             <th class="text-left">
               Разделы 
@@ -51,17 +47,25 @@ export default Vue.extend({
         </thead>
         <tbody>
           <tr
-            v-for="(item, index) in desserts"
+            v-for="(item, index) in statisticBanks"
             :key="index"
           >
             <td>{{ item.name }}</td>
-            <td>{{ item.sections }}</td>
-            <td>{{ item.categories }}</td>
-            <td>{{ item.questions }}</td>
+            <td>{{ item.count_sections }}</td>
+            <td>{{ item.count_categories }}</td>
+            <td>{{ item.count_questions }}</td>
             <td>
               <div class="buttons">
-                <app-button class="micro unload-question" :title="'вопросы'" />
-                <app-button class="micro unload-passport" :title="'паспорт'" />
+                <app-button 
+                  @click="unloadBank(item.id)"
+                  class="micro unload-question" 
+                  :title="'вопросы'" 
+                />
+                <app-button
+                  @click="unloadPassport(item.id)"
+                  class="micro unload-passport" 
+                  :title="'паспорт'" 
+                />
               </div>
             </td>
           </tr>

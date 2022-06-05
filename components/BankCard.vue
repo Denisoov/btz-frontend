@@ -2,9 +2,17 @@
 import Vue from 'vue';
 
 export default Vue.extend({
+  props: {
+    bank: {
+      type: Object
+    }
+  },
   methods: {
     goToDetailBank() {
-      alert('hello')
+      this.$router.push(`/banks/${this.bank.id}`)
+    },
+    deleteCurrentBank() {
+      this.$store.dispatch('bank/deleteCurrentBank', this.bank.id)
     }
   }
 })
@@ -12,22 +20,26 @@ export default Vue.extend({
 
 <template>
   <article class="card-bank">
-    <h3 class="card-bank__title">
-      Разработка программного обеспечения по решению государственных задач
-    </h3>
-    <div class="card-bank__body">
-      <p class="card-bank__amount-text">Количество вопросов: 
-        <span class="card-bank__count">67</span>
-      </p>
-    </div>
-    <div class="card-bank__control">
-      <button 
-        @click="goToDetailBank()" 
-        class="card-bank__control-detail"
-      > Подробнее...</button>
-      <button 
-        class="card-bank__control-remove"
-      >Удалить</button>
+    <div class="card-bank__content">
+      <h3 class="card-bank__title">
+        {{ bank.name }}
+      </h3>
+      <div class="card-bank__body">
+        <p class="card-bank__amount-text">
+          Количество разделов: 
+          <span class="card-bank__count">{{ bank.count_questions }}</span>
+        </p>
+      </div>
+      <div class="card-bank__control">
+        <button 
+          @click="goToDetailBank()" 
+          class="card-bank__control-detail"
+        > Подробнее...</button>
+        <button 
+          @click="deleteCurrentBank()"
+          class="card-bank__control-remove"
+        >Удалить</button>
+      </div>
     </div>
   </article>
 </template>
@@ -35,29 +47,51 @@ export default Vue.extend({
 <style scoped lang="scss">
  .card-bank {
     position: relative;
-    width: 100%;
-    height: 150px;
-    padding: 15px 30px 0 15px;
-    background: none;
     border-radius: 1em;
-    border: 2px solid #d3dffd;
-
+    box-shadow: 0 0 25px #a695ff1f;
+    @include flex-mix(flex, flex-start, flex-start);
+    flex-direction: column;
+    overflow: hidden;
+    height: auto;
+    min-height: 360px;
+    transition: all 250ms ease-in-out;
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      width: 100%;
+      height: 70%;
+      // background: linear-gradient(180deg, #1d22af 0%, #2228c7 100%);
+      background: linear-gradient(180deg, #1116af 0%, #1f2168 100%);
+      transform: skewY(345deg);
+    }
     &:hover {
       box-shadow: 4px 4px 25px #a695ff1f;
-      border: none;
       background-color: #ffffff96;
-      transition:  .3s ease;
+      transform: translateY(-10px);
+      transition: all 250ms ease-in-out;
+    }
+    &__content {
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      padding: 30px;
+      @include flex-mix(flex, space-between, flex-start);
+      flex-direction: column;
     }
     &__title {
-      margin-bottom: 20px;
-      font-size: 16px;
+      color: white;
+      word-break: break-all;
+      height: 75%;
+      font-size: 18px;
     }
     &__amount-text {
-      color: $light-gray;
-      font-size: 14px;
+      color: $light-gray;   
     }
     &__control {
-      @include flex-mix(flex, flex-end);
+      width: 100%;
+      @include flex-mix(flex, space-between);
       font-family: "Montserrat-SemiBold", "sans-serif";
       font-size: 14px;
     }

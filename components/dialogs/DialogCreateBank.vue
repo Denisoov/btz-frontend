@@ -7,18 +7,14 @@ export default Vue.extend({
   },
   data: () => ({ newTitleBank: null }),
   methods: {
-    closeDialog() {
-      this.$emit('input', false)
-    },
     async createNewBank() {
       await this.$store.dispatch(
         'bank/createNewBank',
         { name: this.newTitleBank }
       )
+      await this.$emit('closeDialog')
 
       this.newTitleBank = null;
-
-      await this.closeDialog()
     }
   },
 })
@@ -27,7 +23,11 @@ export default Vue.extend({
 <template>
   <div>
     <h3>Новый банк тестовых заданий</h3>
-    <v-text-field placeholder="Наименование банка" v-model="newTitleBank" />
+    <v-text-field
+      placeholder="Наименование банка" 
+      v-model="newTitleBank" 
+      autofocus
+    />
     <div class="control-buttons">
       <app-button 
         :title="'Создать'" 

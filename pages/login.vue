@@ -7,7 +7,8 @@ import SignInForm from '@/components/login/SignInForm.vue'
 import LogoType from '@/assets/images/logo.png'
 
 export default Vue.extend({
-  layout: 'auth',
+  layout: 'auth-default',
+  name: 'login',
   components: {
     LogInForm,
     SignInForm,

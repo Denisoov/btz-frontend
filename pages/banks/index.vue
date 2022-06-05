@@ -2,35 +2,52 @@
 import Vue from 'vue'
 
 import PageHeader from '@/components/PageHeader'
-import InfoBlock from '@/components/InfoBlock'
+import BankCard from '@/components/BankCard'
+
+import AppContentPage from '@/components/base/AppContentPage'
 import AppInputSearch from '@/components/base/AppInputSearch'
 import AppButton from '@/components/base/AppButton'
-import BankCard from '@/components/BankCard'
-import BanksEmpty from '@/components/BanksEmpty'
 
 export default Vue.extend({
+  layout: 'default',
   components: {
+    AppContentPage,
     PageHeader,
-    InfoBlock,
     AppInputSearch,
     AppButton,
     BankCard,
-    BanksEmpty,
     AppDialog: () => (import('@/components/base/AppDialog')),
     DialogCreateBank: () => (import('@/components/dialogs/DialogCreateBank')),
     DialogLoadFile: () => (import('@/components/dialogs/DialogLoadFile')),
   },
   async asyncData({ store }) {
     try {
-      const data  = await store.dispatch('bank/fetchAllBanks')
+      await store.dispatch('bank/fetchAllBanks')
 
-      const banks = data
-      console.log('banks', banks)
-      return { banks }
     } catch (error) {
       console.log(error)
     }
   },
+  computed: {
+    getContentStatus() {
+      return this.$store.state.contentStatusBanks
+    },
+    banks() {
+      return this.$store.state.bank.banks
+    },
+    foundBanks() {
+      return this.$store.getters['bank/foundBanks']
+    },
+    checkAvailibleBanks() {
+      if (this.banks.length !== 0 && this.foundBanks.length !== 0) return true
+      else return false
+    },
+  },
+  data: () => ({
+    isDialogCreateNewBank: false,
+    isDialogLoadFile: false,
+    emptyListBanks: 'У вас нет ни одного банка. Чтобы создать банк, нажмите на кнопку ниже',
+  }),
   methods: {
     closeDialog() {
       this.isDialogCreateNewBank = false
@@ -45,66 +62,71 @@ export default Vue.extend({
       this.isDialogLoadFile = true
     }
   },
-  computed: {
-    questions() {
-      return this.$store.state.question.questions
-    },
-  },
-  data: () => ({
-    isDialogCreateNewBank: false,
-    isDialogLoadFile: false,
-  })
 })
 </script>
 
 <template>
   <div class="content" >
     <page-header :content-title="'Управление БТЗ'" />
-    <!-- <info-block /> -->
-    <section v-if="banks.length !== 0" class="control-panel">
-      <app-input-search
-        class="control-panel__search"
-        :placeholder="'Поиск по банку'"
-      />
-      <app-button
-        @click="openDialogCreateNewBank"
-        class="control-panel__create mini" 
-        :title="'Создать'" 
-      />
-      <app-button
-        @click="openDialogLoadFile"
-        class="control-panel__upload mini" 
-        :title="'Загрузить'"
-      />
-    </section>
-    <section v-if="banks.length !== 0" class="banks">
-      <!-- <bank-card v-for="i in 9" :key="i" /> -->
-    </section>
-    <section v-else>
-      <banks-empty @openDialogCreateNewBank="openDialogCreateNewBank" />
-    </section>
+    <app-content-page 
+      :page="'banks'"
+      :empty-text="emptyListBanks" 
+      :status="getContentStatus"
+      @openDialog="openDialogCreateNewBank"
+    >
+      <template #content>
+        <section v-if="banks.length !== 0" class="control-panel">
+          <app-input-search
+            class="control-panel__search"
+            :placeholder="'Поиск по банку'"
+            :type-search="'bank'"
+          />
+          <app-button
+            @click="openDialogCreateNewBank"
+            class="control-panel__create mini" 
+            :title="'Создать'" 
+          />
+          <app-button
+            :disabled="false"
+            @click="openDialogLoadFile"
+            class="control-panel__upload mini" 
+            :title="'Загрузить'"
+          />
+        </section>
+        <section v-if="checkAvailibleBanks" class="banks">
+          <bank-card 
+            v-for="(bank, index) in foundBanks" 
+            :key="index"
+            :bank="bank"
+          />
+        </section>
+      </template>
+      <template #empty />
+    </app-content-page>
     <app-dialog
       v-if="isDialogCreateNewBank"
       ref="dialog"
-      :max-width="'680'"
+      :max-width="600"
       :value="isDialogCreateNewBank"
       v-bind="$attrs"
       v-on="$listeners"
+      @input="closeDialog"
     >
-        <template #content>
-          <dialog-create-bank
-            v-click-outside="closeDialog"
-            @closeDialog="closeDialog" 
-          />
-        </template>
+      <template #content>
+        <dialog-create-bank
+          v-click-outside="closeDialog"
+          @closeDialog="closeDialog" 
+        />
+      </template>
     </app-dialog>
     <app-dialog
       v-if="isDialogLoadFile"
       ref="dialog"
-      :max-width="'680'"
+      :max-width="600"
       :value="isDialogLoadFile"
       v-bind="$attrs"
       v-on="$listeners"
+      @input="closeDialogLoadFile"
     >
         <template #content>
           <dialog-load-file
@@ -116,7 +138,7 @@ export default Vue.extend({
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .content {
   &__header {
     position: relative;
@@ -140,8 +162,8 @@ export default Vue.extend({
 .banks {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 270px);
+  grid-template-rows: auto;
   gap: 20px 20px;
   margin-top: 30px;
 }

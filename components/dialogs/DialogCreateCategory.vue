@@ -5,22 +5,30 @@ export default Vue.extend({
   components: {
     AppButton: () => import('@/components/base/AppButton.vue'),
   },
+  data: () => ({ newTitleCategory: null }),
   methods: {
-    closeDialog() {
-      this.$emit('input', false)
-    },
-  }
+    async createNewCategory() {
+      await this.$store.dispatch('category/createNewCategory',{ name: this.newTitleCategory })
+      await this.$emit('closeDialog')
+      
+      this.newTitleCategory = null;
+    }
+  },
 })
 </script>
 
 <template>
   <div>
     <h3>Новая категория</h3>
-    <v-text-field />
+    <v-text-field 
+      v-model="newTitleCategory"
+      placeholder="Наименование категории" 
+      autofocus
+    />
     <div class="control-buttons">
       <app-button 
         :title="'Создать'" 
-        @click="closeDialog" 
+        @click="createNewCategory" 
         class="create mini" 
       />
     </div>
@@ -37,6 +45,6 @@ export default Vue.extend({
   @include flex-mix(flex, flex-end)
 }
 .create {
-  background: $primary;
+  background: $background-button-red;
 }
 </style>

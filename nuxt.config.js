@@ -1,7 +1,8 @@
 export default {
+  target: 'server',
   head: {
-    titleTemplate: 'btz-frontend',
-    title: 'btz-frontend',
+    titleTemplate: 'createst',
+    title: 'createst',
     htmlAttrs: {
       lang: 'ru',
     },
@@ -24,30 +25,29 @@ export default {
     middleware: ['authorization'],
   },
   css: [
-    '~/assets/styles/index.scss'],
+    '~/assets/styles/index.scss',
+  ],
   plugins: [
     '@/plugins/rules-validate',
-    '@/plugins/axiosFactory',
+    '@/plugins/axios-init',
+    '@plugins/v-mask.js',
+    { src: '@/plugins/vuedraggable', mode: 'client' },
+    { src: '@/plugins/mathjax', mode: 'client' },
   ],
-
   components: true,
-
   buildModules: [
     '@nuxtjs/vuetify',
   ],
-
   modules: [
     '@nuxtjs/style-resources',
     '@nuxtjs/axios',
     'cookie-universal-nuxt'
   ],
-
   vuetify: {
     optionsPath: './vuetify.config.js',
     treeShake: true,
     defaultAssets: false,
   },
-
   build: {
     extractCSS: true,
     transpile: [

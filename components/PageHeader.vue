@@ -1,7 +1,7 @@
 <template>
   <section class="page-header">
     <button @click="$router.go(-1)" class="page-header__comback ripple">Назад</button>
-    <h2> {{ $attrs['content-title']}} </h2>
+    <h2 v-if="$attrs['content-title']" > {{ $attrs['content-title']}} </h2>
   </section>
 </template>
 

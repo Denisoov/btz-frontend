@@ -1,55 +1,59 @@
 <script>
 import Vue from 'vue'
 
-import { Container, Draggable } from "vue-smooth-dnd";
-import { applyDrag } from '@/helpers/smooth-dnd'
+import DragOpinions from '@/components/questions/DragOpinions';
 
 export default Vue.extend({
   components: {
-    Container,
-    Draggable
+    DragOpinions,
   },
   computed: {
-    opinionsOpenQuestion() {
-      return this.$store.state.question.activeQuestion.opinions
-    }
+    opinionsOpenQuestion: {
+      get() {
+        return this.$store.state.question.activeQuestion.opinions
+      },
+      set(value) {
+        this.$store.commit('question/SET_ORDERING_QUESTION_OPINIONS', value)
+      }
+    },
+    activeQuestion() {
+      return this.$store.getters['question/activeQuestion']
+    },
   },
   methods: {
-    onDrop(dropResult) {
-      this.items = applyDrag(this.items, dropResult);
-      console.log(this.items)
-    }
+    deleteOpinion(index) {
+      this.$store.commit(
+        'question/DELETE_OPINION', 
+        index
+      )
+    },
+    searchMaxId() {
+      const id = Math.max(...this.opinionsOpenQuestion.map(i => i.id))
+      return id + 1
+    },
+    addOpinion() {
+      this.$store.commit(
+        'question/ADD_OPINION_TYPE_ORDERING', {
+          id: this.searchMaxId(),
+          opinion: `Новый вариант`
+      })
+    },
   },
-  data: () => ({
-    items: [
-        { id: 1, data: "1 Draggable "},
-        { id: 2, data: "2 Draggable "},
-        { id: 3, data: "3 Draggable "}
-    ]
-  })
 })
 </script>
 
 <template>
-  <form class="question-open">
-    <Container  @drop="onDrop">            
-      <Draggable 
-        v-for="(item, index) in items" 
-        :key="index"
-      >
-        <div class="draggable-item">
-          <v-text-field 
-            v-model="item.data" 
-            type="text" 
-          />
-        </div>
-      </Draggable>
-    </Container>
+  <form class="question-ordering">
+    <drag-opinions 
+      v-model="opinionsOpenQuestion"
+      @addOpinion="addOpinion"
+      @deleteOpinion="deleteOpinion"
+    />
   </form>
 </template>
 
 <style scoped lang="scss">
-.question-open {
+.question-ordering {
   &::before {
     content: '';
     position: absolute;
@@ -67,13 +71,51 @@ export default Vue.extend({
     margin-bottom: 0;
   }
 }
-.smooth-dnd-draggable-wrapper {
-  width: 500px;
-  box-shadow: 6px 6px 13px rgb(166 149 255 / 12%);
-  border: 2px dashed #3cd36f;
-  background-color: #fff;
-  border-radius: 8px;
-  margin-bottom: 2px;
-  padding-left: 30px;
+.btn-drag {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+}
+.btn-close {
+  width: 24px;
+  height: 24px;
+  margin-left: 8px;
+
+&__icon {
+    width: 24px;
+    height: 24px;
+  }
+}
+.list-group {
+  &__item {
+    @include flex-mix(flex, flex-start, center);
+    margin-bottom: 12px;
+
+    &:hover input {
+      border-bottom: 1px solid #171b946c;
+    }
+    input {
+      width: 40%;
+      height: 30px;
+      font-size: 14px;
+      outline: none;
+      padding: 2px 0 0 5px;
+
+      &:focus {
+        border-bottom: 2px solid #414394;
+      }
+    }
+  }
+}
+.handle {
+  float: left;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.text {
+  margin: 20px;
+}
+.flip-list-move {
+  transition: transform 0.5s;
 }
 </style>

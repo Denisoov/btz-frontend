@@ -1,5 +1,31 @@
+<script>
+import Vue from 'vue'
+
+export default Vue.extend({
+  props: {
+    typeSearch: {
+      type: String
+    }
+  },
+  computed: {
+    searchBank: {
+      get() {
+        return this.$store.state[this.typeSearch].search
+      },
+      set(value) {
+        this.$store.commit(`${this.typeSearch}/SET_NEW_SEARCH`, value)
+      }
+    }
+  },
+})
+</script>
+
 <template>
-  <input class="search" type="text">
+  <input 
+    v-model="searchBank" 
+    class="search" 
+    type="text"
+  >
 </template>
 
 <style lang="scss" scoped>

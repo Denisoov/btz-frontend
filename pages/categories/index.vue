@@ -2,21 +2,30 @@
 import Vue from 'vue'
 
 import PageHeader from '@/components/PageHeader'
-import InfoBlock from '@/components/InfoBlock'
+import CategoryCard from '@/components/CategoryCard.vue'
+
+import AppContentPage from '@/components/base/AppContentPage'
 import AppInputSearch from '@/components/base/AppInputSearch'
 import AppButton from '@/components/base/AppButton'
-import ListQuestions from '@/components/ListQuestions'
 
 export default Vue.extend({
   
   components: {
     PageHeader,
-    InfoBlock,
+    CategoryCard,
+    AppContentPage,
     AppInputSearch,
     AppButton,
-    ListQuestions,
     AppDialog: () => (import('@/components/base/AppDialog')),
     DialogCreateCategory: () => (import('@/components/dialogs/DialogCreateCategory')),
+  },
+  async asyncData({ store }) {
+    try {
+      await store.dispatch('category/fetchAllCategories')
+
+    } catch (error) {
+      console.log(error)
+    }
   },
   methods: {
     closeDialog() {
@@ -27,12 +36,23 @@ export default Vue.extend({
     }
   },
   computed: {
-    questions() {
-      return this.$store.state.question.questions
+    getContentStatus() {
+      return this.$store.state.contentStatusCategories
+    },
+    categories() {
+      return this.$store.state.category.categories
+    },
+    foundCategories() {
+      return this.$store.getters['category/foundCategories']
+    },
+    checkAvailibleCategories() {
+      if (this.categories.length !== 0 && this.foundCategories.length !== 0) return true
+      else return false
     },
   },
   data: () => ({
     isDialogCreateCategory: false,
+    emptyListCategories: 'У вас нет категорий. Чтобы создать категорию, нажмите на кнопку ниже',
   })
 })
 </script>
@@ -40,42 +60,57 @@ export default Vue.extend({
 <template>
   <div class="content">
     <page-header :content-title="'Категории'" />
-    <info-block />
+    <app-content-page
+      :page="'categories'"       
+      :empty-text="emptyListCategories" 
+      :status="getContentStatus"
+      @openDialog="openDialogCreateCategory"
+    >
+      <template #content>
+        <section v-if="categories.length !== 0" class="control-panel">
+          <app-input-search
+            class="control-panel__search"
+            :placeholder="'Поиск по категориям'"
+            :type-search="'category'"
+          />
+          <app-button 
+            class="control-panel__create mini" 
+            :title="'Создать'"
+            @click="openDialogCreateCategory"
+          />
+        </section>
+        <section 
+          v-if="checkAvailibleCategories"
+          class="categories"
+        >
+          <category-card 
+            v-for="(category, index) in foundCategories"
+            :key="index"
+            :category="category"
+          />
+        </section>
+      </template>
+    </app-content-page>
     <app-dialog
       v-if="isDialogCreateCategory"
       ref="dialog"
-      :max-width="'680'"
+      :max-width="600"
       :value="isDialogCreateCategory"
       v-bind="$attrs"
       v-on="$listeners"
+      @input="closeDialog"
     >
-        <template #content>
-          <dialog-create-category
-            v-click-outside="closeDialog"
-            @closeDialog="closeDialog" 
-          />
-        </template>
+      <template #content>
+        <dialog-create-category
+          v-click-outside="closeDialog"
+          @closeDialog="closeDialog" 
+        />
+      </template>
     </app-dialog>
-    <section class="control-panel">
-      <app-input-search
-        class="control-panel__search"
-        :placeholder="'Поиск по категориям'"
-      />
-      <app-button 
-        class="control-panel__create mini" 
-        :title="'Создать'"
-        @click="openDialogCreateCategory"
-      />
-      <app-button 
-        class="control-panel__upload mini" 
-        :title="'Загрузить'" 
-      />
-    </section>
-    <list-questions :questions="questions" />
   </div>
 </template>
 
-<style lang="scss">
+<style scoped lang="scss">
 .content {
   &__header {
     position: relative;
@@ -83,11 +118,11 @@ export default Vue.extend({
   }
 }
 .control-panel {
-  @include flex-mix(flex, space-between);
+  @include flex-mix(flex, flex-start);
   margin-top: 60px;
 
   &__search {
-    margin: 30px 0;
+    margin: 30px 30px 30px 0;
   }
   &__create {
     background: $background-button-red;
@@ -96,11 +131,12 @@ export default Vue.extend({
     background: $backgorund-birch;
   }
 }
-.banks {
+
+.categories {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, 270px);
+  grid-template-rows: auto;
   gap: 20px 20px;
   margin-top: 30px;
 }

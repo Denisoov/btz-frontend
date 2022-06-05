@@ -1,27 +1,36 @@
 <script>
 import Vue from 'vue'
 
+import IconClose from '@/components/icons/IconClose'
+
 export default Vue.extend({
+  components: {
+    IconClose,
+  },
   props: {
     opinion: {
       type: Object | String
     },
     index: {
       type: Number
+    },
+    lengthOpinions: {
+      type: Number,
     }
   },
-  data: () => ({
-    isCheked: true
-  }),
+  data: () => ({ isCheked: true }),
   computed: {
-    isChekedOpinions() {
-      return this.$store.question.activeQuestion.answer
+    definitionClass() {
+      return this.isButton 
+        ? 'wrapper-checkbox__button'
+        : 'wrapper-checkbox__input'
     },
     opinionQuestion: {
       get() {
         return this.opinion
       },
       set(value) {
+        console.log(value)
         this.$store.commit('question/REWRITE_OPEN_QUESTION_OPINION', 
         {
           index: this.index,
@@ -30,6 +39,11 @@ export default Vue.extend({
       }
     }
   },
+  methods: {
+    deleteOpinion(index) {
+      this.$emit('deleteOpinion', index)
+    },
+  }
 })
 </script>
 
@@ -42,9 +56,17 @@ export default Vue.extend({
     >
     <input 
       v-model="opinionQuestion" 
-      class="wrapper-checkbox__input" 
+      :class="definitionClass"
       type="text"
+      placeholder="Без текста"
     >
+    <v-btn 
+      v-if="lengthOpinions > 1"
+      @click="deleteOpinion(index)" 
+      icon
+    >
+      <icon-close class="icon-close"/>
+    </v-btn>
   </div>
 </template>
 
@@ -54,7 +76,13 @@ export default Vue.extend({
 }
 .wrapper-checkbox {
   @include flex-mix(flex, flex-start);
-    margin-bottom: 6px;
+  margin-bottom: 6px;
+  font-family: "Montserrat-Medium", "sans-serif";
+
+  
+  &:hover &__input {
+    border-bottom: 1px solid rgba(23, 27, 148, 0.425);
+  }
 
   &__checkbox {
     margin-right: 10px;
@@ -65,15 +93,17 @@ export default Vue.extend({
     font-size: 14px;
     outline: none;
     padding: 2px 0 0 5px;
-    font-family: "Montserrat-Medium", "sans-serif";
-
-    &:hover {
-      border-bottom: 1px solid rgba(23, 27, 148, 0.425);
-    }
 
     &:focus {
       border-bottom: 2px solid #414394;
     }
+  }
+  .v-btn {
+    margin-left: 10px;
+  }
+  .icon-close {
+    width: 24px;
+    height: 24px;
   }
 }
 </style>

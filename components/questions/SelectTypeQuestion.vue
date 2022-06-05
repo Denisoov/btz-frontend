@@ -12,8 +12,12 @@ export default Vue.extend({
         type: 2,
         typeName: 'Закрытый вопрос',
       },
+      // {
+      //   type: 3,
+      //   typeName: 'На соответствие',
+      // },
       {
-        type: 3,
+        type: 4,
         typeName: 'На упорядочивание',
       },
     ],
@@ -24,7 +28,7 @@ export default Vue.extend({
         return this.$store.state.question.activeQuestion.type_question_id
       },
       set(value) {
-        this.$store.commit('question/SET_QUESTION_TYPE', value)
+        this.$store.dispatch('question/changeTypeQuestion', value)
       },
     },
   },

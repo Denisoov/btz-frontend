@@ -1,62 +1,95 @@
 <script>
-import Vue from "vue";
+import Vue from 'vue'
 
 export default Vue.extend({
+  created() {
+    this.extractLatex(this.questionName)
+  },
   computed: {
     questionName: {
       get() {
         return this.$store.state.question.activeQuestion.question
       },
       set(value) {
+        this.extractLatex(value)
         this.$store.commit('question/SET_QUESTION_NAME', value)
       },
+    },
+    questionType() {
+      return this.$store.state.question.activeQuestion.type_question_id
     }
   },
   methods: {
     getAnswer() {
       if (this.$store.state.question.activeQuestion.type_question_id === 2) {
         const question = this.questionName
-        const answers = this.extractAnswer(question)
+        const answers = this.extractWords(question)
 
-        console.log('answers:', answers)
-        this.$store.commit('question/REVIEW_CLOSED_QUESTION_ANSWERS', answers)
+        this.$store.commit(
+          'question/REVIEW_CLOSED_QUESTION_ANSWERS', 
+          answers || []
+        )
       }
     },
-    extractAnswer(str){
-      let answer, positionStart, positionEnd;
+    extractWords(str) {
+      let segment, 
+          regStart = /@.*?@/ig;
 
-      let regStart = /{/ig;
-      let regEnd = /}/ig;
+      segment = regStart.exec(str)
 
-      positionStart = regStart.exec(str)
-      positionEnd = regEnd.exec(str)
-
-      if (positionStart && positionEnd) {
-        answer = str.slice(positionStart.index + 1, positionEnd.index)
-                      .replace(/[^a-zа-яё\s]/gi, '')
-                        .split(' ');
-
-        return answer
+      if (segment) {
+        // обрезаем спецсимволы, и двойные проблемы, разбиваем на массив слов
+        segment = segment[0].replace(/\s+/g, ' ')
+                              .replace(/^.|.$/g,"")
+                                .trim()
+                                  .split(/[,]+/);
+        return segment
       }
     },
+    extractLatex(str) {
+      // запрещаем латех для второго типа вопроса
+      if (this.questionType === 2) return
+
+      let segment, 
+          regStart = /(\${2})((?:\\.|.)*)\1/;
+
+      segment = regStart.exec(str)
+      
+      if (segment) {
+        this.formula = segment[0]       
+        console.log(segment)
+      }
+      else this.formula = ''
+    }
+  },
+  data: () => ({
+    formula: ''
+  }),
+  watch: {
+    questionType(val, old) {
+      if (val !== old) this.formula = ''
+    }
   },
   updated() {
     this.getAnswer()
-  }
+  },
 })
 </script>
 
 <template>
-  <v-textarea
-    filled
-    auto-grow
-    label="Вопрос"
-    rows="2"
-    hide-details
-    row-height="20"
-    class="input-title"
-    v-model="questionName"
-  ></v-textarea>
+  <div>
+    <v-textarea
+      filled
+      auto-grow
+      placeholder="Вопрос без заголовка"
+      rows="2"
+      hide-details
+      row-height="20"
+      class="input-title"
+      v-model="questionName"
+    />
+    <math-jax :latex="formula" />
+  </div>
 </template>
 
 <style lang="scss">
@@ -66,7 +99,9 @@ export default Vue.extend({
     font-family: 'Montserrat-SemiBold', 'sans-serif';
     resize: none;
     overflow-y: hidden;
-
-
+  }
+  .MathJax {
+    font-size: 160%;
+    top: 10px;
   }
 </style>
