@@ -34,7 +34,7 @@ export const actions = {
     try {
       await this.$api.post('registration', rootState.login.loginForm)
 
-      dispatch('login/changeCurrentForm', 'EmailVerify', { root: true })
+      dispatch('login/changeCurrentForm', 'SignInForm', { root: true })
 
     } catch (error) {
       console.log(error)

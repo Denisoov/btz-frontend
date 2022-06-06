@@ -138,7 +138,7 @@ export default Vue.extend({
           <v-text-field
             v-model="email"
             :error-messages="errors"
-            autocomplete="off"
+            :autocomplete="false"
             placeholder="Логин"
             type="text"
           ></v-text-field>
@@ -153,7 +153,7 @@ export default Vue.extend({
           <v-text-field
             v-model="password"
             :error-messages="errors"
-            autocomplete="off"
+            :autocomplete="false"
             placeholder="Пароль"
             type="password"
           ></v-text-field>

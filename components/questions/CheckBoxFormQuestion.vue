@@ -27,17 +27,31 @@ export default Vue.extend({
     },
     opinionQuestion: {
       get() {
-        return this.opinion
+        return this.opinion.opinion
       },
       set(value) {
-        console.log(value)
         this.$store.commit('question/REWRITE_OPEN_QUESTION_OPINION', 
         {
           index: this.index,
           text: value
         })
-      }
+      },
+    },
+    opinionCheckQuestion: {
+      get() {
+        return this.opinion.check
+      },
+      set(value) {
+        this.$store.commit('question/REWRITE_OPEN_QUESTION_OPINION', 
+        {
+          index: this.index,
+          text: value
+        })
+      },
     }
+  },
+  mounted() {
+    console.log(this.opinion)
   },
   methods: {
     deleteOpinion(index) {
@@ -50,9 +64,9 @@ export default Vue.extend({
 <template>
   <div class="wrapper-checkbox">
     <input 
-      v-model="isCheked"
+      v-model="opinionCheckQuestion"
       class="wrapper-checkbox__checkbox" 
-      type="checkbox"
+      type="radio"
     >
     <input 
       v-model="opinionQuestion" 

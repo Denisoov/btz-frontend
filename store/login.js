@@ -69,9 +69,6 @@ export const actions = {
         commit('RESET_LOGIN_DATA', defaultState.loginForm)
       case 'LogInForm':
         commit('RESET_LOGIN_DATA', defaultState.signInForm)
-      case 'EmailVerify':
-        commit('RESET_LOGIN_DATA', defaultState.loginForm)
-        commit('RESET_LOGIN_DATA', defaultState.logisignInFormnForm)
     }
   },
   clearState({ commit }) {
