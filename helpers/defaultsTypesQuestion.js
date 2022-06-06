@@ -7,6 +7,7 @@ export default [
       {
         id: 1,
         opinion: 'Вариант 1',
+        check: false,
       },
     ],
   },

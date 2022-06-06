@@ -8,13 +8,29 @@ export default Vue.extend({
     CheckBoxFormQuestion,
   },
   computed: {
-    opinionsOpenQuestion() {
-      return this.$store.state.question.activeQuestion.opinions
-    }
+    opinionsOpenQuestion: {
+      get() {
+        return this.$store.state.question.activeQuestion.opinions
+      },
+      set(value) {
+        this.$store.commit('question/REWRITE_OPEN_QUESTION_OPINION', 
+        {
+          index: this.index,
+          text: value
+        })
+    },
+    definitionClass() {
+      return this.isButton 
+        ? 'wrapper-checkbox__button'
+        : 'wrapper-checkbox__input'
+    },
   },
   methods: {
     searchMaxId() {
-      const id = Math.max(...this.opinionsOpenQuestion.map(i => i.id))
+      const id = Math.max(
+        ...this.opinionsOpenQuestion.map(i => i.id)
+      )
+
       return id + 1
     },
     deleteOpinion(index) {
@@ -24,7 +40,8 @@ export default Vue.extend({
       this.$store.commit(
         'question/ADD_OPINION_TYPE_OPEN', {
           id: this.searchMaxId,
-          opinion: `Новый вариант`
+          opinion: `Новый вариант`,
+          check: false,
       })
     }
   }
@@ -33,14 +50,26 @@ export default Vue.extend({
 
 <template>
   <div class="question-open">
-    <check-box-form-question
-      v-for="(opinion, index) in opinionsOpenQuestion"
-      :key="index"
-      :opinion="opinion.opinion"
-      :index="index"
-      :length-opinions="opinionsOpenQuestion.length"
-      @deleteOpinion="deleteOpinion"
-    />
+    <div v-for="(opinion, index) in opinionsOpenQuestion" :key="index" class="wrapper-checkbox">
+      <input 
+        v-model="opinion.opinion"
+        class="wrapper-checkbox__checkbox" 
+        type="radio"
+      >
+      <input 
+        v-model="opinion.opinion" 
+        :class="definitionClass"
+        type="text"
+        placeholder="Без текста"
+      >
+      <v-btn 
+        v-if="opinionsOpenQuestion > 1"
+        @click="deleteOpinion(index)" 
+        icon
+      >
+        <icon-close class="icon-close"/>
+      </v-btn>
+    </div>
     <button
       v-if="opinionsOpenQuestion.length < 6"
       type="button"
@@ -76,6 +105,41 @@ export default Vue.extend({
     &:hover {
       border-bottom: 1px solid rgba(151, 151, 151, 0.425);
     }
+  }
+}
+.v-list-item__title {
+  font-family: 'Montserrat-Regular', 'sans-serif';
+}
+.wrapper-checkbox {
+  @include flex-mix(flex, flex-start);
+  margin-bottom: 6px;
+  font-family: "Montserrat-Medium", "sans-serif";
+
+  
+  &:hover &__input {
+    border-bottom: 1px solid rgba(23, 27, 148, 0.425);
+  }
+
+  &__checkbox {
+    margin-right: 10px;
+  }
+  &__input {
+    width: 40%;
+    height: 30px;
+    font-size: 14px;
+    outline: none;
+    padding: 2px 0 0 5px;
+
+    &:focus {
+      border-bottom: 2px solid #414394;
+    }
+  }
+  .v-btn {
+    margin-left: 10px;
+  }
+  .icon-close {
+    width: 24px;
+    height: 24px;
   }
 }
 </style>

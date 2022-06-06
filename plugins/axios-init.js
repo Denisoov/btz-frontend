@@ -20,6 +20,14 @@ export default ({ $axios, store, $cookies }, inject) => {
               store.dispatch('user/exit')
               break;
           
+            case 422: 
+              store.commit('OPEN_SNACKBAR', {
+                isShowSnackbar: true,
+                message: 'Некорректные данные',
+              })
+
+              break;
+
             default:
               store.commit('OPEN_SNACKBAR', {
                 isShowSnackbar: true,
@@ -29,6 +37,7 @@ export default ({ $axios, store, $cookies }, inject) => {
                 status: error.response.status,
                 message: 'Что-то пошло не так',
               })
+
               break;
           }
           return 
