@@ -44,6 +44,7 @@ export default Vue.extend({
           check: false,
       })
     }
+    }
   }
 })
 </script>

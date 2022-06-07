@@ -1,5 +1,4 @@
 export default {
-  target: 'server',
   head: {
     titleTemplate: 'createst',
     title: 'createst',
