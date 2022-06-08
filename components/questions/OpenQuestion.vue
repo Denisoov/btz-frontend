@@ -3,21 +3,49 @@ import Vue from 'vue'
 
 import CheckBoxFormQuestion from '@/components/questions/CheckBoxFormQuestion'
 
+import IconClose from '@/components/icons/IconClose'
+
 export default Vue.extend({
   components: {
     CheckBoxFormQuestion,
+    IconClose
   },
+  // props: {
+  //   activeQuestion: {
+  //     type: Object,
+  //     required: true
+  //   }
+  // },
+  // data() {
+  //   return {
+  //     question: ''
+  //   }
+  // },
   computed: {
     opinionsOpenQuestion: {
       get() {
-        return this.$store.state.question.activeQuestion.opinions
+        return [...this.$store.state.question.activeQuestion.opinions]
       },
       set(value) {
-        this.$store.commit('question/REWRITE_OPEN_QUESTION_OPINION', 
-        {
-          index: this.index,
-          text: value
+        console.log(value)
+        this.$store.commit('question/REWRITE_OPEN_QUESTION_OPINION', value)
+      }
+    },
+    data: () => ({
+      question: {}
+    }),
+    searchMaxId() {
+      if (this.opinionsOpenQuestion.length <= 1) return 2
+      else {
+        const maxId = this.opinionsOpenQuestion.reduce((prev, cur) => {
+          if (prev.id > cur.id) {
+            return prev
+          }
+          return cur
         })
+
+       return maxId.id + 1
+      }
     },
     definitionClass() {
       return this.isButton 
@@ -25,16 +53,15 @@ export default Vue.extend({
         : 'wrapper-checkbox__input'
     },
   },
+  beforeMount() {
+    this.question = JSON.parse(JSON.stringify(this.opinionsOpenQuestion))
+  },
   methods: {
-    searchMaxId() {
-      const id = Math.max(
-        ...this.opinionsOpenQuestion.map(i => i.id)
-      )
-
-      return id + 1
-    },
     deleteOpinion(index) {
       this.$store.commit('question/DELETE_OPINION', index)
+    },
+    changeCheckOpinion(check, index) {
+      this.$store.commit('question/CHANGE_CHECK_OPEN_QUESTION', { check, index })
     },
     addOpinion() {
       this.$store.commit(
@@ -44,27 +71,26 @@ export default Vue.extend({
           check: false,
       })
     }
-    }
   }
 })
 </script>
 
 <template>
   <div class="question-open">
-    <div v-for="(opinion, index) in opinionsOpenQuestion" :key="index" class="wrapper-checkbox">
-      <input 
-        v-model="opinion.opinion"
+    <div v-for="(opinion, index) in question" :key="index" class="wrapper-checkbox">
+      <input  
+        v-model="opinion.check"
         class="wrapper-checkbox__checkbox" 
-        type="radio"
+        type="checkbox"
+        @click="changeCheckOpinion(opinion, index)"
       >
       <input 
         v-model="opinion.opinion" 
-        :class="definitionClass"
+        class="wrapper-checkbox__input"
         type="text"
         placeholder="Без текста"
       >
       <v-btn 
-        v-if="opinionsOpenQuestion > 1"
         @click="deleteOpinion(index)" 
         icon
       >
@@ -72,7 +98,7 @@ export default Vue.extend({
       </v-btn>
     </div>
     <button
-      v-if="opinionsOpenQuestion.length < 6"
+      v-if="question.length < 6"
       type="button"
       class="question-open__add"
       @click="addOpinion"

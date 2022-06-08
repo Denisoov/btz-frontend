@@ -263,7 +263,7 @@ export default Vue.extend({
   font-family: 'Montserrat-Medium', 'sans-serif';
   max-width: 250px;
   height: inherit;
-  padding: 10px 10px;
+  padding: 10px 25px 10px 10px;
   justify-content: flex-start;
   white-space: normal;
   text-align: left;

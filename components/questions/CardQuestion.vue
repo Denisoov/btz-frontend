@@ -83,7 +83,6 @@ export default Vue.extend({
       <component
         v-if="determinantQuestionId(question.id)"
         :is="determinantTypeQuestion(activeQuestion.type_question_id)"
-        :activeQuestion="activeQuestion"
     ></component>
       <div class="footer">
         <hr class="footer__line">

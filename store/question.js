@@ -30,8 +30,14 @@ export const mutations = {
 
     Object.assign(state.activeQuestion, {...question, active: true })
   },
-  REWRITE_OPEN_QUESTION_OPINION({ activeQuestion }, { index, text }) {
-    activeQuestion.opinions[index].opinion = text
+  // REWRITE_OPEN_QUESTION_OPINION({ activeQuestion }, { index, text }) {
+  //   activeQuestion.opinions[index].opinion = text
+  // },
+  REWRITE_OPEN_QUESTION_OPINION({ activeQuestion }, opinions) {
+    activeQuestion.opinions = opinions
+  },
+  CHANGE_CHECK_OPEN_QUESTION({ activeQuestion }, { check, index, }) {
+    activeQuestion.opinions[index] = check
   },
   SET_ORDERING_QUESTION_OPINIONS(state, opinions) {
     state.activeQuestion.opinions = opinions

@@ -1,4 +1,9 @@
 export default {
+  server: {
+    port: 80, // default: 3000
+    host: 'createst.ugrasu.ru', // default: localhost,
+    timing: false
+  },
   head: {
     titleTemplate: 'createst',
     title: 'createst',
