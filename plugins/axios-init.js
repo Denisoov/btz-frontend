@@ -15,7 +15,7 @@ export default ({ $axios, store, $cookies }, inject) => {
             console.log("Пожалуйста проверьте ваше соединение.");
         }
         else {
-          switch (error.response.status) {
+          switch (error?.response?.status) {
             case 401:
               store.dispatch('user/exit')
               break;
@@ -40,29 +40,10 @@ export default ({ $axios, store, $cookies }, inject) => {
 
               break;
           }
-          return 
         }
         return error
       }
   )
-
-  //   api.onError(error => {
-  //     console.log(error?.response.status)
-  //     if (error.response.status === 401) {
-  //         store.dispatch('user/exit')
-  //     }
-  //     else if (error.request) {
-  //       store.dispatch('user/exit')
-  //     }
-  //     else if (error?.response.status === 500) {
-  //       const { data } = error.response
-      
-  //       store.commit('OPEN_SNACKBAR', {
-  //           isShowSnackbar: true,
-  //           message: data.error,
-  //       })
-  //     }
-  // })
 
   inject('api', api)
 }

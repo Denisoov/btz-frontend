@@ -92,8 +92,8 @@ export default Vue.extend({
       />
       <v-text-field 
         v-model="formPassport.time_testing"
-        label="Время тестирования"
-        placeholder="Например: 40 мин." 
+        label="Время тестирования (в мин.)"
+        placeholder="Например: 40" 
         :rules="generalRules"
         v-mask="'###'"
       />

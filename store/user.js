@@ -14,31 +14,39 @@ export const state = () => defaultState
 export const mutations = {
   SET_JWT_TOKEN(state, data) {
     state.token = data
-  }
+  },
 }
 
 export const actions = {
   async signIn({ commit }, dataForm) {
+    commit('login/SET_LOADING', true, { root: true })
+
     try {
+
       const { data } = await this.$api.post('getToken', dataForm)
 
-      this.$cookies.set('jwt_token', data.token)
+      await this.$cookies.set('jwt_token', data.token)
 
-      commit('SET_JWT_TOKEN', data.token)
+      await commit('SET_JWT_TOKEN', data.token)
+      await commit('login/RESET_STATE', {}, { root: true })
     } catch (error) {
-      console.log(error)
+      console.log(new Error('Запрос не выполнен'))
     }
+    commit('login/SET_LOADING', false, { root: true })
   },
   
-  async registration({ dispatch, rootState  }) {
-    try {
-      await this.$api.post('registration', rootState.login.loginForm)
+  async registration({ dispatch, commit, rootState  }) {
+    commit('login/SET_LOADING', true, { root: true })
 
-      dispatch('login/changeCurrentForm', 'SignInForm', { root: true })
+    try {
+      const { data } = await this.$api.post('registration', rootState.login.loginForm)
+
+      if (data)  await dispatch('login/changeCurrentForm', 'SignInForm', { root: true })
 
     } catch (error) {
-      console.log(error)
+      console.log(new Error('Запрос не выполнен'))
     }
+    commit('login/SET_LOADING', false, { root: true })
   },
 
   async exit() {

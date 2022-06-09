@@ -1,7 +1,7 @@
 export default {
   server: {
     port: 80, // default: 3000
-    host: 'createst.ugrasu.ru' || '0.0.0.0', // default: localhost,
+    host: '0.0.0.0', // default: localhost,
     timing: false
   },
   head: {
@@ -41,6 +41,7 @@ export default {
   components: true,
   buildModules: [
     '@nuxtjs/vuetify',
+    '@nuxtjs/device',
   ],
   modules: [
     '@nuxtjs/style-resources',

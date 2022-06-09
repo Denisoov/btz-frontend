@@ -42,6 +42,7 @@ export default Vue.extend({
         outlined
         class="types__type"
         color="indigo"
+        :disabled="typeQuestion.type === 3"
       >
         {{ typeQuestion.title }}
       </v-btn>

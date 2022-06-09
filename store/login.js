@@ -1,5 +1,5 @@
 const defaultState = {
-  isLoading: false,
+  isLoadingForm: false,
   currentForm: 'SignInForm',
   loginForm: {
     first_name: '',
@@ -36,6 +36,9 @@ export const mutations = {
       state.loginForm[key] = ''
     })
   },
+  RESET_STATE: (state) => {
+    Object.assign(state, defaultState)
+  },
   SET_LAST_NAME: (state, lastName) => {
     state.loginForm.last_name = lastName
   },
@@ -58,6 +61,9 @@ export const mutations = {
   SET_PASSWORD_SIGNIN: (state, password) => {
     state.signInForm.password = password
   },
+  SET_LOADING(state, status) {
+    state.isLoadingForm = status
+  }
 }
 
 export const actions = {

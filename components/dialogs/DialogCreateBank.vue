@@ -5,6 +5,11 @@ export default Vue.extend({
   components: {
     AppButton: () => import('@/components/base/AppButton.vue'),
   },
+  computed: {
+    checkChartsOfTitle() {
+      return this.newTitleBank && this.newTitleBank.length !== 0
+    }
+  },
   data: () => ({ newTitleBank: null }),
   methods: {
     async createNewBank() {
@@ -30,6 +35,7 @@ export default Vue.extend({
     />
     <div class="control-buttons">
       <app-button 
+        :disabled="!checkChartsOfTitle"
         :title="'Создать'" 
         @click="createNewBank" 
         class="create mini" 

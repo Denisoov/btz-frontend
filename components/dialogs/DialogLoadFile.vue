@@ -5,7 +5,10 @@ export default Vue.extend({
   components: {
     AppButton: () => import('@/components/base/AppButton.vue'),
   },
-  data: () => ({ newTitleBank: null }),
+  data: () => ({ 
+    newTitleBank: null,
+    fileQuestions: null,
+  }),
   methods: {
     closeDialog() {
       this.$emit('input', false)
@@ -22,14 +25,16 @@ export default Vue.extend({
   <div>
     <h3>Новый банк тестовых заданий</h3>
     <v-file-input 
-      show-size 
-      label="Загрузка файла" 
+      label="Загрузка файла"
+      accept=".gift"
+      v-model="fileQuestions"
     />
     <div class="control-buttons">
       <app-button
         :title="'Загрузить'"
         @click="createNewBank"
         class="create mini"
+        :disabled="!fileQuestions"
       />
     </div>
   </div>

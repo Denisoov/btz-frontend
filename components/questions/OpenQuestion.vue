@@ -22,9 +22,9 @@ export default Vue.extend({
   //   }
   // },
   computed: {
-    opinionsOpenQuestion: {
+    opinions: {
       get() {
-        return [...this.$store.state.question.activeQuestion.opinions]
+        return JSON.parse(JSON.stringify([...this.$store.state.question.activeQuestion.opinions]))
       },
       set(value) {
         console.log(value)
@@ -32,16 +32,16 @@ export default Vue.extend({
       }
     },
     data: () => ({
-      question: {}
+      question: [],
     }),
     searchMaxId() {
-      if (this.opinionsOpenQuestion.length <= 1) return 2
+      if (this.opinions.length <= 1) return 2
       else {
-        const maxId = this.opinionsOpenQuestion.reduce((prev, cur) => {
-          if (prev.id > cur.id) {
+        const maxId = this.opinions.reduce((prev, current) => {
+          if (prev.id > current.id) {
             return prev
           }
-          return cur
+          return current
         })
 
        return maxId.id + 1
@@ -53,15 +53,15 @@ export default Vue.extend({
         : 'wrapper-checkbox__input'
     },
   },
-  beforeMount() {
-    this.question = JSON.parse(JSON.stringify(this.opinionsOpenQuestion))
-  },
+  // beforeMount() {
+  //   this.opinions = JSON.parse(JSON.stringify(this.opinionsOpenQuestion))
+  // },
   methods: {
     deleteOpinion(index) {
       this.$store.commit('question/DELETE_OPINION', index)
     },
-    changeCheckOpinion(check, index) {
-      this.$store.commit('question/CHANGE_CHECK_OPEN_QUESTION', { check, index })
+    changeTitleOpinion(value) {
+      console.log(value)
     },
     addOpinion() {
       this.$store.commit(
@@ -77,18 +77,19 @@ export default Vue.extend({
 
 <template>
   <div class="question-open">
-    <div v-for="(opinion, index) in question" :key="index" class="wrapper-checkbox">
+    <div v-for="(opinion, index) in opinions" :key="index" class="wrapper-checkbox">
       <input  
         v-model="opinion.check"
         class="wrapper-checkbox__checkbox" 
         type="checkbox"
-        @click="changeCheckOpinion(opinion, index)"
       >
+      <div>id: {{opinion.id}}</div>
       <input 
         v-model="opinion.opinion" 
         class="wrapper-checkbox__input"
         type="text"
         placeholder="Без текста"
+        @change="changeTitleOpinion"
       >
       <v-btn 
         @click="deleteOpinion(index)" 
@@ -98,7 +99,7 @@ export default Vue.extend({
       </v-btn>
     </div>
     <button
-      v-if="question.length < 6"
+      v-if="opinions.length < 6"
       type="button"
       class="question-open__add"
       @click="addOpinion"

@@ -5,6 +5,11 @@ export default Vue.extend({
   components: {
     AppButton: () => import('@/components/base/AppButton.vue'),
   },
+  computed: {
+    checkChartsOfTitle() {
+      return this.newTitleCategory && this.newTitleCategory.length !== 0
+    }
+  },
   data: () => ({ newTitleCategory: null }),
   methods: {
     async createNewCategory() {
@@ -27,6 +32,7 @@ export default Vue.extend({
     />
     <div class="control-buttons">
       <app-button 
+        :disabled="!checkChartsOfTitle"
         :title="'Создать'" 
         @click="createNewCategory" 
         class="create mini" 

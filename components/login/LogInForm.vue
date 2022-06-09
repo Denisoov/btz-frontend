@@ -4,6 +4,8 @@ import { ValidationProvider, ValidationObserver, extend } from 'vee-validate'
 import { min, max, email, required } from '@/plugins/rules-validate'
 
 import AppButton from '@/components/base/AppButton.vue'
+import AppLoading from '@/components/base/AppLoading'
+
 
 extend('min', min)
 extend('max', max)
@@ -15,6 +17,7 @@ export default Vue.extend({
     ValidationProvider,
     ValidationObserver,
     AppButton,
+    AppLoading
   },
   computed: {
     form(){
@@ -60,6 +63,9 @@ export default Vue.extend({
         this.$store.commit('login/SET_PASSWORD', value)
       },
     },
+    isLoadingForm() {
+      return this.$store.state.login.isLoadingForm
+    }
   },
   methods: {
     goToSignIn() {
@@ -77,7 +83,7 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div class="form">
+  <div v-if="!isLoadingForm" class="form">
     <h2 class="form__title">Давайте сделаем первый шаг</h2>
     <span class="form__description">
       Начать работу быстро и легко, просто заполните информацию ниже
@@ -170,6 +176,7 @@ export default Vue.extend({
       title="Регистрация"
     />
   </div>
+  <app-loading v-else />
 </template>
 
 <style lang="scss">

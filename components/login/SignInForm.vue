@@ -8,12 +8,14 @@ import { required } from '@/plugins/rules-validate'
 extend('required', required)
 
 import AppButton from '@/components/base/AppButton.vue'
+import AppLoading from '@/components/base/AppLoading'
 
 export default Vue.extend({
   components: {
     ValidationObserver,
     ValidationProvider,
     AppButton,
+    AppLoading
   },
    computed: {
     email: {
@@ -35,6 +37,9 @@ export default Vue.extend({
     form() {
       return this.$refs.SignInForm
     },
+    isLoadingForm() {
+      return this.$store.state.login.isLoadingForm
+    }
   },
    methods: {
     goToLogIn() {
@@ -59,7 +64,7 @@ export default Vue.extend({
 </script>
 
 <template>
-  <div class="form">
+  <div v-if="!isLoadingForm" class="form">
     <h2 class="form__title">Вход в систему</h2>
     <validation-observer 
       ref="SignInForm" 
@@ -108,9 +113,10 @@ export default Vue.extend({
     <app-button 
       class="signin middle" 
       @click="signIn()"
-      :title="'Войти'" 
+      :title="'Войти'"
     />
   </div>
+  <app-loading v-else />
 </template>
 
 <style lang="scss">

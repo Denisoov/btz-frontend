@@ -82,7 +82,7 @@ export default Vue.extend({
     }
     &__title {
       color: white;
-      word-break: break-all;
+      word-break: break-word;
       height: 75%;
       font-size: 18px;
     }

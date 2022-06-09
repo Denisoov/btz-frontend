@@ -139,7 +139,7 @@ export default Vue.extend({
     &__header {
       margin-top: 30px;
       color: #747474;
-      font-size: 18px;
+      font-size: 15px;
     }
     
     &__body {
