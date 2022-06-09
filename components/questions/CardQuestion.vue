@@ -87,6 +87,7 @@ export default Vue.extend({
       <div class="footer">
         <hr class="footer__line">
         <div class="footer__container">
+          <div class="footer__container-message">*Конструкт на стадии разработки</div>
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
@@ -118,7 +119,13 @@ export default Vue.extend({
       background: $light-gray;
     }
     &__container {
-      @include flex-mix(flex, flex-end)
+      @include flex-mix(flex, space-between);
+
+      &-message {
+        font-family: "Montserrat-Regular";
+        font-size: 13px;
+        color: #ff2e2e;
+      }
     }
   }
 </style>

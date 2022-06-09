@@ -14,7 +14,12 @@ export default Vue.extend({
       this.$emit('input', false)
       this.newTitleBank = null
     },
-    async createNewBank() {
+    createNewBank() {
+      let formData = new FormData();
+      formData.append('file', this.fileQuestions.file);
+
+      this.$store.dispatch('bank/loadNewBank', this.idBank)
+
       this.closeDialog()
     },
   },
@@ -26,7 +31,7 @@ export default Vue.extend({
     <h3>Новый банк тестовых заданий</h3>
     <v-file-input 
       label="Загрузка файла"
-      accept=".gift"
+      accept=".text/xml"
       v-model="fileQuestions"
     />
     <div class="control-buttons">

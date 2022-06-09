@@ -147,6 +147,17 @@ export const actions = {
     } catch (error) {
       
     }
+  },
+  async loadNewBank({ dispatch }, formNewBtz) {
+    try {
+      console.log(formNewBtz)
+      await this.$api.post(`files/loadingBank`, {'file': formNewBtz})
+
+      await dispatch('fetchAllBanks')
+      
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

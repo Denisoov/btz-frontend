@@ -83,7 +83,6 @@ export default Vue.extend({
         class="wrapper-checkbox__checkbox" 
         type="checkbox"
       >
-      <div>id: {{opinion.id}}</div>
       <input 
         v-model="opinion.opinion" 
         class="wrapper-checkbox__input"
