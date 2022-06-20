@@ -79,7 +79,7 @@ export const actions = {
   async changeTitleCategory({ state }, name) {
     const { id } = state.detailCategory
 
-    await this.$api.post(`category/update/${id}/`, name)
+    await this.$api.put(`category/update/${id}`, name)
   }
 }
 
