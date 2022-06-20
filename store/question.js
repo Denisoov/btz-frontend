@@ -91,12 +91,14 @@ export const mutations = {
   },
   DELETE_OPINION(state, index) {
     state.activeQuestion.opinions.splice(index,1)
+    state.activeQuestion.answer.splice(index, 1)
   },
   ADD_OPINION_TYPE_OPEN(state, newOpinion) {
     state.activeQuestion.opinions.push(newOpinion)
   },
   ADD_OPINION_TYPE_ORDERING(state, newOpinion) {
     state.activeQuestion.opinions.push(newOpinion)
+    state.activeQuestion.answer.push(newOpinion.id)
   },
   CHANGE_BODY_QUESTION(state, bodyQuestion) {
     state.activeQuestion = Object.assign(state.activeQuestion, bodyQuestion)
