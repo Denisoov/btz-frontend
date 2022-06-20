@@ -150,8 +150,7 @@ export const actions = {
   },
   async loadNewBank({ dispatch }, formNewBtz) {
     try {
-      console.log(formNewBtz)
-      await this.$api.post(`files/loadingBank`, {'file': formNewBtz})
+      await this.$api.post(`files/loadingBank`, formNewBtz)
 
       await dispatch('fetchAllBanks')
       

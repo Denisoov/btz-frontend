@@ -11,14 +11,14 @@ export default Vue.extend({
   }),
   methods: {
     closeDialog() {
-      this.$emit('input', false)
-      this.newTitleBank = null
+      this.$emit('closeDialogLoadFile', false)
+      this.fileQuestions = null
     },
     createNewBank() {
       let formData = new FormData();
-      formData.append('file', this.fileQuestions.file);
+      formData.append('file', this.fileQuestions);
 
-      this.$store.dispatch('bank/loadNewBank', this.idBank)
+      this.$store.dispatch('bank/loadNewBank', formData)
 
       this.closeDialog()
     },
@@ -29,9 +29,10 @@ export default Vue.extend({
 <template>
   <div>
     <h3>Новый банк тестовых заданий</h3>
-    <v-file-input 
+    <v-file-input
       label="Загрузка файла"
-      accept=".text/xml"
+      ref="file"
+      accept=".xml"
       v-model="fileQuestions"
     />
     <div class="control-buttons">
