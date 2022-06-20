@@ -118,7 +118,7 @@ export const actions = {
     try {
       const { id } = rootState.bank.detailBank
       
-      await this.$api.put(`bank/update/${id}/`, name)
+      await this.$api.put(`bank/update/${id}`, name)
 
     } catch (error) {
       
