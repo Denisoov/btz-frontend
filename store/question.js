@@ -30,11 +30,27 @@ export const mutations = {
 
     Object.assign(state.activeQuestion, {...question, active: true })
   },
-  // REWRITE_OPEN_QUESTION_OPINION({ activeQuestion }, { index, text }) {
-  //   activeQuestion.opinions[index].opinion = text
-  // },
-  REWRITE_OPEN_QUESTION_OPINION({ activeQuestion }, opinions) {
-    activeQuestion.opinions = opinions
+  REWRITE_OPEN_QUESTION_OPINION(state, opinion) {
+    const newOpinions = state.activeQuestion.opinions.map(item => {
+      if (item.id === opinion.id) return opinion
+      else return item
+    })
+
+    state.activeQuestion.opinions = newOpinions
+  },
+  REWRITE_OPEN_QUESTION_CHECK(state, opinion) {
+    const newOpinions = state.activeQuestion.opinions.map(item => {
+      if (item.id === opinion.id) {
+        return opinion
+      }
+      else {
+        item.check = false
+        return item
+      }
+    })
+
+    state.activeQuestion.opinions = newOpinions
+    state.activeQuestion.answer[0] = opinion.id
   },
   CHANGE_CHECK_OPEN_QUESTION({ activeQuestion }, { check, index, }) {
     activeQuestion.opinions[index] = check
@@ -65,7 +81,13 @@ export const mutations = {
     state.questions = state.questions.filter(
       (question) => question.id !== idQuestion)
 
-    state.activeQuestion = defaultActiveQuestion
+    state.activeQuestion = {
+      question: '',
+      id: null,
+      opinions: [],
+      type_question_id: 0,
+      answer: [],
+    }
   },
   DELETE_OPINION(state, index) {
     state.activeQuestion.opinions.splice(index,1)

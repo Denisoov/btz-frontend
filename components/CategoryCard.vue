@@ -80,7 +80,7 @@ export default Vue.extend({
   }
   &__title {
     height: initial;
-    word-break: break-all;
+    word-break: break-word;
     color: $small-title;
     font-size: 18px;
   }

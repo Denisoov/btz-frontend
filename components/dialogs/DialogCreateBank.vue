@@ -6,16 +6,24 @@ export default Vue.extend({
     AppButton: () => import('@/components/base/AppButton.vue'),
   },
   computed: {
-    checkChartsOfTitle() {
-      return this.newTitleBank && this.newTitleBank.length !== 0
-    }
+    checkFieldsForm() {
+      return (this.newTitleBank && this.newTitleBank.length !== 0)  && 
+      (this.creditBank && this.creditBank > 1)
+    },
   },
-  data: () => ({ newTitleBank: null }),
+  data: () => ({ 
+    newTitleBank: null,
+    creditBank: null,
+    generalRules: [
+        v => !!v || '*Это поле обязательно',
+        v => v > 1 || 'Значение не может быть меньше 2'
+    ],
+  }),
   methods: {
     async createNewBank() {
       await this.$store.dispatch(
         'bank/createNewBank',
-        { name: this.newTitleBank }
+        { name: this.newTitleBank, credits: this.creditBank }
       )
       await this.$emit('closeDialog')
 
@@ -33,9 +41,17 @@ export default Vue.extend({
       v-model="newTitleBank" 
       autofocus
     />
+    <v-text-field
+      style="width: 160px"
+      placeholder="Зачет. единицы"
+      v-mask="'###'"
+      outlined
+      v-model="creditBank"
+      :rules="generalRules"
+    />
     <div class="control-buttons">
       <app-button 
-        :disabled="!checkChartsOfTitle"
+        :disabled="!checkFieldsForm"
         :title="'Создать'" 
         @click="createNewBank" 
         class="create mini" 

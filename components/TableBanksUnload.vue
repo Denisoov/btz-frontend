@@ -18,6 +18,21 @@ export default Vue.extend({
     },
     unloadPassport(idBank) {
       this.$emit('openDialogPassport', idBank)
+    },
+    thresholdDeterminerQuestions(obj) {
+      if (obj.min_count_questions > obj.count_questions) return '#ec0000' 
+      else return '#1fbe2b'
+    },
+    thresholdDeterminer(obj) {
+      if (obj.hasOwnProperty('max_count')) {
+        return obj.count_questions >= obj.max_count 
+          ? '#ec0000' 
+          : '#1fbe2b'
+      }
+      else if (obj.hasOwnProperty('min_count'))
+        return obj.count_questions >= obj.min_count 
+          ? '#1fbe2b' 
+          : '#ec0000'
     }
   },
 })
@@ -32,16 +47,22 @@ export default Vue.extend({
               Наименование банка
             </th>
             <th class="text-left">
-              Разделы 
-            </th>
-            <th class="text-left">
-              Категории
-            </th>
-            <th class="text-left">
               Вопросы
             </th>
             <th class="text-left">
-              Опции выгрузки 
+              Открыт. 
+            </th>
+            <th class="text-left">
+              Закрыт.
+            </th>
+            <th class="text-left">
+              Соответств.
+            </th>
+            <th class="text-left">
+              Упорядочив.
+            </th>
+            <th class="text-left">
+              Опции
             </th>
           </tr>
         </thead>
@@ -51,9 +72,21 @@ export default Vue.extend({
             :key="index"
           >
             <td>{{ item.name }}</td>
-            <td>{{ item.count_sections }}</td>
-            <td>{{ item.count_categories }}</td>
-            <td>{{ item.count_questions }}</td>
+            <td :style="{color: thresholdDeterminerQuestions(item) }">{{ `${item.count_questions} / ${item.min_count_questions}` }}</td>
+            <td 
+              v-for="(typeQuestion, index) in item.question_table" 
+              :key="index"
+            >
+              <span 
+                class="table-variable" 
+              >
+                <p class="table-variable--text">{{ `${typeQuestion.min_count ? 'Минимум: ' + typeQuestion.min_count : 'Минимум: 0'}` }}</p>
+                <span :style="{ color: thresholdDeterminer(typeQuestion) }">
+                  {{ `В наличии: ${typeQuestion.count_questions} ` }}
+                </span>
+                <p class="table-variable--text">{{ `${typeQuestion.max_count ? 'Порог ' + typeQuestion.max_count : 'Порог: ∞'}` }}</p>
+              </span>
+            </td>
             <td>
               <div class="buttons">
                 <app-button 
@@ -99,5 +132,12 @@ export default Vue.extend({
 }
 .unload-passport {
   background: $background-button-red;
+}
+.table-variable {
+  font-weight: 700;
+
+  &--text {
+    font-weight: 400;
+  }
 }
 </style>

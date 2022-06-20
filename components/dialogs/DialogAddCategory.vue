@@ -37,7 +37,7 @@ export default Vue.extend({
   <div v-else>
     <h3 class="dialog__title">Добавление категории в раздел</h3>
      <v-chip-group
-      v-if="freeCategories.length === 1"
+      v-if="freeCategories.length >= 1"
       v-model="selectCategory"
       active-class="chip-active"
       column
@@ -49,7 +49,7 @@ export default Vue.extend({
         {{ category.name }}
       </v-chip>
     </v-chip-group>
-    <div class="dialog__no-match">
+    <div v-else class="dialog__no-match">
       Для этого раздела нет свободных категорий.
       <br>
       Создайте новую категорию перейдя по <nuxt-link to="/categories">ссылке</nuxt-link>

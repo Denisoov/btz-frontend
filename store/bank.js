@@ -55,9 +55,9 @@ export const actions = {
     }
     
   },
-  async createNewBank({ dispatch }, newTitleBank) {
+  async createNewBank({ dispatch }, newBank) {
     try {
-      await this.$api.post('bank/create', newTitleBank)
+      await this.$api.post('bank/create', newBank)
 
       dispatch('fetchAllBanks')
     } catch (error) {

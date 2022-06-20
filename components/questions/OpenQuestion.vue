@@ -10,30 +10,18 @@ export default Vue.extend({
     CheckBoxFormQuestion,
     IconClose
   },
-  // props: {
-  //   activeQuestion: {
-  //     type: Object,
-  //     required: true
-  //   }
-  // },
-  // data() {
-  //   return {
-  //     question: ''
-  //   }
-  // },
+  props: {
+    activeQuestion: {
+      type: Object,
+      required: true
+    }
+  },
   computed: {
-    opinions: {
-      get() {
-        return JSON.parse(JSON.stringify([...this.$store.state.question.activeQuestion.opinions]))
-      },
-      set(value) {
-        console.log(value)
-        this.$store.commit('question/REWRITE_OPEN_QUESTION_OPINION', value)
-      }
+    opinions() {
+        return JSON.parse(
+          JSON.stringify([...this.activeQuestion.opinions])
+        )
     },
-    data: () => ({
-      question: [],
-    }),
     searchMaxId() {
       if (this.opinions.length <= 1) return 2
       else {
@@ -53,15 +41,24 @@ export default Vue.extend({
         : 'wrapper-checkbox__input'
     },
   },
-  // beforeMount() {
-  //   this.opinions = JSON.parse(JSON.stringify(this.opinionsOpenQuestion))
-  // },
   methods: {
     deleteOpinion(index) {
-      this.$store.commit('question/DELETE_OPINION', index)
+      this.$store.commit(
+        'question/DELETE_OPINION', 
+        index
+      )
     },
-    changeTitleOpinion(value) {
-      console.log(value)
+    changeTitleOpinion(opinion) {
+      this.$store.commit(
+        'question/REWRITE_OPEN_QUESTION_OPINION', 
+        opinion
+      )
+    },
+    changeCheckOpinion(opinion) {
+      this.$store.commit(
+        'question/REWRITE_OPEN_QUESTION_CHECK', 
+        opinion
+      )
     },
     addOpinion() {
       this.$store.commit(
@@ -82,17 +79,19 @@ export default Vue.extend({
         v-model="opinion.check"
         class="wrapper-checkbox__checkbox" 
         type="checkbox"
+        @change="changeCheckOpinion(opinion)"
       >
       <input 
         v-model="opinion.opinion" 
         class="wrapper-checkbox__input"
         type="text"
         placeholder="Без текста"
-        @change="changeTitleOpinion"
+        @change="changeTitleOpinion(opinion)"
       >
       <v-btn 
         @click="deleteOpinion(index)" 
         icon
+        v-if="opinions.length > 1"
       >
         <icon-close class="icon-close"/>
       </v-btn>
